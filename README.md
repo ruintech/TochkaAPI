@@ -31,9 +31,18 @@ for (AccountModel account : client.accounts().getAccountsList()) {
 
 ## Установка
 
+Библиотека публикуется во внутренний Nexus, поэтому сначала пропишите репозиторий.
+
 Maven:
 
 ```xml
+<repositories>
+  <repository>
+    <id>ruintech</id>
+    <url>https://maven.ruintech.net/repository/maven-public/</url>
+  </repository>
+</repositories>
+
 <dependency>
   <groupId>com.tochka</groupId>
   <artifactId>tochka-api</artifactId>
@@ -41,10 +50,18 @@ Maven:
 </dependency>
 ```
 
+Группа `maven-public` отдаёт и внутренние артефакты, и проксированный Maven Central.
+
 Gradle:
 
 ```kotlin
-implementation("com.tochka:tochka-api:1.98.1-SNAPSHOT")
+repositories {
+    maven("https://maven.ruintech.net/repository/maven-public/")
+}
+
+dependencies {
+    implementation("com.tochka:tochka-api:1.98.1-SNAPSHOT")
+}
 ```
 
 Требуется Java 17 и Jackson 2.17+ (подтягивается транзитивно).

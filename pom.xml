@@ -19,9 +19,9 @@
     <jackson.version>2.17.2</jackson.version>
     <junit.version>5.10.2</junit.version>
 
-    <!-- Адреса внутреннего репозитория. CI передаёт их через -D, локально деплой не нужен. -->
-    <nexus.releases.url>https://nexus.invalid/repository/maven-releases/</nexus.releases.url>
-    <nexus.snapshots.url>https://nexus.invalid/repository/maven-snapshots/</nexus.snapshots.url>
+    <nexus.base.url>https://maven.ruintech.net/repository</nexus.base.url>
+    <nexus.releases.url>${nexus.base.url}/maven-releases/</nexus.releases.url>
+    <nexus.snapshots.url>${nexus.base.url}/maven-snapshots/</nexus.snapshots.url>
   </properties>
 
   <distributionManagement>

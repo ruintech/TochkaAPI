@@ -33,16 +33,15 @@ jobs:
           echo "Релизная версия: $VERSION"
           ./mvnw -B --no-transfer-progress versions:set -DnewVersion="$VERSION" -DgenerateBackupPoms=false
 
+      # Адреса репозиториев заданы свойствами в pom.xml; при переезде Nexus правится pom,
+      # а разово их можно переопределить через -Dnexus.base.url=...
       # Учётные данные подставляются в .mvn/ci-settings.xml из переменных окружения,
       # на диск секреты не попадают.
       - name: mvn deploy
         env:
           NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
           NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
-        run: |
-          ./mvnw -B --no-transfer-progress -s .mvn/ci-settings.xml deploy \
-            -Dnexus.releases.url="${{ vars.NEXUS_RELEASES_URL }}" \
-            -Dnexus.snapshots.url="${{ vars.NEXUS_SNAPSHOTS_URL }}"
+        run: ./mvnw -B --no-transfer-progress -s .mvn/ci-settings.xml deploy
 
       - name: Сохранить артефакты
         uses: actions/upload-artifact@v4
