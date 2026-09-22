@@ -16,19 +16,19 @@ public record GetCashboxQrCodeStatusResponseModel(
         @JsonProperty("status") SBPCashboxQrCodeStatus status,
         @JsonProperty("paramsId") String paramsId) {
 
-    /** Строитель {@link GetCashboxQrCodeStatusResponseModel}. */
+    /** Builder for {@link GetCashboxQrCodeStatusResponseModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .status(this.status)
                 .paramsId(this.paramsId);
     }
 
-    /** Строитель {@link GetCashboxQrCodeStatusResponseModel}. */
+    /** Builder for {@link GetCashboxQrCodeStatusResponseModel}. */
     public static final class Builder {
 
         private SBPCashboxQrCodeStatus status;

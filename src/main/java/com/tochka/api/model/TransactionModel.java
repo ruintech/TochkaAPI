@@ -8,23 +8,23 @@ import java.time.LocalDate;
 /**
  * TransactionModel
  *
- * @param transactionId Уникальный идентификатор транзакции. Например: "23489" (необязательное)
- * @param paymentId Уникальный идентификатор платежа, по которому произошла транзакция. Например: "abcd-11234"
- *        (необязательное)
- * @param creditDebitIndicator Приход/Уход. Например: "Credit"
- * @param status Статус транзакции. Например: "Booked"
- * @param documentNumber Номер платежного документа. Например: "123456" (необязательное)
- * @param transactionTypeCode Код типа транзакции (Вид платежного документа). Например: "Платежный ордер" (необязательное)
- * @param documentProcessDate Дата отражения на балансе. Например: "2019-01-01" (необязательное)
- * @param description Назначение платежа. Например: "string" (необязательное)
+ * @param transactionId Уникальный идентификатор транзакции. Example: "23489" (optional)
+ * @param paymentId Уникальный идентификатор платежа, по которому произошла транзакция. Example: "abcd-11234"
+ *        (optional)
+ * @param creditDebitIndicator Приход/Уход. Example: "Credit"
+ * @param status Статус транзакции. Example: "Booked"
+ * @param documentNumber Номер платежного документа. Example: "123456" (optional)
+ * @param transactionTypeCode Код типа транзакции (Вид платежного документа). Example: "Платежный ордер" (optional)
+ * @param documentProcessDate Дата отражения на балансе. Example: "2019-01-01" (optional)
+ * @param description Назначение платежа. Example: "string" (optional)
  * @param amount Amount
- * @param debtorParty Информация о контрагенте в случае кредитной операции (необязательное)
- * @param debtorAccount Идентификация счета дебитора, в случае кредитной операции (необязательное)
- * @param debtorAgent Финансовое организация, обслуживающая счет дебитора (необязательное)
- * @param creditorParty Информация о контрагенте в случае дебетовой транзакции (необязательное)
- * @param creditorAccount Идентификация счета кредитора, в случае дебетовой транзакции (необязательное)
- * @param creditorAgent Финансовое организация, обслуживающая счет кредитора (необязательное)
- * @param taxFields Налоговые поля (необязательное)
+ * @param debtorParty Информация о контрагенте в случае кредитной операции (optional)
+ * @param debtorAccount Идентификация счета дебитора, в случае кредитной операции (optional)
+ * @param debtorAgent Финансовое организация, обслуживающая счет дебитора (optional)
+ * @param creditorParty Информация о контрагенте в случае дебетовой транзакции (optional)
+ * @param creditorAccount Идентификация счета кредитора, в случае дебетовой транзакции (optional)
+ * @param creditorAgent Финансовое организация, обслуживающая счет кредитора (optional)
+ * @param taxFields Налоговые поля (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -46,12 +46,12 @@ public record TransactionModel(
         @JsonProperty("CreditorAgent") ContractorBankInfoModel creditorAgent,
         @JsonProperty("TaxFields") TaxFieldsModel taxFields) {
 
-    /** Строитель {@link TransactionModel}. */
+    /** Builder for {@link TransactionModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .transactionId(this.transactionId)
@@ -72,7 +72,7 @@ public record TransactionModel(
                 .taxFields(this.taxFields);
     }
 
-    /** Строитель {@link TransactionModel}. */
+    /** Builder for {@link TransactionModel}. */
     public static final class Builder {
 
         private String transactionId;
@@ -92,49 +92,49 @@ public record TransactionModel(
         private ContractorBankInfoModel creditorAgent;
         private TaxFieldsModel taxFields;
 
-        /** Уникальный идентификатор транзакции. Например: "23489" */
+        /** Уникальный идентификатор транзакции. Example: "23489" */
         public Builder transactionId(String transactionId) {
             this.transactionId = transactionId;
             return this;
         }
 
-        /** Уникальный идентификатор платежа, по которому произошла транзакция. Например: "abcd-11234" */
+        /** Уникальный идентификатор платежа, по которому произошла транзакция. Example: "abcd-11234" */
         public Builder paymentId(String paymentId) {
             this.paymentId = paymentId;
             return this;
         }
 
-        /** Приход/Уход. Например: "Credit" */
+        /** Приход/Уход. Example: "Credit" */
         public Builder creditDebitIndicator(ExternalCreditDebitIndicatorEnum creditDebitIndicator) {
             this.creditDebitIndicator = creditDebitIndicator;
             return this;
         }
 
-        /** Статус транзакции. Например: "Booked" */
+        /** Статус транзакции. Example: "Booked" */
         public Builder status(ExternalTransactionStatusEnum status) {
             this.status = status;
             return this;
         }
 
-        /** Номер платежного документа. Например: "123456" */
+        /** Номер платежного документа. Example: "123456" */
         public Builder documentNumber(String documentNumber) {
             this.documentNumber = documentNumber;
             return this;
         }
 
-        /** Код типа транзакции (Вид платежного документа). Например: "Платежный ордер" */
+        /** Код типа транзакции (Вид платежного документа). Example: "Платежный ордер" */
         public Builder transactionTypeCode(ExternalTransationTypeEnum transactionTypeCode) {
             this.transactionTypeCode = transactionTypeCode;
             return this;
         }
 
-        /** Дата отражения на балансе. Например: "2019-01-01" */
+        /** Дата отражения на балансе. Example: "2019-01-01" */
         public Builder documentProcessDate(LocalDate documentProcessDate) {
             this.documentProcessDate = documentProcessDate;
             return this;
         }
 
-        /** Назначение платежа. Например: "string" */
+        /** Назначение платежа. Example: "string" */
         public Builder description(String description) {
             this.description = description;
             return this;

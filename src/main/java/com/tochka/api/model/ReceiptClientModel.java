@@ -7,10 +7,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * ReceiptClientModel
  *
- * @param name Для юрлица — название организации, для ИП и физического лица — ФИО. Например: "Иванов Иван
- *        Иванович" (необязательное)
- * @param email Email покупателя, на который будет отправлен чек. Например: "ivanov&#64;mail.com"
- * @param phone Телефон пользователя для отправки чека.. Например: "+7999999999" (необязательное)
+ * @param name Для юрлица — название организации, для ИП и физического лица — ФИО. Example: "Иванов Иван
+ *        Иванович" (optional)
+ * @param email Email покупателя, на который будет отправлен чек. Example: "ivanov&#64;mail.com"
+ * @param phone Телефон пользователя для отправки чека.. Example: "+7999999999" (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -19,12 +19,12 @@ public record ReceiptClientModel(
         @JsonProperty("email") String email,
         @JsonProperty("phone") String phone) {
 
-    /** Строитель {@link ReceiptClientModel}. */
+    /** Builder for {@link ReceiptClientModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .name(this.name)
@@ -32,27 +32,27 @@ public record ReceiptClientModel(
                 .phone(this.phone);
     }
 
-    /** Строитель {@link ReceiptClientModel}. */
+    /** Builder for {@link ReceiptClientModel}. */
     public static final class Builder {
 
         private String name;
         private String email;
         private String phone;
 
-        /** Для юрлица — название организации, для ИП и физического лица — ФИО. Например: "Иванов Иван
+        /** Для юрлица — название организации, для ИП и физического лица — ФИО. Example: "Иванов Иван
         Иванович" */
         public Builder name(String name) {
             this.name = name;
             return this;
         }
 
-        /** Email покупателя, на который будет отправлен чек. Например: "ivanov&#64;mail.com" */
+        /** Email покупателя, на который будет отправлен чек. Example: "ivanov&#64;mail.com" */
         public Builder email(String email) {
             this.email = email;
             return this;
         }
 
-        /** Телефон пользователя для отправки чека.. Например: "+7999999999" */
+        /** Телефон пользователя для отправки чека.. Example: "+7999999999" */
         public Builder phone(String phone) {
             this.phone = phone;
             return this;

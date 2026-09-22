@@ -7,9 +7,9 @@ import com.tochka.api.model.InvoiceCreateRequestModel;
 import com.tochka.api.model.InvoicePaymentStatusEnum;
 
 /**
- * Счета на оплату для юрлиц и ИП.
+ * Invoices for companies and sole proprietors.
  *
- * <p>Экземпляр доступен через {@link com.tochka.api.TochkaClient}.
+ * <p>An instance is available from {@link com.tochka.api.TochkaClient}.
  */
 public final class InvoicesApi {
 
@@ -26,9 +26,9 @@ public final class InvoicesApi {
      * оплату — в разделе «Счёт на оплату
      * (/docs/tochka-api/opisanie-metodov/vystavlenie-schetov-i-sozdanie-zakryvayushih-dokumentov/schet-na-oplatu)».
      *
-     * <p>Требуемые разрешения: {@code ManageInvoiceData}.
+     * <p>Required permissions: {@code ManageInvoiceData}.
      *
-     * @param request тело запроса
+     * @param request request body
      */
     public String createInvoice(InvoiceCreateRequestModel request) {
         return transport.request("POST", "/invoice/v1.0/bills")
@@ -43,7 +43,7 @@ public final class InvoicesApi {
      * — в разделе «Счёт на оплату
      * (/docs/tochka-api/opisanie-metodov/vystavlenie-schetov-i-sozdanie-zakryvayushih-dokumentov/schet-na-oplatu)».
      *
-     * <p>Требуемые разрешения: {@code ManageInvoiceData}.
+     * <p>Required permissions: {@code ManageInvoiceData}.
      *
      * @param customerCode Уникальный код клиента
      * @param documentId Уникальный идентификатор документа
@@ -61,7 +61,7 @@ public final class InvoicesApi {
      * сохранить или отправить покупателю. Подробнее о счетах на оплату — в разделе «Счёт на оплату
      * (/docs/tochka-api/opisanie-metodov/vystavlenie-schetov-i-sozdanie-zakryvayushih-dokumentov/schet-na-oplatu)».
      *
-     * <p>Требуемые разрешения: {@code ManageInvoiceData}.
+     * <p>Required permissions: {@code ManageInvoiceData}.
      *
      * @param customerCode Уникальный код клиента
      * @param documentId Уникальный идентификатор документа
@@ -79,7 +79,7 @@ public final class InvoicesApi {
      * отслеживается оплата счёта — в разделе «Счёт на оплату
      * (/docs/tochka-api/opisanie-metodov/vystavlenie-schetov-i-sozdanie-zakryvayushih-dokumentov/schet-na-oplatu)».
      *
-     * <p>Требуемые разрешения: {@code ManageInvoiceData}.
+     * <p>Required permissions: {@code ManageInvoiceData}.
      *
      * @param customerCode Уникальный код клиента
      * @param documentId Уникальный идентификатор документа
@@ -97,7 +97,7 @@ public final class InvoicesApi {
      * покупателю. Подробнее о счетах на оплату — в разделе «Счёт на оплату
      * (/docs/tochka-api/opisanie-metodov/vystavlenie-schetov-i-sozdanie-zakryvayushih-dokumentov/schet-na-oplatu)».
      *
-     * <p>Требуемые разрешения: {@code ManageInvoiceData}.
+     * <p>Required permissions: {@code ManageInvoiceData}.
      *
      * @param customerCode Уникальный код клиента
      * @param documentId Уникальный идентификатор документа

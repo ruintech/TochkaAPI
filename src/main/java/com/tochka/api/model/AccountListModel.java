@@ -15,18 +15,18 @@ import java.util.List;
 public record AccountListModel(
         @JsonProperty("Account") List<AccountModel> account) {
 
-    /** Строитель {@link AccountListModel}. */
+    /** Builder for {@link AccountListModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .account(this.account);
     }
 
-    /** Строитель {@link AccountListModel}. */
+    /** Builder for {@link AccountListModel}. */
     public static final class Builder {
 
         private List<AccountModel> account;

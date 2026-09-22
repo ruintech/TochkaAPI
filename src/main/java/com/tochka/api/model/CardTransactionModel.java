@@ -7,9 +7,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * CardTransactionModel
  *
- * @param accountId Уникальный и неизменный идентификатор счёта. Например: "40817810802000000008/044525104"
+ * @param accountId Уникальный и неизменный идентификатор счёта. Example: "40817810802000000008/044525104"
  * @param pan Pan. Маскированный номер карты транзакции
- * @param dateTime Дата и время транзакции. Используется стандарт ISO8601. Например:
+ * @param dateTime Дата и время транзакции. Используется стандарт ISO8601. Example:
  *        "2019-01-01T06:06:06.364+00:00"
  * @param amount Оригинальная сумма и валюта
  * @param accountAmount Сумма и валюта в валюте счета
@@ -25,12 +25,12 @@ public record CardTransactionModel(
         @JsonProperty("AccountAmount") CardTransactionAmountModel accountAmount,
         @JsonProperty("TerminalData") CardTransactionTerminalData terminalData) {
 
-    /** Строитель {@link CardTransactionModel}. */
+    /** Builder for {@link CardTransactionModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .accountId(this.accountId)
@@ -41,7 +41,7 @@ public record CardTransactionModel(
                 .terminalData(this.terminalData);
     }
 
-    /** Строитель {@link CardTransactionModel}. */
+    /** Builder for {@link CardTransactionModel}. */
     public static final class Builder {
 
         private String accountId;
@@ -51,7 +51,7 @@ public record CardTransactionModel(
         private CardTransactionAmountModel accountAmount;
         private CardTransactionTerminalData terminalData;
 
-        /** Уникальный и неизменный идентификатор счёта. Например: "40817810802000000008/044525104" */
+        /** Уникальный и неизменный идентификатор счёта. Example: "40817810802000000008/044525104" */
         public Builder accountId(String accountId) {
             this.accountId = accountId;
             return this;
@@ -63,7 +63,7 @@ public record CardTransactionModel(
             return this;
         }
 
-        /** Дата и время транзакции. Используется стандарт ISO8601. Например:
+        /** Дата и время транзакции. Используется стандарт ISO8601. Example:
         "2019-01-01T06:06:06.364+00:00" */
         public Builder dateTime(String dateTime) {
             this.dateTime = dateTime;

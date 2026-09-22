@@ -6,8 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Запрос к методу API, собираемый по частям. Экземпляры создаёт {@link Transport#request};
- * пользователю библиотеки они обычно не видны — их строят классы сервисов из пакета
+ * An API request assembled piece by piece. Instances come from {@link Transport#request} and are
+ * normally invisible to library users: they are built by the service classes in
  * {@code com.tochka.api.api}.
  */
 public final class ApiRequest {
@@ -27,7 +27,7 @@ public final class ApiRequest {
         this.pathTemplate = pathTemplate;
     }
 
-    /** Подставляет значение в плейсхолдер пути вида <code>{accountId}</code>. */
+    /** Fills in a path placeholder such as <code>{accountId}</code>. */
     public ApiRequest path(String name, Object value) {
         if (value == null) {
             throw new IllegalArgumentException("Параметр пути " + name + " обязателен");
@@ -36,7 +36,7 @@ public final class ApiRequest {
         return this;
     }
 
-    /** Добавляет query-параметр; {@code null} игнорируется. */
+    /** Adds a query parameter; {@code null} is ignored. */
     public ApiRequest query(String name, Object value) {
         if (value != null) {
             queryParams.put(name, value);
@@ -44,7 +44,7 @@ public final class ApiRequest {
         return this;
     }
 
-    /** Добавляет заголовок; {@code null} игнорируется. */
+    /** Adds a header; {@code null} is ignored. */
     public ApiRequest header(String name, String value) {
         if (value != null) {
             headers.put(name, value);
@@ -52,42 +52,42 @@ public final class ApiRequest {
         return this;
     }
 
-    /** Тело запроса — объект модели, который будет сериализован в JSON. */
+    /** Request body — a model object that will be serialized to JSON. */
     public ApiRequest body(Object body) {
         this.body = body;
         return this;
     }
 
     /**
-     * Путь внутри конверта ответа, который нужно вернуть вызывающему коду,
-     * например {@code unwrap("Data", "AccountList")}.
+     * Path inside the response envelope whose content is returned to the caller,
+     * for example {@code unwrap("Data", "AccountList")}.
      */
     public ApiRequest unwrap(String... path) {
         this.unwrapPath = path;
         return this;
     }
 
-    /** Выполняет запрос и разбирает результат в указанный тип. */
+    /** Executes the request and parses the result into the given type. */
     public <T> T as(Class<T> type) {
         return transport.execute(this, Json.mapper().getTypeFactory().constructType(type));
     }
 
-    /** Выполняет запрос и разбирает результат в указанный обобщённый тип. */
+    /** Executes the request and parses the result into the given generic type. */
     public <T> T as(TypeReference<T> type) {
         return transport.execute(this, Json.mapper().getTypeFactory().constructType(type));
     }
 
-    /** Выполняет запрос и возвращает страницу списка вместе с {@code Links} и {@code Meta}. */
+    /** Executes the request and returns a page together with {@code Links} and {@code Meta}. */
     public <T> Page<T> asPage(TypeReference<java.util.List<T>> itemsType) {
         return transport.executePage(this, Json.mapper().getTypeFactory().constructType(itemsType));
     }
 
-    /** Выполняет запрос и возвращает файл: PDF счёта или закрывающего документа. */
+    /** Executes the request and returns a file: the PDF of an invoice or a closing document. */
     public BinaryContent asBinary() {
         return transport.executeBinary(this);
     }
 
-    /** Выполняет запрос, игнорируя тело ответа. */
+    /** Executes the request, ignoring the response body. */
     public void execute() {
         transport.execute(this, Json.mapper().getTypeFactory().constructType(Object.class));
     }

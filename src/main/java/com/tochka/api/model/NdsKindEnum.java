@@ -6,9 +6,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 /**
  * NdsKindEnum
  *
- * <p>Неизвестное значение, которого ещё нет в этой версии библиотеки,
- * разбирается в {@code null}, а не приводит к ошибке — используйте
- * {@link #parse(String)}, если незнакомое значение должно быть ошибкой.
+ * <p>A value that is not yet known to this version of the library is parsed
+ * as {@code null} instead of failing; use {@link #parse(String)} when an
+ * unknown value must be an error.
  */
 public enum NdsKindEnum {
 
@@ -25,13 +25,13 @@ public enum NdsKindEnum {
         this.value = value;
     }
 
-    /** Значение, как оно передаётся в JSON. */
+    /** The value as it is sent over the wire. */
     @JsonValue
     public String value() {
         return this.value;
     }
 
-    /** Разбирает значение из JSON; неизвестное значение даёт {@code null}. */
+    /** Parses a wire value; an unknown one yields {@code null}. */
     @JsonCreator
     public static NdsKindEnum fromValue(String value) {
         if (value == null) {
@@ -45,7 +45,7 @@ public enum NdsKindEnum {
         return null;
     }
 
-    /** Разбирает значение, выбрасывая исключение на неизвестном. */
+    /** Parses a wire value, throwing on an unknown one. */
     public static NdsKindEnum parse(String value) {
         NdsKindEnum parsed = fromValue(value);
         if (parsed == null) {

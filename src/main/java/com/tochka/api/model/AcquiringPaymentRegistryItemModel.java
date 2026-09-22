@@ -9,10 +9,9 @@ import java.util.List;
 /**
  * AcquiringPaymentRegistryItemModel
  *
- * @param paymentType Тип оплаты. Например: "card"
- * @param totalAmount Сумма всех позиций из этого блока. Например: 18548.39
- * @param paymentId Уникальный идентификатор платежа. Например: "A22031016256670100000533E625FCB3"
- *        (необязательное)
+ * @param paymentType Тип оплаты. Example: "card"
+ * @param totalAmount Сумма всех позиций из этого блока. Example: 18548.39
+ * @param paymentId Уникальный идентификатор платежа. Example: "A22031016256670100000533E625FCB3" (optional)
  * @param payments Список товаров в заказе
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -23,12 +22,12 @@ public record AcquiringPaymentRegistryItemModel(
         @JsonProperty("paymentId") String paymentId,
         @JsonProperty("payments") List<PaymentItemModel> payments) {
 
-    /** Строитель {@link AcquiringPaymentRegistryItemModel}. */
+    /** Builder for {@link AcquiringPaymentRegistryItemModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .paymentType(this.paymentType)
@@ -37,7 +36,7 @@ public record AcquiringPaymentRegistryItemModel(
                 .payments(this.payments);
     }
 
-    /** Строитель {@link AcquiringPaymentRegistryItemModel}. */
+    /** Builder for {@link AcquiringPaymentRegistryItemModel}. */
     public static final class Builder {
 
         private ExternalAcquiringPaymentTypeEnum paymentType;
@@ -45,19 +44,19 @@ public record AcquiringPaymentRegistryItemModel(
         private String paymentId;
         private List<PaymentItemModel> payments;
 
-        /** Тип оплаты. Например: "card" */
+        /** Тип оплаты. Example: "card" */
         public Builder paymentType(ExternalAcquiringPaymentTypeEnum paymentType) {
             this.paymentType = paymentType;
             return this;
         }
 
-        /** Сумма всех позиций из этого блока. Например: 18548.39 */
+        /** Сумма всех позиций из этого блока. Example: 18548.39 */
         public Builder totalAmount(BigDecimal totalAmount) {
             this.totalAmount = totalAmount;
             return this;
         }
 
-        /** Уникальный идентификатор платежа. Например: "A22031016256670100000533E625FCB3" */
+        /** Уникальный идентификатор платежа. Example: "A22031016256670100000533E625FCB3" */
         public Builder paymentId(String paymentId) {
             this.paymentId = paymentId;
             return this;

@@ -14,18 +14,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public record WebhookTestSendRequest(
         @JsonProperty("webhookType") WebhookTypeEnum webhookType) {
 
-    /** Строитель {@link WebhookTestSendRequest}. */
+    /** Builder for {@link WebhookTestSendRequest}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .webhookType(this.webhookType);
     }
 
-    /** Строитель {@link WebhookTestSendRequest}. */
+    /** Builder for {@link WebhookTestSendRequest}. */
     public static final class Builder {
 
         private WebhookTypeEnum webhookType;

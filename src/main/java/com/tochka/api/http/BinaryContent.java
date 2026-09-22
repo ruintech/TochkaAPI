@@ -8,11 +8,11 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Файл, полученный от API: счёт на оплату или закрывающий документ в PDF.
+ * A file received from the API: an invoice or a closing document in PDF.
  *
- * @param bytes       содержимое файла
- * @param contentType MIME-тип из заголовка {@code Content-Type}
- * @param fileName    имя файла из {@code Content-Disposition}, если банк его прислал
+ * @param bytes       file contents
+ * @param contentType MIME type from the {@code Content-Type} header
+ * @param fileName    file name from {@code Content-Disposition}, when the bank sends one
  */
 public record BinaryContent(byte[] bytes, String contentType, String fileName) {
 
@@ -29,10 +29,10 @@ public record BinaryContent(byte[] bytes, String contentType, String fileName) {
     }
 
     /**
-     * Сохраняет файл на диск.
+     * Writes the file to disk.
      *
-     * @param target путь к файлу; существующий файл перезаписывается
-     * @return тот же путь
+     * @param target target path; an existing file is overwritten
+     * @return the same path
      */
     public Path writeTo(Path target) {
         try {

@@ -1,12 +1,11 @@
 package com.tochka.api.exception;
 
 /**
- * Запрос не дошёл до API или ответ не удалось прочитать: сетевая ошибка, таймаут,
- * несостоявшееся TLS-рукопожатие, нечитаемое тело ответа.
+ * The request never reached the API, or the response could not be read: a network error, a
+ * timeout, a failed TLS handshake, an unreadable response body.
  *
- * <p>Ошибка TLS при обращении к {@code enter.tochka.com} чаще всего означает, что в
- * доверенное хранилище JVM не добавлены сертификаты Минцифры — см.
- * {@link com.tochka.api.tls.RussianTrustedCa}.
+ * <p>A TLS failure against {@code enter.tochka.com} usually means the JVM trust store lacks the
+ * Ministry of Digital Development certificates — see {@link com.tochka.api.tls.RussianTrustedCa}.
  */
 public class TochkaTransportException extends TochkaException {
 

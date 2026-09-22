@@ -9,27 +9,26 @@ import java.util.List;
 /**
  * AcquiringCreateSubscriptionWithReceiptResponseModel
  *
- * @param purpose Назначение платежа. Например: "Перевод за оказанные услуги"
- * @param amount Сумма платежа, которая будет списываться в указанный клиентом период. Например: "1234.00"
- * @param status Статус платежа. Например: "CREATED" (необязательное)
- * @param operationId Идентификатор платежа. Например: "48232c9a-ce82-1593-3cb6-5c85a1ffef8f"
- * @param paymentLink Ссылка на оплату. Например:
+ * @param purpose Назначение платежа. Example: "Перевод за оказанные услуги"
+ * @param amount Сумма платежа, которая будет списываться в указанный клиентом период. Example: "1234.00"
+ * @param status Статус платежа. Example: "CREATED" (optional)
+ * @param operationId Идентификатор платежа. Example: "48232c9a-ce82-1593-3cb6-5c85a1ffef8f"
+ * @param paymentLink Ссылка на оплату. Example:
  *        "https://merch.example.com/order/?uuid=16ea4c54-bf1d-4e6a-a1ef-53ad55666e43"
- * @param consumerId Идентификатор покупателя. Например: "fedac807-078d-45ac-a43b-5c01c57edbf8" (необязательное)
- * @param recurring Рекуррентная подписка (необязательное)
- * @param options Опции подписки (необязательное)
- * @param paymentLinkId Уникальный номер заказа (необязательное)
- * @param customerCode Уникальный код клиента. Например: "300000092"
- * @param redirectUrl URL адрес, куда будет переправлен клиент после оплаты услуги. Например:
- *        "https://example.com" (необязательное)
- * @param failRedirectUrl URL адрес, куда будет переправлен клиент в случае неуспешной оплаты. Например:
- *        "https://example.com/fail" (необязательное)
- * @param merchantId Идентификатор торговой точки в интернет-эквайринге. Например: "200000000001056"
- *        (необязательное)
- * @param taxSystemCode Система налогообложения. Например: "osn" (необязательное)
+ * @param consumerId Идентификатор покупателя. Example: "fedac807-078d-45ac-a43b-5c01c57edbf8" (optional)
+ * @param recurring Рекуррентная подписка (optional)
+ * @param options Опции подписки (optional)
+ * @param paymentLinkId Уникальный номер заказа (optional)
+ * @param customerCode Уникальный код клиента. Example: "300000092"
+ * @param redirectUrl URL адрес, куда будет переправлен клиент после оплаты услуги. Example: "https://example.com"
+ *        (optional)
+ * @param failRedirectUrl URL адрес, куда будет переправлен клиент в случае неуспешной оплаты. Example:
+ *        "https://example.com/fail" (optional)
+ * @param merchantId Идентификатор торговой точки в интернет-эквайринге. Example: "200000000001056" (optional)
+ * @param taxSystemCode Система налогообложения. Example: "osn" (optional)
  * @param client Данные покупателя
  * @param items Список товаров в заказе
- * @param supplier Данные поставщика (необязательное)
+ * @param supplier Данные поставщика (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -52,12 +51,12 @@ public record AcquiringCreateSubscriptionWithReceiptResponseModel(
         @JsonProperty("Items") List<ReceiptItemOutputModel> items,
         @JsonProperty("Supplier") SupplierModel supplier) {
 
-    /** Строитель {@link AcquiringCreateSubscriptionWithReceiptResponseModel}. */
+    /** Builder for {@link AcquiringCreateSubscriptionWithReceiptResponseModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .purpose(this.purpose)
@@ -79,7 +78,7 @@ public record AcquiringCreateSubscriptionWithReceiptResponseModel(
                 .supplier(this.supplier);
     }
 
-    /** Строитель {@link AcquiringCreateSubscriptionWithReceiptResponseModel}. */
+    /** Builder for {@link AcquiringCreateSubscriptionWithReceiptResponseModel}. */
     public static final class Builder {
 
         private String purpose;
@@ -100,38 +99,38 @@ public record AcquiringCreateSubscriptionWithReceiptResponseModel(
         private List<ReceiptItemOutputModel> items;
         private SupplierModel supplier;
 
-        /** Назначение платежа. Например: "Перевод за оказанные услуги" */
+        /** Назначение платежа. Example: "Перевод за оказанные услуги" */
         public Builder purpose(String purpose) {
             this.purpose = purpose;
             return this;
         }
 
-        /** Сумма платежа, которая будет списываться в указанный клиентом период. Например: "1234.00" */
+        /** Сумма платежа, которая будет списываться в указанный клиентом период. Example: "1234.00" */
         public Builder amount(BigDecimal amount) {
             this.amount = amount;
             return this;
         }
 
-        /** Статус платежа. Например: "CREATED" */
+        /** Статус платежа. Example: "CREATED" */
         public Builder status(AcquiringCreatedStatus status) {
             this.status = status;
             return this;
         }
 
-        /** Идентификатор платежа. Например: "48232c9a-ce82-1593-3cb6-5c85a1ffef8f" */
+        /** Идентификатор платежа. Example: "48232c9a-ce82-1593-3cb6-5c85a1ffef8f" */
         public Builder operationId(String operationId) {
             this.operationId = operationId;
             return this;
         }
 
-        /** Ссылка на оплату. Например:
+        /** Ссылка на оплату. Example:
         "https://merch.example.com/order/?uuid=16ea4c54-bf1d-4e6a-a1ef-53ad55666e43" */
         public Builder paymentLink(String paymentLink) {
             this.paymentLink = paymentLink;
             return this;
         }
 
-        /** Идентификатор покупателя. Например: "fedac807-078d-45ac-a43b-5c01c57edbf8" */
+        /** Идентификатор покупателя. Example: "fedac807-078d-45ac-a43b-5c01c57edbf8" */
         public Builder consumerId(String consumerId) {
             this.consumerId = consumerId;
             return this;
@@ -155,33 +154,32 @@ public record AcquiringCreateSubscriptionWithReceiptResponseModel(
             return this;
         }
 
-        /** Уникальный код клиента. Например: "300000092" */
+        /** Уникальный код клиента. Example: "300000092" */
         public Builder customerCode(String customerCode) {
             this.customerCode = customerCode;
             return this;
         }
 
-        /** URL адрес, куда будет переправлен клиент после оплаты услуги. Например:
-        "https://example.com" */
+        /** URL адрес, куда будет переправлен клиент после оплаты услуги. Example: "https://example.com" */
         public Builder redirectUrl(String redirectUrl) {
             this.redirectUrl = redirectUrl;
             return this;
         }
 
-        /** URL адрес, куда будет переправлен клиент в случае неуспешной оплаты. Например:
+        /** URL адрес, куда будет переправлен клиент в случае неуспешной оплаты. Example:
         "https://example.com/fail" */
         public Builder failRedirectUrl(String failRedirectUrl) {
             this.failRedirectUrl = failRedirectUrl;
             return this;
         }
 
-        /** Идентификатор торговой точки в интернет-эквайринге. Например: "200000000001056" */
+        /** Идентификатор торговой точки в интернет-эквайринге. Example: "200000000001056" */
         public Builder merchantId(String merchantId) {
             this.merchantId = merchantId;
             return this;
         }
 
-        /** Система налогообложения. Например: "osn" */
+        /** Система налогообложения. Example: "osn" */
         public Builder taxSystemCode(TaxSystemCodeInput taxSystemCode) {
             this.taxSystemCode = taxSystemCode;
             return this;

@@ -14,18 +14,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public record RegisterB2BQRCodeRequest(
         @JsonProperty("Data") RegisterB2BQRCode data) {
 
-    /** Строитель {@link RegisterB2BQRCodeRequest}. */
+    /** Builder for {@link RegisterB2BQRCodeRequest}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .data(this.data);
     }
 
-    /** Строитель {@link RegisterB2BQRCodeRequest}. */
+    /** Builder for {@link RegisterB2BQRCodeRequest}. */
     public static final class Builder {
 
         private RegisterB2BQRCode data;

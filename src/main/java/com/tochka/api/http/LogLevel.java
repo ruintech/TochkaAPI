@@ -1,17 +1,17 @@
 package com.tochka.api.http;
 
-/** Насколько подробно клиент логирует HTTP-обмен. */
+/** How much of the HTTP exchange the client logs. */
 public enum LogLevel {
 
-    /** Ничего не логировать. Значение по умолчанию. */
+    /** Log nothing. The default. */
     NONE,
 
-    /** Метод, адрес, статус и длительность запроса. */
+    /** Method, URL, status and duration of the request. */
     BASIC,
 
-    /** То же плюс заголовки; {@code Authorization} всегда маскируется. */
+    /** The same plus headers; {@code Authorization} is always masked. */
     HEADERS,
 
-    /** То же плюс тела запроса и ответа. Может содержать персональные данные и реквизиты. */
+    /** The same plus request and response bodies. May contain personal and banking data. */
     BODY
 }

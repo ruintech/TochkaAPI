@@ -1,7 +1,7 @@
 package com.tochka.api.http;
 
 /**
- * Приёмник строк лога HTTP-обмена. Подключите свой логгер:
+ * Sink for HTTP exchange log lines. Plug in your own logger:
  * {@code .logger(message -> log.debug(message))}.
  */
 @FunctionalInterface
@@ -9,13 +9,13 @@ public interface RequestLogger {
 
     void log(String message);
 
-    /** Логгер, который ничего не делает. */
+    /** A logger that does nothing. */
     static RequestLogger noop() {
         return message -> {
         };
     }
 
-    /** Пишет в {@link System#out} — удобно при первичной отладке интеграции. */
+    /** Writes to {@link System#out} — handy while bringing an integration up. */
     static RequestLogger stdout() {
         return message -> System.out.println("[tochka] " + message);
     }

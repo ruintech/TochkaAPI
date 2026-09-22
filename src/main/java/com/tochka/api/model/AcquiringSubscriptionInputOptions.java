@@ -7,9 +7,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * AcquiringSubscriptionInputOptions
  *
- * @param trancheCount Количество списаний по подписке. Например: 12 (необязательное)
- * @param period Периодичность списания. Например: "Month" (необязательное)
- * @param daysInPeriod Длина периодичности в днях. Работает только с периодом Day. Например: 14 (необязательное)
+ * @param trancheCount Количество списаний по подписке. Example: 12 (optional)
+ * @param period Периодичность списания. Example: "Month" (optional)
+ * @param daysInPeriod Длина периодичности в днях. Работает только с периодом Day. Example: 14 (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -18,12 +18,12 @@ public record AcquiringSubscriptionInputOptions(
         @JsonProperty("period") AcquiringSubscriptionPeriodInput period,
         @JsonProperty("daysInPeriod") Integer daysInPeriod) {
 
-    /** Строитель {@link AcquiringSubscriptionInputOptions}. */
+    /** Builder for {@link AcquiringSubscriptionInputOptions}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .trancheCount(this.trancheCount)
@@ -31,26 +31,26 @@ public record AcquiringSubscriptionInputOptions(
                 .daysInPeriod(this.daysInPeriod);
     }
 
-    /** Строитель {@link AcquiringSubscriptionInputOptions}. */
+    /** Builder for {@link AcquiringSubscriptionInputOptions}. */
     public static final class Builder {
 
         private Integer trancheCount;
         private AcquiringSubscriptionPeriodInput period;
         private Integer daysInPeriod;
 
-        /** Количество списаний по подписке. Например: 12 */
+        /** Количество списаний по подписке. Example: 12 */
         public Builder trancheCount(Integer trancheCount) {
             this.trancheCount = trancheCount;
             return this;
         }
 
-        /** Периодичность списания. Например: "Month" */
+        /** Периодичность списания. Example: "Month" */
         public Builder period(AcquiringSubscriptionPeriodInput period) {
             this.period = period;
             return this;
         }
 
-        /** Длина периодичности в днях. Работает только с периодом Day. Например: 14 */
+        /** Длина периодичности в днях. Работает только с периодом Day. Example: 14 */
         public Builder daysInPeriod(Integer daysInPeriod) {
             this.daysInPeriod = daysInPeriod;
             return this;

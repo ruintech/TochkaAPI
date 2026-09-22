@@ -3,11 +3,11 @@ package com.tochka.api.auth;
 import java.util.List;
 
 /**
- * Области доступа (scope) OAuth 2.0.
+ * OAuth 2.0 scopes.
  *
- * <p>Scope задаёт, к каким сервисам приложение просит доступ, а разрешения (permissions)
- * в списке согласия — точный перечень операций внутри них. Набор scope должен быть одинаковым
- * во всех запросах одного потока авторизации.
+ * <p>A scope says which services the application asks access to, while the permissions of a
+ * consent list say exactly which operations inside them are allowed. The set of scopes must be
+ * identical across all requests of one authorization flow.
  */
 public final class Scopes {
 
@@ -19,7 +19,7 @@ public final class Scopes {
     public static final String PAYMENTS = "payments";
     public static final String ACQUIRING = "acquiring";
 
-    /** Все известные области доступа. */
+    /** All known scopes. */
     public static final List<String> ALL =
             List.of(ACCOUNTS, BALANCES, CUSTOMERS, STATEMENTS, SBP, PAYMENTS, ACQUIRING);
 

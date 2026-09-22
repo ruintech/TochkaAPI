@@ -11,9 +11,9 @@ import com.tochka.api.model.StatusEnum;
 import java.util.List;
 
 /**
- * СБП: регистрация юрлица и его счета.
+ * SBP: legal entity registration and its accounts.
  *
- * <p>Экземпляр доступен через {@link com.tochka.api.TochkaClient}.
+ * <p>An instance is available from {@link com.tochka.api.TochkaClient}.
  */
 public final class SbpLegalEntitiesApi {
 
@@ -28,7 +28,7 @@ public final class SbpLegalEntitiesApi {
      * регистрацию и счета в СБП — в разделе «Регистрация ЮЛ или ТСП
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/registraciya-yul-i-tsp)».
      *
-     * <p>Требуемые разрешения: {@code ReadSBPData}.
+     * <p>Required permissions: {@code ReadSBPData}.
      *
      * @param legalId Идентификатор зарегистрированного юрлица в СБП (12 символов)
      */
@@ -45,7 +45,7 @@ public final class SbpLegalEntitiesApi {
      * проверить регистрацию в СБП вы можете изучить в разделе «Регистрация ЮЛ или ТСП
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/registraciya-yul-i-tsp)».
      *
-     * <p>Требуемые разрешения: {@code ReadSBPData}.
+     * <p>Required permissions: {@code ReadSBPData}.
      *
      * @param customerCode Уникальный код клиента
      * @param bankCode БИК банка
@@ -63,7 +63,7 @@ public final class SbpLegalEntitiesApi {
      * юрлица — в разделе «Регистрация ЮЛ или ТСП
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/registraciya-yul-i-tsp)».
      *
-     * <p>Требуемые разрешения: {@code ReadSBPData}.
+     * <p>Required permissions: {@code ReadSBPData}.
      *
      * @param legalId Идентификатор зарегистрированного юрлица в СБП (12 символов)
      */
@@ -80,9 +80,9 @@ public final class SbpLegalEntitiesApi {
      * чего начать работу с СБП вы можете прочитать в разделе «Регистрация ЮЛ или ТСП
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/registraciya-yul-i-tsp)».
      *
-     * <p>Требуемые разрешения: {@code EditSBPData}.
+     * <p>Required permissions: {@code EditSBPData}.
      *
-     * @param request тело запроса
+     * @param request request body
      */
     public String registerLegalEntity(CustomerCodeAndBankCode request) {
         return transport.request("POST", "/sbp/v1.0/register-sbp-legal-entity")
@@ -96,10 +96,10 @@ public final class SbpLegalEntitiesApi {
      * разделе «Регистрация ЮЛ или ТСП
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/registraciya-yul-i-tsp)».
      *
-     * <p>Требуемые разрешения: {@code EditSBPData}.
+     * <p>Required permissions: {@code EditSBPData}.
      *
      * @param legalId Идентификатор зарегистрированного юрлица в СБП (12 символов)
-     * @param status Статус объекта. Например: "Active"
+     * @param status Статус объекта. Example: "Active"
      */
     public Boolean setLegalEntityStatus(String legalId, StatusEnum status) {
         return transport.request("POST", "/sbp/v1.0/legal-entity/{legalId}")

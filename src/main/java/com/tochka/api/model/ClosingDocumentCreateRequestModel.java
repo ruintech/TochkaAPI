@@ -7,11 +7,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * ClosingDocumentCreateRequestModel
  *
- * @param accountId Уникальный и неизменный идентификатор счёта. Например: "40817810802000000008/044525104"
- * @param customerCode Уникальный код клиента. Например: "300000092"
+ * @param accountId Уникальный и неизменный идентификатор счёта. Example: "40817810802000000008/044525104"
+ * @param customerCode Уникальный код клиента. Example: "300000092"
  * @param secondSide Сторона заказчика/покупателя в сделке в документе
- * @param documentId ID родительского документа. Например: "1cf95c4f-e794-4407-bac4-0829f19bd2be"
- *        (необязательное)
+ * @param documentId ID родительского документа. Example: "1cf95c4f-e794-4407-bac4-0829f19bd2be" (optional)
  * @param content Содержимое закрывающего документа
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -23,12 +22,12 @@ public record ClosingDocumentCreateRequestModel(
         @JsonProperty("documentId") String documentId,
         @JsonProperty("Content") com.fasterxml.jackson.databind.JsonNode content) {
 
-    /** Строитель {@link ClosingDocumentCreateRequestModel}. */
+    /** Builder for {@link ClosingDocumentCreateRequestModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .accountId(this.accountId)
@@ -38,7 +37,7 @@ public record ClosingDocumentCreateRequestModel(
                 .content(this.content);
     }
 
-    /** Строитель {@link ClosingDocumentCreateRequestModel}. */
+    /** Builder for {@link ClosingDocumentCreateRequestModel}. */
     public static final class Builder {
 
         private String accountId;
@@ -47,13 +46,13 @@ public record ClosingDocumentCreateRequestModel(
         private String documentId;
         private com.fasterxml.jackson.databind.JsonNode content;
 
-        /** Уникальный и неизменный идентификатор счёта. Например: "40817810802000000008/044525104" */
+        /** Уникальный и неизменный идентификатор счёта. Example: "40817810802000000008/044525104" */
         public Builder accountId(String accountId) {
             this.accountId = accountId;
             return this;
         }
 
-        /** Уникальный код клиента. Например: "300000092" */
+        /** Уникальный код клиента. Example: "300000092" */
         public Builder customerCode(String customerCode) {
             this.customerCode = customerCode;
             return this;
@@ -65,7 +64,7 @@ public record ClosingDocumentCreateRequestModel(
             return this;
         }
 
-        /** ID родительского документа. Например: "1cf95c4f-e794-4407-bac4-0829f19bd2be" */
+        /** ID родительского документа. Example: "1cf95c4f-e794-4407-bac4-0829f19bd2be" */
         public Builder documentId(String documentId) {
             this.documentId = documentId;
             return this;

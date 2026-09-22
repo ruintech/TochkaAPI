@@ -15,18 +15,18 @@ import java.util.List;
 public record BalanceListModel(
         @JsonProperty("Balance") List<BalanceModel> balance) {
 
-    /** Строитель {@link BalanceListModel}. */
+    /** Builder for {@link BalanceListModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .balance(this.balance);
     }
 
-    /** Строитель {@link BalanceListModel}. */
+    /** Builder for {@link BalanceListModel}. */
     public static final class Builder {
 
         private List<BalanceModel> balance;

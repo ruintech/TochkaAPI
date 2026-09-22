@@ -7,25 +7,25 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * GetCashboxQRCodeRequestModel
  *
- * @param imageParams imageParams (необязательное)
+ * @param imageParams imageParams (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record GetCashboxQRCodeRequestModel(
         @JsonProperty("imageParams") QrCodeImageParams imageParams) {
 
-    /** Строитель {@link GetCashboxQRCodeRequestModel}. */
+    /** Builder for {@link GetCashboxQRCodeRequestModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .imageParams(this.imageParams);
     }
 
-    /** Строитель {@link GetCashboxQRCodeRequestModel}. */
+    /** Builder for {@link GetCashboxQRCodeRequestModel}. */
     public static final class Builder {
 
         private QrCodeImageParams imageParams;

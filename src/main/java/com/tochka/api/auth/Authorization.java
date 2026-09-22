@@ -3,16 +3,16 @@ package com.tochka.api.auth;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-/** Источник значения заголовка {@code Authorization} для запросов к API. */
+/** Source of the {@code Authorization} header value for API requests. */
 @FunctionalInterface
 public interface Authorization {
 
-    /** Готовое значение заголовка, например {@code Bearer eyJ...}. */
+    /** The ready header value, for example {@code Bearer eyJ...}. */
     String authorizationHeader();
 
     /**
-     * Долгоживущий JWT-ключ, созданный в интернет-банке («Интеграции и API» → «Создать JWT-ключ»).
-     * Подходит, когда интеграцией пользуетесь только вы.
+     * A long-lived JWT key created in the internet bank («Интеграции и API» → «Создать JWT-ключ»).
+     * The right choice when you are the only user of the integration.
      */
     static Authorization jwt(String token) {
         Objects.requireNonNull(token, "token");
@@ -21,9 +21,9 @@ public interface Authorization {
     }
 
     /**
-     * Токен, вычисляемый на каждый запрос, — например, если он хранится во внешнем секрет-сторе.
+     * A token resolved on every request — for example when it lives in an external secret store.
      *
-     * @param tokenSupplier поставщик самого токена, без префикса {@code Bearer}
+     * @param tokenSupplier supplier of the bare token, without the {@code Bearer} prefix
      */
     static Authorization dynamic(Supplier<String> tokenSupplier) {
         Objects.requireNonNull(tokenSupplier, "tokenSupplier");

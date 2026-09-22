@@ -7,14 +7,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * CustomerModel
  *
- * @param customerCode Уникальный код клиента. Например: "300000092"
- * @param customerType Тип клиент (физическое или юридическое лицо). Например: "Personal"
- * @param isResident Признак резидента. Например: true
- * @param taxCode ИНН. Например: "660000000000" (необязательное)
- * @param fullName Полное наименование. Например: "Индивидуальный Предприниматель Тест"
- * @param shortName Краткое наименование. Например: "ИП Тест" (необязательное)
- * @param kpp КПП. Например: "668501001" (необязательное)
- * @param customerOgrn ОГРН или ОГРНИП. Например: "319665800211661" (необязательное)
+ * @param customerCode Уникальный код клиента. Example: "300000092"
+ * @param customerType Тип клиент (физическое или юридическое лицо). Example: "Personal"
+ * @param isResident Признак резидента. Example: true
+ * @param taxCode ИНН. Example: "660000000000" (optional)
+ * @param fullName Полное наименование. Example: "Индивидуальный Предприниматель Тест"
+ * @param shortName Краткое наименование. Example: "ИП Тест" (optional)
+ * @param kpp КПП. Example: "668501001" (optional)
+ * @param customerOgrn ОГРН или ОГРНИП. Example: "319665800211661" (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -28,12 +28,12 @@ public record CustomerModel(
         @JsonProperty("kpp") String kpp,
         @JsonProperty("customerOgrn") String customerOgrn) {
 
-    /** Строитель {@link CustomerModel}. */
+    /** Builder for {@link CustomerModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .customerCode(this.customerCode)
@@ -46,7 +46,7 @@ public record CustomerModel(
                 .customerOgrn(this.customerOgrn);
     }
 
-    /** Строитель {@link CustomerModel}. */
+    /** Builder for {@link CustomerModel}. */
     public static final class Builder {
 
         private String customerCode;
@@ -58,49 +58,49 @@ public record CustomerModel(
         private String kpp;
         private String customerOgrn;
 
-        /** Уникальный код клиента. Например: "300000092" */
+        /** Уникальный код клиента. Example: "300000092" */
         public Builder customerCode(String customerCode) {
             this.customerCode = customerCode;
             return this;
         }
 
-        /** Тип клиент (физическое или юридическое лицо). Например: "Personal" */
+        /** Тип клиент (физическое или юридическое лицо). Example: "Personal" */
         public Builder customerType(ExternalTypeEnum customerType) {
             this.customerType = customerType;
             return this;
         }
 
-        /** Признак резидента. Например: true */
+        /** Признак резидента. Example: true */
         public Builder isResident(Boolean isResident) {
             this.isResident = isResident;
             return this;
         }
 
-        /** ИНН. Например: "660000000000" */
+        /** ИНН. Example: "660000000000" */
         public Builder taxCode(String taxCode) {
             this.taxCode = taxCode;
             return this;
         }
 
-        /** Полное наименование. Например: "Индивидуальный Предприниматель Тест" */
+        /** Полное наименование. Example: "Индивидуальный Предприниматель Тест" */
         public Builder fullName(String fullName) {
             this.fullName = fullName;
             return this;
         }
 
-        /** Краткое наименование. Например: "ИП Тест" */
+        /** Краткое наименование. Example: "ИП Тест" */
         public Builder shortName(String shortName) {
             this.shortName = shortName;
             return this;
         }
 
-        /** КПП. Например: "668501001" */
+        /** КПП. Example: "668501001" */
         public Builder kpp(String kpp) {
             this.kpp = kpp;
             return this;
         }
 
-        /** ОГРН или ОГРНИП. Например: "319665800211661" */
+        /** ОГРН или ОГРНИП. Example: "319665800211661" */
         public Builder customerOgrn(String customerOgrn) {
             this.customerOgrn = customerOgrn;
             return this;

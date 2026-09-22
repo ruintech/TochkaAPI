@@ -9,8 +9,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * @param width Ширина изображения (&gt;=200, по умолчанию: 300)
  * @param height Высота изображения (&gt;=200, по умолчанию: 300)
- * @param mediaType Тип контента (необязательное)
- * @param content содержимое изображения (для image/png - в кодировке base64). Например:
+ * @param mediaType Тип контента (optional)
+ * @param content содержимое изображения (для image/png - в кодировке base64). Example:
  *        "iVBORw0KGgoAAAANSUhEUgAAASwAAAEs..."
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -21,12 +21,12 @@ public record QrCodeContent(
         @JsonProperty("mediaType") MediaTypeEnum mediaType,
         @JsonProperty("content") String content) {
 
-    /** Строитель {@link QrCodeContent}. */
+    /** Builder for {@link QrCodeContent}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .width(this.width)
@@ -35,7 +35,7 @@ public record QrCodeContent(
                 .content(this.content);
     }
 
-    /** Строитель {@link QrCodeContent}. */
+    /** Builder for {@link QrCodeContent}. */
     public static final class Builder {
 
         private Integer width;
@@ -61,7 +61,7 @@ public record QrCodeContent(
             return this;
         }
 
-        /** содержимое изображения (для image/png - в кодировке base64). Например:
+        /** содержимое изображения (для image/png - в кодировке base64). Example:
         "iVBORw0KGgoAAAANSUhEUgAAASwAAAEs..." */
         public Builder content(String content) {
             this.content = content;

@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * API вернул ответ с кодом ошибки. Тело разобрано в поля {@link #code()}, {@link #errorId()},
- * {@link #errors()} — в том виде, в каком их отдаёт банк.
+ * The API answered with an error status. The body is parsed into {@link #code()},
+ * {@link #errorId()} and {@link #errors()} exactly as the bank returns them.
  *
- * <p>Для типовых ситуаций выбрасываются подклассы: {@link TochkaBadRequestException},
+ * <p>Common situations get their own subclasses: {@link TochkaBadRequestException},
  * {@link TochkaUnauthorizedException}, {@link TochkaForbiddenException},
  * {@link TochkaNotFoundException}, {@link TochkaDependencyException},
  * {@link TochkaServerException}.
@@ -19,7 +19,7 @@ public class TochkaApiException extends TochkaException {
     private final int statusCode;
     private final String code;
     private final String errorId;
-    @SuppressWarnings("serial") // List.copyOf возвращает сериализуемую реализацию
+    @SuppressWarnings("serial") // List.copyOf returns a serializable implementation
     private final List<ApiError> errors;
     private final String rawBody;
 
@@ -58,32 +58,32 @@ public class TochkaApiException extends TochkaException {
         return sb.toString();
     }
 
-    /** HTTP-статус ответа. */
+    /** HTTP status of the response. */
     public int statusCode() {
         return statusCode;
     }
 
-    /** Высокоуровневый код ошибки из тела ответа. */
+    /** High-level error code from the response body. */
     public String code() {
         return code;
     }
 
-    /** Уникальный идентификатор ошибки — его стоит указывать при обращении в поддержку банка. */
+    /** Unique error id — quote it when contacting the bank support. */
     public Optional<String> errorId() {
         return Optional.ofNullable(errorId);
     }
 
-    /** Подробный список ошибок из поля {@code Errors}. */
+    /** Detailed error list from the {@code Errors} field. */
     public List<ApiError> errors() {
         return errors;
     }
 
-    /** Тело ответа как есть — на случай, если структура ошибки отличается от ожидаемой. */
+    /** Raw response body, in case the error structure differs from the expected one. */
     public String rawBody() {
         return rawBody;
     }
 
-    /** Низкоуровневый {@code errorCode} первой ошибки, если он есть. */
+    /** Low-level {@code errorCode} of the first error, if any. */
     public Optional<String> firstErrorCode() {
         return errors.isEmpty() ? Optional.empty() : Optional.ofNullable(errors.get(0).errorCode());
     }

@@ -15,18 +15,18 @@ import java.util.List;
 public record AcquiringRetailerListModel(
         @JsonProperty("Retailer") List<AcquiringRetailerModel> retailer) {
 
-    /** Строитель {@link AcquiringRetailerListModel}. */
+    /** Builder for {@link AcquiringRetailerListModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .retailer(this.retailer);
     }
 
-    /** Строитель {@link AcquiringRetailerListModel}. */
+    /** Builder for {@link AcquiringRetailerListModel}. */
     public static final class Builder {
 
         private List<AcquiringRetailerModel> retailer;

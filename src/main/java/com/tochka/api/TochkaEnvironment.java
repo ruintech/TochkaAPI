@@ -4,22 +4,22 @@ import java.net.URI;
 import java.util.Objects;
 
 /**
- * Среда исполнения запросов: боевой слой или песочница.
+ * The environment requests are sent to: production or sandbox.
  *
- * <p>Песочница повторяет структуру боевых методов, но отвечает захардкоженными тестовыми
- * данными, поэтому пригодна только для отладки формата запросов и ответов.
+ * <p>The sandbox mirrors the structure of the production methods but answers with hard-coded
+ * test data, so it is only good for working out request and response formats.
  */
 public final class TochkaEnvironment {
 
-    /** Боевой слой: {@code https://enter.tochka.com/uapi/}. */
+    /** Production: {@code https://enter.tochka.com/uapi/}. */
     public static final TochkaEnvironment PRODUCTION =
             new TochkaEnvironment(URI.create("https://enter.tochka.com/uapi/"));
 
-    /** Песочница: {@code https://enter.tochka.com/sandbox/v2/}. Токен — {@code sandbox.jwt.token}. */
+    /** Sandbox: {@code https://enter.tochka.com/sandbox/v2/}. The token is {@code sandbox.jwt.token}. */
     public static final TochkaEnvironment SANDBOX =
             new TochkaEnvironment(URI.create("https://enter.tochka.com/sandbox/v2/"));
 
-    /** Токен, с которым работает песочница. */
+    /** The token the sandbox accepts. */
     public static final String SANDBOX_TOKEN = "sandbox.jwt.token";
 
     private final URI baseUri;
@@ -29,9 +29,9 @@ public final class TochkaEnvironment {
     }
 
     /**
-     * Произвольный базовый адрес — например, корпоративный прокси перед API банка.
+     * An arbitrary base URL — a corporate proxy in front of the bank API, for example.
      *
-     * @param baseUri базовый адрес; завершающий слеш добавляется автоматически
+     * @param baseUri base URL; the trailing slash is added automatically
      */
     public static TochkaEnvironment of(String baseUri) {
         Objects.requireNonNull(baseUri, "baseUri");

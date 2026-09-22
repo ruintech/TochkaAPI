@@ -29,9 +29,9 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Выполняет HTTP-запросы к API: собирает адрес, подставляет авторизацию, повторяет
- * неудавшиеся попытки, разбирает конверт {@code {Data, Links, Meta}} и превращает ответы
- * с кодом ошибки в исключения.
+ * Executes HTTP requests against the API: builds the URL, applies authorization, retries failed
+ * attempts, unwraps the {@code {Data, Links, Meta}} envelope and turns error responses into
+ * exceptions.
  */
 public final class Transport {
 
@@ -67,12 +67,12 @@ public final class Transport {
         this.userAgent = userAgent;
     }
 
-    /** Начинает сборку запроса. */
+    /** Starts assembling a request. */
     public ApiRequest request(String method, String pathTemplate) {
         return new ApiRequest(this, method, pathTemplate);
     }
 
-    /** Код клиента, который подставляется в запросы, если он не задан явно. */
+    /** Customer code used by requests that do not receive one explicitly. */
     public String defaultCustomerCode() {
         return defaultCustomerCode;
     }
@@ -216,8 +216,8 @@ public final class Transport {
     }
 
     /**
-     * Кодирует значение параметра пути, сохраняя слеши: {@code accountId} — это номер счёта и
-     * БИК через слеш, и банк ждёт его в пути как есть.
+     * Encodes a path parameter while keeping slashes: {@code accountId} is an account number and
+     * a BIC separated by a slash, and the bank expects it in the path exactly like that.
      */
     private static String encodePathSegment(String value) {
         StringBuilder sb = new StringBuilder(value.length());

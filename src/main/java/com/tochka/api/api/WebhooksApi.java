@@ -7,9 +7,9 @@ import com.tochka.api.model.WebhookEditRequest;
 import com.tochka.api.model.WebhookTypeEnum;
 
 /**
- * Подписка на события по счетам и платежам.
+ * Webhook subscriptions for account and payment events.
  *
- * <p>Экземпляр доступен через {@link com.tochka.api.TochkaClient}.
+ * <p>An instance is available from {@link com.tochka.api.TochkaClient}.
  */
 public final class WebhooksApi {
 
@@ -26,7 +26,7 @@ public final class WebhooksApi {
      * разделе «Вебхуки (/docs/tochka-api/opisanie-metodov/vebhuki)».
      *
      * @param clientId Уникальный идентификатор приложения
-     * @param request тело запроса
+     * @param request request body
      */
     public Webhook createWebhook(String clientId, Webhook request) {
         return transport.request("PUT", "/webhook/v1.0/{client_id}")
@@ -56,7 +56,7 @@ public final class WebhooksApi {
      * (/docs/tochka-api/opisanie-metodov/vebhuki)».
      *
      * @param clientId Уникальный идентификатор приложения
-     * @param request тело запроса
+     * @param request request body
      */
     public Webhook editWebhook(String clientId, WebhookEditRequest request) {
         return transport.request("POST", "/webhook/v1.0/{client_id}")

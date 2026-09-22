@@ -12,13 +12,12 @@ import java.util.List;
  *
  * @param positions Список позиций
  * @param date Дата выставления счета, приведенная к часовому поясу Москвы. Если не передана, то текущая
- *        дата.. Например: "2010-10-29" (необязательное)
- * @param totalAmount Сумма всех позиций с НДС. Например: "1234.56"
- * @param totalNds Сумма НДС. Например: "1234.56" (необязательное)
- * @param number Номер счёт-фактуры. Например: "1"
- * @param basedOn Документ, на основании которого выставляется счёт. Например: "Основание платежа"
- *        (необязательное)
- * @param shipmentDocuments Реквизиты документа, подтверждающего отгрузку товаров, работ или услуг (необязательное)
+ *        дата.. Example: "2010-10-29" (optional)
+ * @param totalAmount Сумма всех позиций с НДС. Example: "1234.56"
+ * @param totalNds Сумма НДС. Example: "1234.56" (optional)
+ * @param number Номер счёт-фактуры. Example: "1"
+ * @param basedOn Документ, на основании которого выставляется счёт. Example: "Основание платежа" (optional)
+ * @param shipmentDocuments Реквизиты документа, подтверждающего отгрузку товаров, работ или услуг (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -31,12 +30,12 @@ public record InvoicefModel(
         @JsonProperty("basedOn") String basedOn,
         @JsonProperty("shipmentDocuments") List<ShipmentDocumentModel> shipmentDocuments) {
 
-    /** Строитель {@link InvoicefModel}. */
+    /** Builder for {@link InvoicefModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .positions(this.positions)
@@ -48,7 +47,7 @@ public record InvoicefModel(
                 .shipmentDocuments(this.shipmentDocuments);
     }
 
-    /** Строитель {@link InvoicefModel}. */
+    /** Builder for {@link InvoicefModel}. */
     public static final class Builder {
 
         private List<PositionModel> positions;
@@ -66,31 +65,31 @@ public record InvoicefModel(
         }
 
         /** Дата выставления счета, приведенная к часовому поясу Москвы. Если не передана, то текущая
-        дата.. Например: "2010-10-29" */
+        дата.. Example: "2010-10-29" */
         public Builder date(LocalDate date) {
             this.date = date;
             return this;
         }
 
-        /** Сумма всех позиций с НДС. Например: "1234.56" */
+        /** Сумма всех позиций с НДС. Example: "1234.56" */
         public Builder totalAmount(BigDecimal totalAmount) {
             this.totalAmount = totalAmount;
             return this;
         }
 
-        /** Сумма НДС. Например: "1234.56" */
+        /** Сумма НДС. Example: "1234.56" */
         public Builder totalNds(BigDecimal totalNds) {
             this.totalNds = totalNds;
             return this;
         }
 
-        /** Номер счёт-фактуры. Например: "1" */
+        /** Номер счёт-фактуры. Example: "1" */
         public Builder number(String number) {
             this.number = number;
             return this;
         }
 
-        /** Документ, на основании которого выставляется счёт. Например: "Основание платежа" */
+        /** Документ, на основании которого выставляется счёт. Example: "Основание платежа" */
         public Builder basedOn(String basedOn) {
             this.basedOn = basedOn;
             return this;

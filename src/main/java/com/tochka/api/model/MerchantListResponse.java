@@ -15,18 +15,18 @@ import java.util.List;
 public record MerchantListResponse(
         @JsonProperty("MerchantList") List<Merchant> merchantList) {
 
-    /** Строитель {@link MerchantListResponse}. */
+    /** Builder for {@link MerchantListResponse}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .merchantList(this.merchantList);
     }
 
-    /** Строитель {@link MerchantListResponse}. */
+    /** Builder for {@link MerchantListResponse}. */
     public static final class Builder {
 
         private List<Merchant> merchantList;

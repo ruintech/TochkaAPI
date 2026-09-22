@@ -2,7 +2,7 @@ package com.tochka.api.exception;
 
 import java.util.List;
 
-/** 401 Unauthorized: токен отсутствует, истёк или отозван. */
+/** 401 Unauthorized: the token is missing, expired or revoked. */
 public class TochkaUnauthorizedException extends TochkaApiException {
 
     private static final long serialVersionUID = 1L;

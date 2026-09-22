@@ -7,12 +7,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * QrCodePaymentStatus
  *
- * @param qrcId Идентификатор QR-кода в СБП. Например: "AS000000000000000000000000000001"
- * @param code Код операции. Например: "RQ00000"
- * @param status Статус операции, инициированной Dynamic QR-кодом. Например: "InProgress" (необязательное)
- * @param message Текстовое представление статуса. Например: "Запрос обработан успешно"
- * @param trxId Идентификатор операции, инициированной Dynamic QR-кодом. Например:
- *        "X1A2S3D5F6G7H8J9K0C4S5C6D7V5D1K2" (необязательное)
+ * @param qrcId Идентификатор QR-кода в СБП. Example: "AS000000000000000000000000000001"
+ * @param code Код операции. Example: "RQ00000"
+ * @param status Статус операции, инициированной Dynamic QR-кодом. Example: "InProgress" (optional)
+ * @param message Текстовое представление статуса. Example: "Запрос обработан успешно"
+ * @param trxId Идентификатор операции, инициированной Dynamic QR-кодом. Example:
+ *        "X1A2S3D5F6G7H8J9K0C4S5C6D7V5D1K2" (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -23,12 +23,12 @@ public record QrCodePaymentStatus(
         @JsonProperty("message") String message,
         @JsonProperty("trxId") String trxId) {
 
-    /** Строитель {@link QrCodePaymentStatus}. */
+    /** Builder for {@link QrCodePaymentStatus}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .qrcId(this.qrcId)
@@ -38,7 +38,7 @@ public record QrCodePaymentStatus(
                 .trxId(this.trxId);
     }
 
-    /** Строитель {@link QrCodePaymentStatus}. */
+    /** Builder for {@link QrCodePaymentStatus}. */
     public static final class Builder {
 
         private String qrcId;
@@ -47,31 +47,31 @@ public record QrCodePaymentStatus(
         private String message;
         private String trxId;
 
-        /** Идентификатор QR-кода в СБП. Например: "AS000000000000000000000000000001" */
+        /** Идентификатор QR-кода в СБП. Example: "AS000000000000000000000000000001" */
         public Builder qrcId(String qrcId) {
             this.qrcId = qrcId;
             return this;
         }
 
-        /** Код операции. Например: "RQ00000" */
+        /** Код операции. Example: "RQ00000" */
         public Builder code(String code) {
             this.code = code;
             return this;
         }
 
-        /** Статус операции, инициированной Dynamic QR-кодом. Например: "InProgress" */
+        /** Статус операции, инициированной Dynamic QR-кодом. Example: "InProgress" */
         public Builder status(QRCodePaymentStatusExternal status) {
             this.status = status;
             return this;
         }
 
-        /** Текстовое представление статуса. Например: "Запрос обработан успешно" */
+        /** Текстовое представление статуса. Example: "Запрос обработан успешно" */
         public Builder message(String message) {
             this.message = message;
             return this;
         }
 
-        /** Идентификатор операции, инициированной Dynamic QR-кодом. Например:
+        /** Идентификатор операции, инициированной Dynamic QR-кодом. Example:
         "X1A2S3D5F6G7H8J9K0C4S5C6D7V5D1K2" */
         public Builder trxId(String trxId) {
             this.trxId = trxId;

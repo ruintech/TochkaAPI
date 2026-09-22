@@ -7,9 +7,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * ContractorInfoModel
  *
- * @param inn ИНН контрагента. Например: "660000000000" (необязательное)
- * @param name Наименование контрагента. Например: "Индивидуальный Предприниматель Тест" (необязательное)
- * @param kpp КПП контрагента. Например: "660000000" (необязательное)
+ * @param inn ИНН контрагента. Example: "660000000000" (optional)
+ * @param name Наименование контрагента. Example: "Индивидуальный Предприниматель Тест" (optional)
+ * @param kpp КПП контрагента. Example: "660000000" (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -18,12 +18,12 @@ public record ContractorInfoModel(
         @JsonProperty("name") String name,
         @JsonProperty("kpp") String kpp) {
 
-    /** Строитель {@link ContractorInfoModel}. */
+    /** Builder for {@link ContractorInfoModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .inn(this.inn)
@@ -31,26 +31,26 @@ public record ContractorInfoModel(
                 .kpp(this.kpp);
     }
 
-    /** Строитель {@link ContractorInfoModel}. */
+    /** Builder for {@link ContractorInfoModel}. */
     public static final class Builder {
 
         private String inn;
         private String name;
         private String kpp;
 
-        /** ИНН контрагента. Например: "660000000000" */
+        /** ИНН контрагента. Example: "660000000000" */
         public Builder inn(String inn) {
             this.inn = inn;
             return this;
         }
 
-        /** Наименование контрагента. Например: "Индивидуальный Предприниматель Тест" */
+        /** Наименование контрагента. Example: "Индивидуальный Предприниматель Тест" */
         public Builder name(String name) {
             this.name = name;
             return this;
         }
 
-        /** КПП контрагента. Например: "660000000" */
+        /** КПП контрагента. Example: "660000000" */
         public Builder kpp(String kpp) {
             this.kpp = kpp;
             return this;

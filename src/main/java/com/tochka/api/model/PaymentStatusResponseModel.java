@@ -8,9 +8,9 @@ import java.util.List;
 /**
  * PaymentStatusResponseModel
  *
- * @param requestId ID запроса. Например: "openapi-b96d770e-769f-49ce-9630-890e00d47720"
- * @param status Статус. Например: "WaitingForCreate"
- * @param errors Ошибки (необязательное)
+ * @param requestId ID запроса. Example: "openapi-b96d770e-769f-49ce-9630-890e00d47720"
+ * @param status Статус. Example: "WaitingForCreate"
+ * @param errors Ошибки (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -19,12 +19,12 @@ public record PaymentStatusResponseModel(
         @JsonProperty("status") PaymentForSignStatusEnum status,
         @JsonProperty("errors") List<com.fasterxml.jackson.databind.JsonNode> errors) {
 
-    /** Строитель {@link PaymentStatusResponseModel}. */
+    /** Builder for {@link PaymentStatusResponseModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .requestId(this.requestId)
@@ -32,20 +32,20 @@ public record PaymentStatusResponseModel(
                 .errors(this.errors);
     }
 
-    /** Строитель {@link PaymentStatusResponseModel}. */
+    /** Builder for {@link PaymentStatusResponseModel}. */
     public static final class Builder {
 
         private String requestId;
         private PaymentForSignStatusEnum status;
         private List<com.fasterxml.jackson.databind.JsonNode> errors;
 
-        /** ID запроса. Например: "openapi-b96d770e-769f-49ce-9630-890e00d47720" */
+        /** ID запроса. Example: "openapi-b96d770e-769f-49ce-9630-890e00d47720" */
         public Builder requestId(String requestId) {
             this.requestId = requestId;
             return this;
         }
 
-        /** Статус. Например: "WaitingForCreate" */
+        /** Статус. Example: "WaitingForCreate" */
         public Builder status(PaymentForSignStatusEnum status) {
             this.status = status;
             return this;

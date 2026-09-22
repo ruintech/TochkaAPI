@@ -7,11 +7,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * ActivateCashboxQrCodeResponseModel
  *
- * @param qrcId Идентификатор QR-кода в СБП. Например: "AS000000000000000000000000000001"
- * @param amount Сумма в копейках. Например: 0
- * @param currency Валюта операции. Например: "RUB" (необязательное)
+ * @param qrcId Идентификатор QR-кода в СБП. Example: "AS000000000000000000000000000001"
+ * @param amount Сумма в копейках. Example: 0
+ * @param currency Валюта операции. Example: "RUB" (optional)
  * @param paramsId Идентификатор активных значений параметров QR-кода
- * @param paymentPurpose Назначение платежа. Например: "Оплата по счету № 1 от 01.01.2021. Без НДС" (необязательное)
+ * @param paymentPurpose Назначение платежа. Example: "Оплата по счету № 1 от 01.01.2021. Без НДС" (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -22,12 +22,12 @@ public record ActivateCashboxQrCodeResponseModel(
         @JsonProperty("paramsId") String paramsId,
         @JsonProperty("paymentPurpose") String paymentPurpose) {
 
-    /** Строитель {@link ActivateCashboxQrCodeResponseModel}. */
+    /** Builder for {@link ActivateCashboxQrCodeResponseModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .qrcId(this.qrcId)
@@ -37,7 +37,7 @@ public record ActivateCashboxQrCodeResponseModel(
                 .paymentPurpose(this.paymentPurpose);
     }
 
-    /** Строитель {@link ActivateCashboxQrCodeResponseModel}. */
+    /** Builder for {@link ActivateCashboxQrCodeResponseModel}. */
     public static final class Builder {
 
         private String qrcId;
@@ -46,19 +46,19 @@ public record ActivateCashboxQrCodeResponseModel(
         private String paramsId;
         private String paymentPurpose;
 
-        /** Идентификатор QR-кода в СБП. Например: "AS000000000000000000000000000001" */
+        /** Идентификатор QR-кода в СБП. Example: "AS000000000000000000000000000001" */
         public Builder qrcId(String qrcId) {
             this.qrcId = qrcId;
             return this;
         }
 
-        /** Сумма в копейках. Например: 0 */
+        /** Сумма в копейках. Example: 0 */
         public Builder amount(Long amount) {
             this.amount = amount;
             return this;
         }
 
-        /** Валюта операции. Например: "RUB" */
+        /** Валюта операции. Example: "RUB" */
         public Builder currency(String currency) {
             this.currency = currency;
             return this;
@@ -70,7 +70,7 @@ public record ActivateCashboxQrCodeResponseModel(
             return this;
         }
 
-        /** Назначение платежа. Например: "Оплата по счету № 1 от 01.01.2021. Без НДС" */
+        /** Назначение платежа. Example: "Оплата по счету № 1 от 01.01.2021. Без НДС" */
         public Builder paymentPurpose(String paymentPurpose) {
             this.paymentPurpose = paymentPurpose;
             return this;

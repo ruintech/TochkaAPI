@@ -9,11 +9,11 @@ import java.time.LocalDate;
 /**
  * AcquiringPaymentOperationRefundModel
  *
- * @param isRefund Оформлен ли возврат. Например: true
- * @param operationId Идентификатор платежа. Например: "48232c9a-ce82-1593-3cb6-5c85a1ffef8f"
- * @param amount Сумма платежа. Например: "1234.00"
- * @param date Дата запроса на возврат. Например: "2025-04-11"
- * @param orderId Идентификатор операции возрата. Например: 1
+ * @param isRefund Оформлен ли возврат. Example: true
+ * @param operationId Идентификатор платежа. Example: "48232c9a-ce82-1593-3cb6-5c85a1ffef8f"
+ * @param amount Сумма платежа. Example: "1234.00"
+ * @param date Дата запроса на возврат. Example: "2025-04-11"
+ * @param orderId Идентификатор операции возрата. Example: 1
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -24,12 +24,12 @@ public record AcquiringPaymentOperationRefundModel(
         @JsonProperty("date") LocalDate date,
         @JsonProperty("orderId") String orderId) {
 
-    /** Строитель {@link AcquiringPaymentOperationRefundModel}. */
+    /** Builder for {@link AcquiringPaymentOperationRefundModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .isRefund(this.isRefund)
@@ -39,7 +39,7 @@ public record AcquiringPaymentOperationRefundModel(
                 .orderId(this.orderId);
     }
 
-    /** Строитель {@link AcquiringPaymentOperationRefundModel}. */
+    /** Builder for {@link AcquiringPaymentOperationRefundModel}. */
     public static final class Builder {
 
         private Boolean isRefund;
@@ -48,31 +48,31 @@ public record AcquiringPaymentOperationRefundModel(
         private LocalDate date;
         private String orderId;
 
-        /** Оформлен ли возврат. Например: true */
+        /** Оформлен ли возврат. Example: true */
         public Builder isRefund(Boolean isRefund) {
             this.isRefund = isRefund;
             return this;
         }
 
-        /** Идентификатор платежа. Например: "48232c9a-ce82-1593-3cb6-5c85a1ffef8f" */
+        /** Идентификатор платежа. Example: "48232c9a-ce82-1593-3cb6-5c85a1ffef8f" */
         public Builder operationId(String operationId) {
             this.operationId = operationId;
             return this;
         }
 
-        /** Сумма платежа. Например: "1234.00" */
+        /** Сумма платежа. Example: "1234.00" */
         public Builder amount(BigDecimal amount) {
             this.amount = amount;
             return this;
         }
 
-        /** Дата запроса на возврат. Например: "2025-04-11" */
+        /** Дата запроса на возврат. Example: "2025-04-11" */
         public Builder date(LocalDate date) {
             this.date = date;
             return this;
         }
 
-        /** Идентификатор операции возрата. Например: 1 */
+        /** Идентификатор операции возрата. Example: 1 */
         public Builder orderId(String orderId) {
             this.orderId = orderId;
             return this;

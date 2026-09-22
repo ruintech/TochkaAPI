@@ -8,10 +8,10 @@ import java.util.List;
 /**
  * Something going wrongResponse
  *
- * @param code Высокоуровневый текстовый код ошибки, необходимый для классификации.. Например: "424"
- * @param id Уникальный идентификатор ошибки, для целей аудита. Например:
+ * @param code Высокоуровневый текстовый код ошибки, необходимый для классификации.. Example: "424"
+ * @param id Уникальный идентификатор ошибки, для целей аудита. Example:
  *        "c397b21a-d998-4c4d-9471-e60eaf816b87"
- * @param message Краткое сообщение об ошибке.. Например: "Что-то пошло не так"
+ * @param message Краткое сообщение об ошибке.. Example: "Что-то пошло не так"
  * @param errors Errors
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -22,12 +22,12 @@ public record DependencyFailureResponse(
         @JsonProperty("message") String message,
         @JsonProperty("Errors") List<SomethingGoingWrong> errors) {
 
-    /** Строитель {@link DependencyFailureResponse}. */
+    /** Builder for {@link DependencyFailureResponse}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .code(this.code)
@@ -36,7 +36,7 @@ public record DependencyFailureResponse(
                 .errors(this.errors);
     }
 
-    /** Строитель {@link DependencyFailureResponse}. */
+    /** Builder for {@link DependencyFailureResponse}. */
     public static final class Builder {
 
         private String code;
@@ -44,20 +44,20 @@ public record DependencyFailureResponse(
         private String message;
         private List<SomethingGoingWrong> errors;
 
-        /** Высокоуровневый текстовый код ошибки, необходимый для классификации.. Например: "424" */
+        /** Высокоуровневый текстовый код ошибки, необходимый для классификации.. Example: "424" */
         public Builder code(String code) {
             this.code = code;
             return this;
         }
 
-        /** Уникальный идентификатор ошибки, для целей аудита. Например:
+        /** Уникальный идентификатор ошибки, для целей аудита. Example:
         "c397b21a-d998-4c4d-9471-e60eaf816b87" */
         public Builder id(String id) {
             this.id = id;
             return this;
         }
 
-        /** Краткое сообщение об ошибке.. Например: "Что-то пошло не так" */
+        /** Краткое сообщение об ошибке.. Example: "Что-то пошло не так" */
         public Builder message(String message) {
             this.message = message;
             return this;

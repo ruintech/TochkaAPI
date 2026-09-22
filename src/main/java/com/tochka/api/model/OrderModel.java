@@ -21,12 +21,12 @@ public record OrderModel(
         @JsonProperty("amount") BigDecimal amount,
         @JsonProperty("time") String time) {
 
-    /** Строитель {@link OrderModel}. */
+    /** Builder for {@link OrderModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .orderId(this.orderId)
@@ -35,7 +35,7 @@ public record OrderModel(
                 .time(this.time);
     }
 
-    /** Строитель {@link OrderModel}. */
+    /** Builder for {@link OrderModel}. */
     public static final class Builder {
 
         private String orderId;

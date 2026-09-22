@@ -15,18 +15,18 @@ import java.util.List;
 public record QRCodeListResponse(
         @JsonProperty("qrCodeList") List<QrCode> qrCodeList) {
 
-    /** Строитель {@link QRCodeListResponse}. */
+    /** Builder for {@link QRCodeListResponse}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .qrCodeList(this.qrCodeList);
     }
 
-    /** Строитель {@link QRCodeListResponse}. */
+    /** Builder for {@link QRCodeListResponse}. */
     public static final class Builder {
 
         private List<QrCode> qrCodeList;

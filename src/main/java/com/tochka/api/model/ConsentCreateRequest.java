@@ -9,7 +9,7 @@ import java.util.Map;
  * ConsentCreateRequest
  *
  * @param data Data
- * @param risks Risks (необязательное)
+ * @param risks Risks (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -17,19 +17,19 @@ public record ConsentCreateRequest(
         @JsonProperty("Data") ConsentCreateRequestModel data,
         @JsonProperty("Risks") Map<String, Object> risks) {
 
-    /** Строитель {@link ConsentCreateRequest}. */
+    /** Builder for {@link ConsentCreateRequest}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .data(this.data)
                 .risks(this.risks);
     }
 
-    /** Строитель {@link ConsentCreateRequest}. */
+    /** Builder for {@link ConsentCreateRequest}. */
     public static final class Builder {
 
         private ConsentCreateRequestModel data;

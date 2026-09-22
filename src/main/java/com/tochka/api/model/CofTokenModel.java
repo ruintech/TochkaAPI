@@ -7,9 +7,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * CofTokenModel
  *
- * @param tokenCardId Токен карты покупателя. Например: "208452" (необязательное)
- * @param cardType Тип платёжной системы. Например: "Mir" (необязательное)
- * @param maskedPan Маскированный номер карты. Например: "220445******0792" (необязательное)
+ * @param tokenCardId Токен карты покупателя. Example: "208452" (optional)
+ * @param cardType Тип платёжной системы. Example: "Mir" (optional)
+ * @param maskedPan Маскированный номер карты. Example: "220445******0792" (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -18,12 +18,12 @@ public record CofTokenModel(
         @JsonProperty("cardType") String cardType,
         @JsonProperty("maskedPan") String maskedPan) {
 
-    /** Строитель {@link CofTokenModel}. */
+    /** Builder for {@link CofTokenModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .tokenCardId(this.tokenCardId)
@@ -31,26 +31,26 @@ public record CofTokenModel(
                 .maskedPan(this.maskedPan);
     }
 
-    /** Строитель {@link CofTokenModel}. */
+    /** Builder for {@link CofTokenModel}. */
     public static final class Builder {
 
         private String tokenCardId;
         private String cardType;
         private String maskedPan;
 
-        /** Токен карты покупателя. Например: "208452" */
+        /** Токен карты покупателя. Example: "208452" */
         public Builder tokenCardId(String tokenCardId) {
             this.tokenCardId = tokenCardId;
             return this;
         }
 
-        /** Тип платёжной системы. Например: "Mir" */
+        /** Тип платёжной системы. Example: "Mir" */
         public Builder cardType(String cardType) {
             this.cardType = cardType;
             return this;
         }
 
-        /** Маскированный номер карты. Например: "220445******0792" */
+        /** Маскированный номер карты. Example: "220445******0792" */
         public Builder maskedPan(String maskedPan) {
             this.maskedPan = maskedPan;
             return this;

@@ -30,13 +30,13 @@ import java.time.Duration;
 import java.util.Objects;
 
 /**
- * Точка входа в API Точка Банка.
+ * Entry point to the Tochka Bank API.
  *
- * <p>Клиент потокобезопасен и рассчитан на то, что в приложении он один: внутри живёт общий
- * {@link HttpClient} с пулом соединений.
+ * <p>The client is thread-safe and meant to exist once per application: it owns a shared
+ * {@link HttpClient} with its connection pool.
  *
- * <p>Сертификатам Минцифры, на которых работает {@code enter.tochka.com}, клиент доверяет из
- * коробки — настраивать TLS отдельно не нужно.
+ * <p>The Ministry of Digital Development certificates that {@code enter.tochka.com} runs on are
+ * trusted out of the box — TLS needs no separate setup.
  *
  * <pre>{@code
  * TochkaClient client = TochkaClient.builder()
@@ -48,7 +48,7 @@ import java.util.Objects;
  * List<BalanceModel> balances = client.balances().getBalancesList();
  * }</pre>
  *
- * <p>Для отладки без боевых данных есть песочница: {@link #sandbox()}.
+ * <p>For debugging without production data there is the sandbox: {@link #sandbox()}.
  */
 public final class TochkaClient {
 
@@ -126,10 +126,10 @@ public final class TochkaClient {
     }
 
     /**
-     * Клиент песочницы с тестовым токеном. Ответы в песочнице фиксированные, оплатить
-     * сформированную платёжную ссылку нельзя — она нужна для отладки формата запросов.
+     * A sandbox client with the test token. Sandbox answers are fixed and a payment link created
+     * there cannot be paid — it exists to work out request formats.
      *
-     * <p>Тестовые идентификаторы: {@code customerCode = 1234567ab},
+     * <p>Test identifiers: {@code customerCode = 1234567ab},
      * {@code accountId = 12345810901234567890/044525104}, {@code merchantId = 200000000001097}.
      */
     public static TochkaClient sandbox() {
@@ -140,94 +140,94 @@ public final class TochkaClient {
                 .build();
     }
 
-    /** Счета компании. */
+    /** Company accounts. */
     public AccountsApi accounts() {
         return accounts;
     }
 
-    /** Остатки по счетам и авторизованные карточные операции. */
+    /** Account balances and authorized card transactions. */
     public BalancesApi balances() {
         return balances;
     }
 
-    /** Выписки по счёту. */
+    /** Account statements. */
     public StatementsApi statements() {
         return statements;
     }
 
-    /** Компании, подключённые к доступу. */
+    /** Companies connected to this access. */
     public CustomersApi customers() {
         return customers;
     }
 
-    /** Платёжные поручения (исходящие платежи). */
+    /** Payment orders (outgoing payments). */
     public PaymentsApi payments() {
         return payments;
     }
 
-    /** Интернет-эквайринг: платёжные ссылки, возвраты, реестр, торговые точки. */
+    /** Internet acquiring: payment links, refunds, registry, retailers. */
     public AcquiringApi acquiring() {
         return acquiring;
     }
 
-    /** Подписки (рекуррентные платежи). */
+    /** Subscriptions (recurring payments). */
     public SubscriptionsApi subscriptions() {
         return subscriptions;
     }
 
-    /** Счета на оплату. */
+    /** Invoices. */
     public InvoicesApi invoices() {
         return invoices;
     }
 
-    /** Закрывающие документы: акты, накладные, счета-фактуры, УПД. */
+    /** Closing documents: acts, packing lists, invoices, UPD. */
     public ClosingDocumentsApi closingDocuments() {
         return closingDocuments;
     }
 
-    /** Управление вебхуками. */
+    /** Webhook management. */
     public WebhooksApi webhooks() {
         return webhooks;
     }
 
-    /** Списки разрешений для OAuth 2.0. */
+    /** Consents for OAuth 2.0. */
     public ConsentsApi consents() {
         return consents;
     }
 
-    /** СБП: юридические лица. */
+    /** SBP: legal entities. */
     public SbpLegalEntitiesApi sbpLegalEntities() {
         return sbpLegalEntities;
     }
 
-    /** СБП: торговые точки (ТСП). */
+    /** SBP: merchants. */
     public SbpMerchantsApi sbpMerchants() {
         return sbpMerchants;
     }
 
-    /** СБП: статические и динамические QR-коды. */
+    /** SBP: static and dynamic QR codes. */
     public SbpQrCodesApi sbpQrCodes() {
         return sbpQrCodes;
     }
 
-    /** СБП: кассовые QR-коды. */
+    /** SBP: cashbox QR codes. */
     public SbpCashboxQrCodesApi sbpCashboxQrCodes() {
         return sbpCashboxQrCodes;
     }
 
-    /** СБП: B2B QR-коды. */
+    /** SBP: B2B QR codes. */
     public SbpB2bQrCodesApi sbpB2bQrCodes() {
         return sbpB2bQrCodes;
     }
 
-    /** СБП: возвраты. */
+    /** SBP: refunds. */
     public SbpRefundsApi sbpRefunds() {
         return sbpRefunds;
     }
 
     /**
-     * Транспорт для ручных запросов — пригодится, если банк выпустил метод, которого ещё нет
-     * в этой версии библиотеки.
+     * The transport for hand-made requests — useful when the bank ships a method this version of
+     * the library does not cover yet.
      *
      * <pre>{@code
      * JsonNode raw = client.transport()
@@ -239,7 +239,7 @@ public final class TochkaClient {
         return transport;
     }
 
-    /** Строитель {@link TochkaClient}. */
+    /** Builder for {@link TochkaClient}. */
     public static final class Builder {
         private Authorization authorization;
         private TochkaEnvironment environment = TochkaEnvironment.PRODUCTION;
@@ -254,28 +254,28 @@ public final class TochkaClient {
         private RequestLogger logger = RequestLogger.noop();
         private String userAgent = "tochka-api-java";
 
-        /** JWT-ключ из интернет-банка. */
+        /** A JWT key issued in the internet bank. */
         public Builder jwt(String token) {
             this.authorization = Authorization.jwt(token);
             return this;
         }
 
-        /** Произвольный источник токена — например {@link com.tochka.api.auth.OAuth2Authorization}. */
+        /** Any token source — {@link com.tochka.api.auth.OAuth2Authorization}, for example. */
         public Builder authorization(Authorization authorization) {
             this.authorization = authorization;
             return this;
         }
 
-        /** Боевой слой или песочница; по умолчанию боевой. */
+        /** Production or sandbox; production by default. */
         public Builder environment(TochkaEnvironment environment) {
             this.environment = Objects.requireNonNull(environment, "environment");
             return this;
         }
 
         /**
-         * Код клиента по умолчанию: подставляется в методы, где он обязателен, если вы не передали
-         * его явно. Узнать код можно методом {@code customers().getCustomersList()} — берите
-         * значение из объекта с {@code customerType: "Business"}.
+         * Default customer code: used by methods that require one when it is not passed
+         * explicitly. Look it up with {@code customers().getCustomersList()} and take the value
+         * from the object with {@code customerType: "Business"}.
          */
         public Builder customerCode(String customerCode) {
             this.customerCode = customerCode;
@@ -283,9 +283,9 @@ public final class TochkaClient {
         }
 
         /**
-         * Готовый HTTP-клиент. Если задан, {@link #sslContext(SSLContext)},
-         * {@link #trustRussianCa(boolean)} и {@link #connectTimeout(Duration)} не применяются —
-         * настройте их в самом клиенте. Не забудьте про сертификаты Минцифры:
+         * A ready HTTP client. When set, {@link #sslContext(SSLContext)},
+         * {@link #trustRussianCa(boolean)} and {@link #connectTimeout(Duration)} are ignored —
+         * configure them on that client instead. Do not forget the ministry certificates:
          * {@code HttpClient.newBuilder().sslContext(RussianTrustedCa.sslContext())}.
          */
         public Builder httpClient(HttpClient httpClient) {
@@ -294,8 +294,8 @@ public final class TochkaClient {
         }
 
         /**
-         * Свой SSL-контекст вместо встроенного. Задавать его не нужно: по умолчанию клиент уже
-         * использует {@link RussianTrustedCa#sslContext()}.
+         * A custom SSL context instead of the built-in one. Normally unnecessary: the client
+         * already uses {@link RussianTrustedCa#sslContext()} by default.
          */
         public Builder sslContext(SSLContext sslContext) {
             this.sslContext = sslContext;
@@ -303,46 +303,46 @@ public final class TochkaClient {
         }
 
         /**
-         * Отключает встроенное доверие сертификатам Минцифры и оставляет стандартное хранилище
-         * JVM. Имеет смысл, только если сертификаты уже добавлены в {@code cacerts} или в
-         * truststore, заданный через {@code -Djavax.net.ssl.trustStore}.
+         * Turns off the built-in trust for the ministry certificates and leaves the standard JVM
+         * trust store in place. Makes sense only when those certificates are already in
+         * {@code cacerts} or in a truststore given via {@code -Djavax.net.ssl.trustStore}.
          */
         public Builder trustRussianCa(boolean trustRussianCa) {
             this.trustRussianCa = trustRussianCa;
             return this;
         }
 
-        /** Таймаут установки соединения; по умолчанию 15 секунд. */
+        /** Connection timeout; 15 seconds by default. */
         public Builder connectTimeout(Duration connectTimeout) {
             this.connectTimeout = connectTimeout;
             return this;
         }
 
-        /** Таймаут запроса целиком; по умолчанию 60 секунд. */
+        /** Timeout of the whole request; 60 seconds by default. */
         public Builder requestTimeout(Duration requestTimeout) {
             this.requestTimeout = requestTimeout;
             return this;
         }
 
-        /** Политика повторов; по умолчанию {@link RetryPolicy#defaults()}. */
+        /** Retry policy; {@link RetryPolicy#defaults()} by default. */
         public Builder retryPolicy(RetryPolicy retryPolicy) {
             this.retryPolicy = Objects.requireNonNull(retryPolicy, "retryPolicy");
             return this;
         }
 
-        /** Подробность логирования; по умолчанию {@link LogLevel#NONE}. */
+        /** Logging verbosity; {@link LogLevel#NONE} by default. */
         public Builder logLevel(LogLevel logLevel) {
             this.logLevel = Objects.requireNonNull(logLevel, "logLevel");
             return this;
         }
 
-        /** Куда писать лог; по умолчанию никуда. */
+        /** Where the log goes; nowhere by default. */
         public Builder logger(RequestLogger logger) {
             this.logger = Objects.requireNonNull(logger, "logger");
             return this;
         }
 
-        /** Значение заголовка {@code User-Agent}. */
+        /** Value of the {@code User-Agent} header. */
         public Builder userAgent(String userAgent) {
             this.userAgent = userAgent;
             return this;

@@ -10,9 +10,9 @@ import com.tochka.api.model.RegisteredQrCode;
 import java.util.List;
 
 /**
- * СБП: статические и динамические QR-коды.
+ * SBP: static and dynamic QR codes.
  *
- * <p>Экземпляр доступен через {@link com.tochka.api.TochkaClient}.
+ * <p>An instance is available from {@link com.tochka.api.TochkaClient}.
  */
 public final class SbpQrCodesApi {
 
@@ -27,7 +27,7 @@ public final class SbpQrCodesApi {
      * QR-кодами — в разделе «Работа с QR-кодами
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/rabota-s-qr-kodami)».
      *
-     * <p>Требуемые разрешения: {@code ReadSBPData}.
+     * <p>Required permissions: {@code ReadSBPData}.
      *
      * @param qrcId Идентификатор QR-кода в СБП
      */
@@ -43,7 +43,7 @@ public final class SbpQrCodesApi {
      * работе с QR-кодами — в разделе «Работа с QR-кодами
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/rabota-s-qr-kodami)».
      *
-     * <p>Требуемые разрешения: {@code ReadSBPData}.
+     * <p>Required permissions: {@code ReadSBPData}.
      *
      * @param legalId Идентификатор зарегистрированного юрлица в СБП (12 символов)
      */
@@ -60,7 +60,7 @@ public final class SbpQrCodesApi {
      * 36 — цифровым рублём Как принимать оплату по QR-кодам — в разделе «Работа с QR-кодами
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/rabota-s-qr-kodami)».
      *
-     * <p>Требуемые разрешения: {@code ReadSBPData}.
+     * <p>Required permissions: {@code ReadSBPData}.
      *
      * @param qrcIds Список qr-кодов для запроса статусов, разделенных через запятую
      */
@@ -78,11 +78,11 @@ public final class SbpQrCodesApi {
      * «Работа с QR-кодами
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/rabota-s-qr-kodami)».
      *
-     * <p>Требуемые разрешения: {@code EditSBPData}.
+     * <p>Required permissions: {@code EditSBPData}.
      *
      * @param merchantId Идентификатор ТСП
      * @param accountId Уникальный и неизменный идентификатор счёта юрлица
-     * @param request тело запроса
+     * @param request request body
      */
     public RegisteredQrCode registerQrCode(String merchantId, String accountId, RegisterQRCode request) {
         return transport.request("POST", "/sbp/v1.0/qr-code/merchant/{merchantId}/{accountId}")

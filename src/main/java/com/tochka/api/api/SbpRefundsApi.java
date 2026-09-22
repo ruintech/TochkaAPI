@@ -10,9 +10,9 @@ import com.tochka.api.model.SBPRefundStatus;
 import java.util.List;
 
 /**
- * СБП: возвраты платежей, принятых по QR-кодам.
+ * SBP: refunds of payments accepted via QR codes.
  *
- * <p>Экземпляр доступен через {@link com.tochka.api.TochkaClient}.
+ * <p>An instance is available from {@link com.tochka.api.TochkaClient}.
  */
 public final class SbpRefundsApi {
 
@@ -29,7 +29,7 @@ public final class SbpRefundsApi {
      * сегодня. Как найти платёж для возврата — в разделе «Работа с возвратами через СБП
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/rabota-s-vozvratami)».
      *
-     * <p>Требуемые разрешения: {@code ReadSBPData}.
+     * <p>Required permissions: {@code ReadSBPData}.
      *
      * @param customerCode Уникальный код клиента
      */
@@ -40,7 +40,7 @@ public final class SbpRefundsApi {
                 .as(new TypeReference<List<SBPPayment>>() {});
     }
 
-    /** Необязательные параметры метода {@code GetPayments}. */
+    /** Optional parameters of {@code GetPayments}. */
     public record GetPaymentsOptions(
             String qrcId,
             String fromDate,
@@ -52,7 +52,7 @@ public final class SbpRefundsApi {
             return new Builder();
         }
 
-        /** Строитель {@link GetPaymentsOptions}. */
+        /** Builder for {@link GetPaymentsOptions}. */
         public static final class Builder {
 
             private String qrcId;
@@ -105,10 +105,10 @@ public final class SbpRefundsApi {
      * сегодня. Как найти платёж для возврата — в разделе «Работа с возвратами через СБП
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/rabota-s-vozvratami)».
      *
-     * <p>Требуемые разрешения: {@code ReadSBPData}.
+     * <p>Required permissions: {@code ReadSBPData}.
      *
      * @param customerCode Уникальный код клиента
-     * @param options необязательные параметры запроса; {@code null} — значения по умолчанию
+     * @param options optional query parameters; {@code null} means defaults
      */
     public List<SBPPayment> getPayments(String customerCode, GetPaymentsOptions options) {
         return transport.request("GET", "/sbp/v1.0/get-sbp-payments")
@@ -129,9 +129,9 @@ public final class SbpRefundsApi {
      * сегодня. Как найти платёж для возврата — в разделе «Работа с возвратами через СБП
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/rabota-s-vozvratami)».
      *
-     * <p>Код клиента берётся из настроек клиента ({@code TochkaClient.builder().customerCode(...)}).
+     * <p>The customer code is taken from the client configuration ({@code TochkaClient.builder().customerCode(...)}).
      *
-     * <p>Требуемые разрешения: {@code ReadSBPData}.
+     * <p>Required permissions: {@code ReadSBPData}.
      */
     public List<SBPPayment> getPayments() {
         return transport.request("GET", "/sbp/v1.0/get-sbp-payments")
@@ -147,11 +147,11 @@ public final class SbpRefundsApi {
      * сегодня. Как найти платёж для возврата — в разделе «Работа с возвратами через СБП
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/rabota-s-vozvratami)».
      *
-     * <p>Код клиента берётся из настроек клиента ({@code TochkaClient.builder().customerCode(...)}).
+     * <p>The customer code is taken from the client configuration ({@code TochkaClient.builder().customerCode(...)}).
      *
-     * <p>Требуемые разрешения: {@code ReadSBPData}.
+     * <p>Required permissions: {@code ReadSBPData}.
      *
-     * @param options необязательные параметры запроса; {@code null} — значения по умолчанию
+     * @param options optional query parameters; {@code null} means defaults
      */
     public List<SBPPayment> getPayments(GetPaymentsOptions options) {
         return transport.request("GET", "/sbp/v1.0/get-sbp-payments")
@@ -170,7 +170,7 @@ public final class SbpRefundsApi {
      * возврат — в разделе «Работа с возвратами через СБП
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/rabota-s-vozvratami)».
      *
-     * <p>Требуемые разрешения: {@code ReadSBPData}.
+     * <p>Required permissions: {@code ReadSBPData}.
      *
      * @param requestId ID запроса
      */
@@ -189,9 +189,9 @@ public final class SbpRefundsApi {
      * возврат по СБП — в разделе «Работа с возвратами через СБП
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/rabota-s-vozvratami)».
      *
-     * <p>Требуемые разрешения: {@code EditSBPData}.
+     * <p>Required permissions: {@code EditSBPData}.
      *
-     * @param request тело запроса
+     * @param request request body
      */
     public SBPRefundRequestResponse startRefund(SBPRefund request) {
         return transport.request("POST", "/sbp/v1.0/refund")

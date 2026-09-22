@@ -6,9 +6,9 @@ import com.tochka.api.model.CustomerModel;
 import java.util.List;
 
 /**
- * Компании, подключённые к вашему доступу в API.
+ * Companies connected to your API access.
  *
- * <p>Экземпляр доступен через {@link com.tochka.api.TochkaClient}.
+ * <p>An instance is available from {@link com.tochka.api.TochkaClient}.
  */
 public final class CustomersApi {
 
@@ -23,7 +23,7 @@ public final class CustomersApi {
      * наименование, ИНН, КПП и другие реквизиты. Подробнее о работе с клиентами — в разделе «Клиенты
      * (/docs/tochka-api/opisanie-metodov/klienty)».
      *
-     * <p>Требуемые разрешения: {@code ReadCustomerData}.
+     * <p>Required permissions: {@code ReadCustomerData}.
      *
      * @param customerCode Идентификатор клиента
      */
@@ -40,7 +40,7 @@ public final class CustomersApi {
      * других запросов. Берите значение из объекта с {@code customerType}: "Business". Что такое {@code
      * customerCode} и где он нужен — в разделе «Клиенты (/docs/tochka-api/opisanie-metodov/klienty)».
      *
-     * <p>Требуемые разрешения: {@code ReadCustomerData}.
+     * <p>Required permissions: {@code ReadCustomerData}.
      */
     public List<CustomerModel> getCustomersList() {
         return transport.request("GET", "/open-banking/v1.0/customers")

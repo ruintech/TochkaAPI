@@ -28,7 +28,7 @@ class RussianTrustedCaTest {
 
         assertNotNull(context);
         assertEquals("TLS", context.getProtocol());
-        // Публичные центры остаются в доверии: их в стандартном хранилище заведомо больше двух.
+        // Public authorities stay trusted: the standard store holds far more than two of them.
         assertTrue(context.getSocketFactory() != null);
     }
 }

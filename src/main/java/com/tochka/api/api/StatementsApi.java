@@ -9,9 +9,9 @@ import com.tochka.api.model.StatementModel;
 import java.util.List;
 
 /**
- * Выписки по счёту: заказ, получение и список.
+ * Account statements: ordering, retrieval and listing.
  *
- * <p>Экземпляр доступен через {@link com.tochka.api.TochkaClient}.
+ * <p>An instance is available from {@link com.tochka.api.TochkaClient}.
  */
 public final class StatementsApi {
 
@@ -27,7 +27,7 @@ public final class StatementsApi {
      * *Ready* — выписка готова В выписку попадают только операции в финальном статусе. Как заказать
      * выписку и что в ней приходит — в разделе «Выписки (/docs/tochka-api/opisanie-metodov/vypiski)».
      *
-     * <p>Требуемые разрешения: {@code ReadStatements}.
+     * <p>Required permissions: {@code ReadStatements}.
      *
      * @param accountId Идентификатор счета
      * @param statementId Идентификатор выписки
@@ -45,7 +45,7 @@ public final class StatementsApi {
      * Помогает найти нужную выписку и понять, готова ли она. Как работать с выписками — в разделе
      * «Выписки (/docs/tochka-api/opisanie-metodov/vypiski)».
      *
-     * <p>Требуемые разрешения: {@code ReadStatements}.
+     * <p>Required permissions: {@code ReadStatements}.
      */
     public List<StatementModel> getStatementsList() {
         return transport.request("GET", "/open-banking/v1.0/statements")
@@ -53,7 +53,7 @@ public final class StatementsApi {
                 .as(new TypeReference<List<StatementModel>>() {});
     }
 
-    /** Необязательные параметры метода {@code GetStatementsList}. */
+    /** Optional parameters of {@code GetStatementsList}. */
     public record GetStatementsListOptions(
             Integer limit) {
 
@@ -61,7 +61,7 @@ public final class StatementsApi {
             return new Builder();
         }
 
-        /** Строитель {@link GetStatementsListOptions}. */
+        /** Builder for {@link GetStatementsListOptions}. */
         public static final class Builder {
 
             private Integer limit;
@@ -83,9 +83,9 @@ public final class StatementsApi {
      * Помогает найти нужную выписку и понять, готова ли она. Как работать с выписками — в разделе
      * «Выписки (/docs/tochka-api/opisanie-metodov/vypiski)».
      *
-     * <p>Требуемые разрешения: {@code ReadStatements}.
+     * <p>Required permissions: {@code ReadStatements}.
      *
-     * @param options необязательные параметры запроса; {@code null} — значения по умолчанию
+     * @param options optional query parameters; {@code null} means defaults
      */
     public List<StatementModel> getStatementsList(GetStatementsListOptions options) {
         return transport.request("GET", "/open-banking/v1.0/statements")
@@ -100,9 +100,9 @@ public final class StatementsApi {
      * которому потом можно забрать готовый документ. Как заказать и получить выписку — в разделе
      * «Выписки (/docs/tochka-api/opisanie-metodov/vypiski)».
      *
-     * <p>Требуемые разрешения: {@code ReadStatements}.
+     * <p>Required permissions: {@code ReadStatements}.
      *
-     * @param statement тело запроса
+     * @param statement request body
      */
     public InitStatementModel initStatement(StatementInitReqModel statement) {
         return transport.request("POST", "/open-banking/v1.0/statements")

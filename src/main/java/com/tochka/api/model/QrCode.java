@@ -8,23 +8,23 @@ import java.math.BigDecimal;
 /**
  * QrCode
  *
- * @param status Статус объекта. Например: "Active"
- * @param payload Payload зарегистрированного QR-кода в СБП. Например:
+ * @param status Статус объекта. Example: "Active"
+ * @param payload Payload зарегистрированного QR-кода в СБП. Example:
  *        "https://qr.nspk.ru/AS1000670LSS7DN18SJQDNP4B05KLJL2"
- * @param accountId Уникальный и неизменный идентификатор счёта. Например: "40817810802000000008/044525104"
- * @param createdAt Время регистрации. Например: "2019-01-01T06:06:06.364+00:00"
- * @param merchantId Идентификатор ТСП. Например: "MF0000000001"
- * @param legalId Идентификатор зарегистрированного юрлица в СБП (12 символов). Например: "LF0000000001"
- * @param qrcId Идентификатор QR-кода в СБП. Например: "AS000000000000000000000000000001"
- * @param amount Сумма в копейках. Например: 0 (необязательное)
- * @param ttl Период использования в минутах. Например: "60" (необязательное)
- * @param paymentPurpose Назначение платежа. Например: "Оплата по счету № 1 от 01.01.2021. Без НДС" (необязательное)
- * @param image image (необязательное)
- * @param commissionPercent Размер комиссии в процентах. Например: 0
- * @param currency Валюта операции. Например: "RUB" (необязательное)
- * @param qrcType Тип QR-кода. Например: "01"
- * @param templateVersion Версия payload QR-кода. Например: "01"
- * @param sourceName название источника (системы создавшей QR-код). Например: "tochka.com" (необязательное)
+ * @param accountId Уникальный и неизменный идентификатор счёта. Example: "40817810802000000008/044525104"
+ * @param createdAt Время регистрации. Example: "2019-01-01T06:06:06.364+00:00"
+ * @param merchantId Идентификатор ТСП. Example: "MF0000000001"
+ * @param legalId Идентификатор зарегистрированного юрлица в СБП (12 символов). Example: "LF0000000001"
+ * @param qrcId Идентификатор QR-кода в СБП. Example: "AS000000000000000000000000000001"
+ * @param amount Сумма в копейках. Example: 0 (optional)
+ * @param ttl Период использования в минутах. Example: "60" (optional)
+ * @param paymentPurpose Назначение платежа. Example: "Оплата по счету № 1 от 01.01.2021. Без НДС" (optional)
+ * @param image image (optional)
+ * @param commissionPercent Размер комиссии в процентах. Example: 0
+ * @param currency Валюта операции. Example: "RUB" (optional)
+ * @param qrcType Тип QR-кода. Example: "01"
+ * @param templateVersion Версия payload QR-кода. Example: "01"
+ * @param sourceName название источника (системы создавшей QR-код). Example: "tochka.com" (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -46,12 +46,12 @@ public record QrCode(
         @JsonProperty("templateVersion") String templateVersion,
         @JsonProperty("sourceName") String sourceName) {
 
-    /** Строитель {@link QrCode}. */
+    /** Builder for {@link QrCode}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .status(this.status)
@@ -72,7 +72,7 @@ public record QrCode(
                 .sourceName(this.sourceName);
     }
 
-    /** Строитель {@link QrCode}. */
+    /** Builder for {@link QrCode}. */
     public static final class Builder {
 
         private StatusEnum status;
@@ -92,62 +92,62 @@ public record QrCode(
         private String templateVersion;
         private String sourceName;
 
-        /** Статус объекта. Например: "Active" */
+        /** Статус объекта. Example: "Active" */
         public Builder status(StatusEnum status) {
             this.status = status;
             return this;
         }
 
-        /** Payload зарегистрированного QR-кода в СБП. Например:
+        /** Payload зарегистрированного QR-кода в СБП. Example:
         "https://qr.nspk.ru/AS1000670LSS7DN18SJQDNP4B05KLJL2" */
         public Builder payload(String payload) {
             this.payload = payload;
             return this;
         }
 
-        /** Уникальный и неизменный идентификатор счёта. Например: "40817810802000000008/044525104" */
+        /** Уникальный и неизменный идентификатор счёта. Example: "40817810802000000008/044525104" */
         public Builder accountId(String accountId) {
             this.accountId = accountId;
             return this;
         }
 
-        /** Время регистрации. Например: "2019-01-01T06:06:06.364+00:00" */
+        /** Время регистрации. Example: "2019-01-01T06:06:06.364+00:00" */
         public Builder createdAt(String createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        /** Идентификатор ТСП. Например: "MF0000000001" */
+        /** Идентификатор ТСП. Example: "MF0000000001" */
         public Builder merchantId(String merchantId) {
             this.merchantId = merchantId;
             return this;
         }
 
-        /** Идентификатор зарегистрированного юрлица в СБП (12 символов). Например: "LF0000000001" */
+        /** Идентификатор зарегистрированного юрлица в СБП (12 символов). Example: "LF0000000001" */
         public Builder legalId(String legalId) {
             this.legalId = legalId;
             return this;
         }
 
-        /** Идентификатор QR-кода в СБП. Например: "AS000000000000000000000000000001" */
+        /** Идентификатор QR-кода в СБП. Example: "AS000000000000000000000000000001" */
         public Builder qrcId(String qrcId) {
             this.qrcId = qrcId;
             return this;
         }
 
-        /** Сумма в копейках. Например: 0 */
+        /** Сумма в копейках. Example: 0 */
         public Builder amount(Long amount) {
             this.amount = amount;
             return this;
         }
 
-        /** Период использования в минутах. Например: "60" */
+        /** Период использования в минутах. Example: "60" */
         public Builder ttl(String ttl) {
             this.ttl = ttl;
             return this;
         }
 
-        /** Назначение платежа. Например: "Оплата по счету № 1 от 01.01.2021. Без НДС" */
+        /** Назначение платежа. Example: "Оплата по счету № 1 от 01.01.2021. Без НДС" */
         public Builder paymentPurpose(String paymentPurpose) {
             this.paymentPurpose = paymentPurpose;
             return this;
@@ -158,31 +158,31 @@ public record QrCode(
             return this;
         }
 
-        /** Размер комиссии в процентах. Например: 0 */
+        /** Размер комиссии в процентах. Example: 0 */
         public Builder commissionPercent(BigDecimal commissionPercent) {
             this.commissionPercent = commissionPercent;
             return this;
         }
 
-        /** Валюта операции. Например: "RUB" */
+        /** Валюта операции. Example: "RUB" */
         public Builder currency(String currency) {
             this.currency = currency;
             return this;
         }
 
-        /** Тип QR-кода. Например: "01" */
+        /** Тип QR-кода. Example: "01" */
         public Builder qrcType(QrTypeEnum qrcType) {
             this.qrcType = qrcType;
             return this;
         }
 
-        /** Версия payload QR-кода. Например: "01" */
+        /** Версия payload QR-кода. Example: "01" */
         public Builder templateVersion(String templateVersion) {
             this.templateVersion = templateVersion;
             return this;
         }
 
-        /** название источника (системы создавшей QR-код). Например: "tochka.com" */
+        /** название источника (системы создавшей QR-код). Example: "tochka.com" */
         public Builder sourceName(String sourceName) {
             this.sourceName = sourceName;
             return this;

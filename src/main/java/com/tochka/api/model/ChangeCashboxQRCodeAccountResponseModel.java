@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * ChangeCashboxQRCodeAccountResponseModel
  *
- * @param accountId Уникальный и неизменный идентификатор счёта. Например: "40817810802000000008/044525104"
- * @param qrcId Идентификатор QR-кода в СБП. Например: "AS000000000000000000000000000001"
+ * @param accountId Уникальный и неизменный идентификатор счёта. Example: "40817810802000000008/044525104"
+ * @param qrcId Идентификатор QR-кода в СБП. Example: "AS000000000000000000000000000001"
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -16,31 +16,31 @@ public record ChangeCashboxQRCodeAccountResponseModel(
         @JsonProperty("accountId") String accountId,
         @JsonProperty("qrcId") String qrcId) {
 
-    /** Строитель {@link ChangeCashboxQRCodeAccountResponseModel}. */
+    /** Builder for {@link ChangeCashboxQRCodeAccountResponseModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .accountId(this.accountId)
                 .qrcId(this.qrcId);
     }
 
-    /** Строитель {@link ChangeCashboxQRCodeAccountResponseModel}. */
+    /** Builder for {@link ChangeCashboxQRCodeAccountResponseModel}. */
     public static final class Builder {
 
         private String accountId;
         private String qrcId;
 
-        /** Уникальный и неизменный идентификатор счёта. Например: "40817810802000000008/044525104" */
+        /** Уникальный и неизменный идентификатор счёта. Example: "40817810802000000008/044525104" */
         public Builder accountId(String accountId) {
             this.accountId = accountId;
             return this;
         }
 
-        /** Идентификатор QR-кода в СБП. Например: "AS000000000000000000000000000001" */
+        /** Идентификатор QR-кода в СБП. Example: "AS000000000000000000000000000001" */
         public Builder qrcId(String qrcId) {
             this.qrcId = qrcId;
             return this;

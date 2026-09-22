@@ -9,14 +9,14 @@ import java.util.List;
 /**
  * ConsentCreateRequestModel
  *
- * @param status Статус разрешения. Например: "AwaitingAuthorisation" (необязательное)
- * @param creationDateTime Дата и время создания статуса ресурса. Используется стандарт ISO8601. Например:
- *        "2019-01-01T06:06:06.364+00:00" (необязательное)
- * @param statusUpdateDateTime Дата и время обновления статуса ресурса. Используется стандарт ISO8601. Например:
- *        "2019-01-01T06:06:06.364+00:00" (необязательное)
- * @param permissions Указание типов данных доступа.. Например: ["ReadAccountsBasic"]
- * @param expirationDateTime Дата и время истечения срока действия разрешений. Используется стандарт ISO8601. Например:
- *        "2019-01-01T06:06:06.364+00:00" (необязательное)
+ * @param status Статус разрешения. Example: "AwaitingAuthorisation" (optional)
+ * @param creationDateTime Дата и время создания статуса ресурса. Используется стандарт ISO8601. Example:
+ *        "2019-01-01T06:06:06.364+00:00" (optional)
+ * @param statusUpdateDateTime Дата и время обновления статуса ресурса. Используется стандарт ISO8601. Example:
+ *        "2019-01-01T06:06:06.364+00:00" (optional)
+ * @param permissions Указание типов данных доступа.. Example: ["ReadAccountsBasic"]
+ * @param expirationDateTime Дата и время истечения срока действия разрешений. Используется стандарт ISO8601. Example:
+ *        "2019-01-01T06:06:06.364+00:00" (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -27,12 +27,12 @@ public record ConsentCreateRequestModel(
         @JsonProperty("permissions") List<ExternalConsentTypeEnum> permissions,
         @JsonProperty("expirationDateTime") OffsetDateTime expirationDateTime) {
 
-    /** Строитель {@link ConsentCreateRequestModel}. */
+    /** Builder for {@link ConsentCreateRequestModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .status(this.status)
@@ -42,7 +42,7 @@ public record ConsentCreateRequestModel(
                 .expirationDateTime(this.expirationDateTime);
     }
 
-    /** Строитель {@link ConsentCreateRequestModel}. */
+    /** Builder for {@link ConsentCreateRequestModel}. */
     public static final class Builder {
 
         private String status;
@@ -51,33 +51,33 @@ public record ConsentCreateRequestModel(
         private List<ExternalConsentTypeEnum> permissions;
         private OffsetDateTime expirationDateTime;
 
-        /** Статус разрешения. Например: "AwaitingAuthorisation" */
+        /** Статус разрешения. Example: "AwaitingAuthorisation" */
         public Builder status(String status) {
             this.status = status;
             return this;
         }
 
-        /** Дата и время создания статуса ресурса. Используется стандарт ISO8601. Например:
+        /** Дата и время создания статуса ресурса. Используется стандарт ISO8601. Example:
         "2019-01-01T06:06:06.364+00:00" */
         public Builder creationDateTime(OffsetDateTime creationDateTime) {
             this.creationDateTime = creationDateTime;
             return this;
         }
 
-        /** Дата и время обновления статуса ресурса. Используется стандарт ISO8601. Например:
+        /** Дата и время обновления статуса ресурса. Используется стандарт ISO8601. Example:
         "2019-01-01T06:06:06.364+00:00" */
         public Builder statusUpdateDateTime(OffsetDateTime statusUpdateDateTime) {
             this.statusUpdateDateTime = statusUpdateDateTime;
             return this;
         }
 
-        /** Указание типов данных доступа.. Например: ["ReadAccountsBasic"] */
+        /** Указание типов данных доступа.. Example: ["ReadAccountsBasic"] */
         public Builder permissions(List<ExternalConsentTypeEnum> permissions) {
             this.permissions = permissions;
             return this;
         }
 
-        /** Дата и время истечения срока действия разрешений. Используется стандарт ISO8601. Например:
+        /** Дата и время истечения срока действия разрешений. Используется стандарт ISO8601. Example:
         "2019-01-01T06:06:06.364+00:00" */
         public Builder expirationDateTime(OffsetDateTime expirationDateTime) {
             this.expirationDateTime = expirationDateTime;

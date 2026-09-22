@@ -9,35 +9,34 @@ import java.util.List;
 /**
  * AcquiringSubscriptionListItemModel
  *
- * @param customerCode Уникальный код клиента. Например: "300000092"
- * @param taxSystemCode Система налогообложения. Например: "osn" (необязательное)
- * @param paymentId Идентификатор платежа в процессинге или СБП. Например: "A22031016256670100000533E625FCB3"
- *        (необязательное)
- * @param transactionId Идентификатор транзакции в СБП. Используется для возврата при оплате по СБП. Например:
- *        "48232c9a-ce82-1593-3cb6-5c85a1ffef8f" (необязательное)
- * @param createdAt Дата и время создания операции. Используется стандарт ISO8601. Например:
+ * @param customerCode Уникальный код клиента. Example: "300000092"
+ * @param taxSystemCode Система налогообложения. Example: "osn" (optional)
+ * @param paymentId Идентификатор платежа в процессинге или СБП. Example: "A22031016256670100000533E625FCB3"
+ *        (optional)
+ * @param transactionId Идентификатор транзакции в СБП. Используется для возврата при оплате по СБП. Example:
+ *        "48232c9a-ce82-1593-3cb6-5c85a1ffef8f" (optional)
+ * @param createdAt Дата и время создания операции. Используется стандарт ISO8601. Example:
  *        "2022-10-18T08:28:59+00:00"
- * @param redirectUrl URL адрес, куда будет переправлен клиент после оплаты услуги. Например:
- *        "https://example.com" (необязательное)
- * @param failRedirectUrl URL адрес, куда будет переправлен клиент в случае неуспешной оплаты. Например:
- *        "https://example.com/fail" (необязательное)
- * @param client Данные покупателя (необязательное)
+ * @param redirectUrl URL адрес, куда будет переправлен клиент после оплаты услуги. Example: "https://example.com"
+ *        (optional)
+ * @param failRedirectUrl URL адрес, куда будет переправлен клиент в случае неуспешной оплаты. Example:
+ *        "https://example.com/fail" (optional)
+ * @param client Данные покупателя (optional)
  * @param items Список товаров в заказе
  * @param purpose Назначение платежа. Отсутствует, если при создании платежа назначение не было указано.
- *        Например: "Перевод за оказанные услуги" (необязательное)
- * @param amount Сумма платежа. Например: "1234.00"
- * @param status Статус платежа. Например: "CREATED"
- * @param operationId Идентификатор платежа. Например: "48232c9a-ce82-1593-3cb6-5c85a1ffef8f"
- * @param paymentLink Ссылка на оплату. Например:
+ *        Example: "Перевод за оказанные услуги" (optional)
+ * @param amount Сумма платежа. Example: "1234.00"
+ * @param status Статус платежа. Example: "CREATED"
+ * @param operationId Идентификатор платежа. Example: "48232c9a-ce82-1593-3cb6-5c85a1ffef8f"
+ * @param paymentLink Ссылка на оплату. Example:
  *        "https://merch.example.com/order/?uuid=16ea4c54-bf1d-4e6a-a1ef-53ad55666e43"
- * @param merchantId Идентификатор торговой точки в интернет-эквайринге. Например: "200000000001056"
- *        (необязательное)
- * @param consumerId Идентификатор покупателя. Например: "fedac807-078d-45ac-a43b-5c01c57edbf8" (необязательное)
- * @param options Опции подписки (необязательное)
- * @param supplier Данные поставщика (необязательное)
- * @param recurring Создание рекуррентной оплаты (необязательное)
- * @param paymentLinkId Уникальный номер заказа (необязательное)
- * @param cofToken Информация о карте плательщика (необязательное)
+ * @param merchantId Идентификатор торговой точки в интернет-эквайринге. Example: "200000000001056" (optional)
+ * @param consumerId Идентификатор покупателя. Example: "fedac807-078d-45ac-a43b-5c01c57edbf8" (optional)
+ * @param options Опции подписки (optional)
+ * @param supplier Данные поставщика (optional)
+ * @param recurring Создание рекуррентной оплаты (optional)
+ * @param paymentLinkId Уникальный номер заказа (optional)
+ * @param cofToken Информация о карте плательщика (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -64,12 +63,12 @@ public record AcquiringSubscriptionListItemModel(
         @JsonProperty("paymentLinkId") String paymentLinkId,
         @JsonProperty("CofToken") CofTokenModel cofToken) {
 
-    /** Строитель {@link AcquiringSubscriptionListItemModel}. */
+    /** Builder for {@link AcquiringSubscriptionListItemModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .customerCode(this.customerCode)
@@ -95,7 +94,7 @@ public record AcquiringSubscriptionListItemModel(
                 .cofToken(this.cofToken);
     }
 
-    /** Строитель {@link AcquiringSubscriptionListItemModel}. */
+    /** Builder for {@link AcquiringSubscriptionListItemModel}. */
     public static final class Builder {
 
         private String customerCode;
@@ -120,46 +119,45 @@ public record AcquiringSubscriptionListItemModel(
         private String paymentLinkId;
         private CofTokenModel cofToken;
 
-        /** Уникальный код клиента. Например: "300000092" */
+        /** Уникальный код клиента. Example: "300000092" */
         public Builder customerCode(String customerCode) {
             this.customerCode = customerCode;
             return this;
         }
 
-        /** Система налогообложения. Например: "osn" */
+        /** Система налогообложения. Example: "osn" */
         public Builder taxSystemCode(TaxSystemCodeOutput taxSystemCode) {
             this.taxSystemCode = taxSystemCode;
             return this;
         }
 
-        /** Идентификатор платежа в процессинге или СБП. Например: "A22031016256670100000533E625FCB3" */
+        /** Идентификатор платежа в процессинге или СБП. Example: "A22031016256670100000533E625FCB3" */
         public Builder paymentId(String paymentId) {
             this.paymentId = paymentId;
             return this;
         }
 
-        /** Идентификатор транзакции в СБП. Используется для возврата при оплате по СБП. Например:
+        /** Идентификатор транзакции в СБП. Используется для возврата при оплате по СБП. Example:
         "48232c9a-ce82-1593-3cb6-5c85a1ffef8f" */
         public Builder transactionId(String transactionId) {
             this.transactionId = transactionId;
             return this;
         }
 
-        /** Дата и время создания операции. Используется стандарт ISO8601. Например:
+        /** Дата и время создания операции. Используется стандарт ISO8601. Example:
         "2022-10-18T08:28:59+00:00" */
         public Builder createdAt(String createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        /** URL адрес, куда будет переправлен клиент после оплаты услуги. Например:
-        "https://example.com" */
+        /** URL адрес, куда будет переправлен клиент после оплаты услуги. Example: "https://example.com" */
         public Builder redirectUrl(String redirectUrl) {
             this.redirectUrl = redirectUrl;
             return this;
         }
 
-        /** URL адрес, куда будет переправлен клиент в случае неуспешной оплаты. Например:
+        /** URL адрес, куда будет переправлен клиент в случае неуспешной оплаты. Example:
         "https://example.com/fail" */
         public Builder failRedirectUrl(String failRedirectUrl) {
             this.failRedirectUrl = failRedirectUrl;
@@ -179,44 +177,44 @@ public record AcquiringSubscriptionListItemModel(
         }
 
         /** Назначение платежа. Отсутствует, если при создании платежа назначение не было указано.
-        Например: "Перевод за оказанные услуги" */
+        Example: "Перевод за оказанные услуги" */
         public Builder purpose(String purpose) {
             this.purpose = purpose;
             return this;
         }
 
-        /** Сумма платежа. Например: "1234.00" */
+        /** Сумма платежа. Example: "1234.00" */
         public Builder amount(BigDecimal amount) {
             this.amount = amount;
             return this;
         }
 
-        /** Статус платежа. Например: "CREATED" */
+        /** Статус платежа. Example: "CREATED" */
         public Builder status(AcquiringPaymentStatus status) {
             this.status = status;
             return this;
         }
 
-        /** Идентификатор платежа. Например: "48232c9a-ce82-1593-3cb6-5c85a1ffef8f" */
+        /** Идентификатор платежа. Example: "48232c9a-ce82-1593-3cb6-5c85a1ffef8f" */
         public Builder operationId(String operationId) {
             this.operationId = operationId;
             return this;
         }
 
-        /** Ссылка на оплату. Например:
+        /** Ссылка на оплату. Example:
         "https://merch.example.com/order/?uuid=16ea4c54-bf1d-4e6a-a1ef-53ad55666e43" */
         public Builder paymentLink(String paymentLink) {
             this.paymentLink = paymentLink;
             return this;
         }
 
-        /** Идентификатор торговой точки в интернет-эквайринге. Например: "200000000001056" */
+        /** Идентификатор торговой точки в интернет-эквайринге. Example: "200000000001056" */
         public Builder merchantId(String merchantId) {
             this.merchantId = merchantId;
             return this;
         }
 
-        /** Идентификатор покупателя. Например: "fedac807-078d-45ac-a43b-5c01c57edbf8" */
+        /** Идентификатор покупателя. Example: "fedac807-078d-45ac-a43b-5c01c57edbf8" */
         public Builder consumerId(String consumerId) {
             this.consumerId = consumerId;
             return this;

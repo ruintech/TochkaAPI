@@ -1,11 +1,11 @@
 package com.tochka.api.exception;
 
 /**
- * Один элемент массива {@code Errors} в теле ошибки API.
+ * A single entry of the {@code Errors} array in an API error body.
  *
- * @param errorCode низкоуровневый код ошибки, например {@code Something going wrong}
- * @param message   описание ошибки
- * @param url       ссылка на документацию, помогающую устранить проблему
+ * @param errorCode low-level error code, for example {@code Something going wrong}
+ * @param message   error description
+ * @param url       link to documentation that helps to resolve the problem
  */
 public record ApiError(String errorCode, String message, String url) {
 

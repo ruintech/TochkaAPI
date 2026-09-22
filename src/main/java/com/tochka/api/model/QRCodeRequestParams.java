@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * @param width Ширина изображения (&gt;=200, по умолчанию: 300)
  * @param height Высота изображения (&gt;=200, по умолчанию: 300)
- * @param mediaType Тип контента ("image/png" или "image/svg+xml" ) (необязательное)
+ * @param mediaType Тип контента ("image/png" или "image/svg+xml" ) (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -18,12 +18,12 @@ public record QRCodeRequestParams(
         @JsonProperty("height") Integer height,
         @JsonProperty("mediaType") MediaTypeEnum mediaType) {
 
-    /** Строитель {@link QRCodeRequestParams}. */
+    /** Builder for {@link QRCodeRequestParams}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .width(this.width)
@@ -31,7 +31,7 @@ public record QRCodeRequestParams(
                 .mediaType(this.mediaType);
     }
 
-    /** Строитель {@link QRCodeRequestParams}. */
+    /** Builder for {@link QRCodeRequestParams}. */
     public static final class Builder {
 
         private Integer width;

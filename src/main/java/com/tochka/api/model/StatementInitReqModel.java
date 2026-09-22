@@ -8,9 +8,9 @@ import java.time.LocalDate;
 /**
  * StatementInitReqModel
  *
- * @param accountId Уникальный и неизменный идентификатор счёта. Например: "40817810802000000008/044525104"
- * @param startDateTime Дата начала выписки. Используется стандарт ISO8601. Например: "2019-01-01"
- * @param endDateTime Дата окончания выписки. Используется стандарт ISO8601. Например: "2019-01-01"
+ * @param accountId Уникальный и неизменный идентификатор счёта. Example: "40817810802000000008/044525104"
+ * @param startDateTime Дата начала выписки. Используется стандарт ISO8601. Example: "2019-01-01"
+ * @param endDateTime Дата окончания выписки. Используется стандарт ISO8601. Example: "2019-01-01"
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -19,12 +19,12 @@ public record StatementInitReqModel(
         @JsonProperty("startDateTime") LocalDate startDateTime,
         @JsonProperty("endDateTime") LocalDate endDateTime) {
 
-    /** Строитель {@link StatementInitReqModel}. */
+    /** Builder for {@link StatementInitReqModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .accountId(this.accountId)
@@ -32,26 +32,26 @@ public record StatementInitReqModel(
                 .endDateTime(this.endDateTime);
     }
 
-    /** Строитель {@link StatementInitReqModel}. */
+    /** Builder for {@link StatementInitReqModel}. */
     public static final class Builder {
 
         private String accountId;
         private LocalDate startDateTime;
         private LocalDate endDateTime;
 
-        /** Уникальный и неизменный идентификатор счёта. Например: "40817810802000000008/044525104" */
+        /** Уникальный и неизменный идентификатор счёта. Example: "40817810802000000008/044525104" */
         public Builder accountId(String accountId) {
             this.accountId = accountId;
             return this;
         }
 
-        /** Дата начала выписки. Используется стандарт ISO8601. Например: "2019-01-01" */
+        /** Дата начала выписки. Используется стандарт ISO8601. Example: "2019-01-01" */
         public Builder startDateTime(LocalDate startDateTime) {
             this.startDateTime = startDateTime;
             return this;
         }
 
-        /** Дата окончания выписки. Используется стандарт ISO8601. Например: "2019-01-01" */
+        /** Дата окончания выписки. Используется стандарт ISO8601. Example: "2019-01-01" */
         public Builder endDateTime(LocalDate endDateTime) {
             this.endDateTime = endDateTime;
             return this;

@@ -8,14 +8,14 @@ import java.math.BigDecimal;
 /**
  * ReceiptItemModel
  *
- * @param vatType Ставка НДС (необязательное)
+ * @param vatType Ставка НДС (optional)
  * @param name Название товара
- * @param amount Цена за единицу товара. Например: "1234.00"
- * @param quantity Количество товара. Например: 1
- * @param paymentMethod Тип оплаты. Например: "full_payment" (необязательное)
- * @param paymentObject Признак предмета расчёта. Например: "service" (необязательное)
- * @param measure Единица измерения. По умолчанию - штуки. Например: "шт." (необязательное)
- * @param supplier Данные поставщика (необязательное)
+ * @param amount Цена за единицу товара. Example: "1234.00"
+ * @param quantity Количество товара. Example: 1
+ * @param paymentMethod Тип оплаты. Example: "full_payment" (optional)
+ * @param paymentObject Признак предмета расчёта. Example: "service" (optional)
+ * @param measure Единица измерения. По умолчанию - штуки. Example: "шт." (optional)
+ * @param supplier Данные поставщика (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -29,12 +29,12 @@ public record ReceiptItemModel(
         @JsonProperty("measure") Measure measure,
         @JsonProperty("Supplier") SupplierModel supplier) {
 
-    /** Строитель {@link ReceiptItemModel}. */
+    /** Builder for {@link ReceiptItemModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .vatType(this.vatType)
@@ -47,7 +47,7 @@ public record ReceiptItemModel(
                 .supplier(this.supplier);
     }
 
-    /** Строитель {@link ReceiptItemModel}. */
+    /** Builder for {@link ReceiptItemModel}. */
     public static final class Builder {
 
         private VatType vatType;
@@ -71,31 +71,31 @@ public record ReceiptItemModel(
             return this;
         }
 
-        /** Цена за единицу товара. Например: "1234.00" */
+        /** Цена за единицу товара. Example: "1234.00" */
         public Builder amount(BigDecimal amount) {
             this.amount = amount;
             return this;
         }
 
-        /** Количество товара. Например: 1 */
+        /** Количество товара. Example: 1 */
         public Builder quantity(BigDecimal quantity) {
             this.quantity = quantity;
             return this;
         }
 
-        /** Тип оплаты. Например: "full_payment" */
+        /** Тип оплаты. Example: "full_payment" */
         public Builder paymentMethod(PaymentMethod paymentMethod) {
             this.paymentMethod = paymentMethod;
             return this;
         }
 
-        /** Признак предмета расчёта. Например: "service" */
+        /** Признак предмета расчёта. Example: "service" */
         public Builder paymentObject(PaymentObject paymentObject) {
             this.paymentObject = paymentObject;
             return this;
         }
 
-        /** Единица измерения. По умолчанию - штуки. Например: "шт." */
+        /** Единица измерения. По умолчанию - штуки. Example: "шт." */
         public Builder measure(Measure measure) {
             this.measure = measure;
             return this;

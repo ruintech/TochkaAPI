@@ -7,9 +7,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * CashAccountInfoModel
  *
- * @param schemeName Название схемы. Например: "RU.CBR.PAN"
- * @param identification Идентификатор счета(может отсутствовать в валютном платеже). Например:
- *        "60000000000000000001" (необязательное)
+ * @param schemeName Название схемы. Example: "RU.CBR.PAN"
+ * @param identification Идентификатор счета(может отсутствовать в валютном платеже). Example: "60000000000000000001"
+ *        (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -17,32 +17,31 @@ public record CashAccountInfoModel(
         @JsonProperty("schemeName") AccountIdentificationEnum schemeName,
         @JsonProperty("identification") String identification) {
 
-    /** Строитель {@link CashAccountInfoModel}. */
+    /** Builder for {@link CashAccountInfoModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .schemeName(this.schemeName)
                 .identification(this.identification);
     }
 
-    /** Строитель {@link CashAccountInfoModel}. */
+    /** Builder for {@link CashAccountInfoModel}. */
     public static final class Builder {
 
         private AccountIdentificationEnum schemeName;
         private String identification;
 
-        /** Название схемы. Например: "RU.CBR.PAN" */
+        /** Название схемы. Example: "RU.CBR.PAN" */
         public Builder schemeName(AccountIdentificationEnum schemeName) {
             this.schemeName = schemeName;
             return this;
         }
 
-        /** Идентификатор счета(может отсутствовать в валютном платеже). Например:
-        "60000000000000000001" */
+        /** Идентификатор счета(может отсутствовать в валютном платеже). Example: "60000000000000000001" */
         public Builder identification(String identification) {
             this.identification = identification;
             return this;

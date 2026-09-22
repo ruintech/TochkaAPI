@@ -15,18 +15,18 @@ import java.util.List;
 public record CardTransactionListModel(
         @JsonProperty("Transactions") List<CardTransactionModel> transactions) {
 
-    /** Строитель {@link CardTransactionListModel}. */
+    /** Builder for {@link CardTransactionListModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .transactions(this.transactions);
     }
 
-    /** Строитель {@link CardTransactionListModel}. */
+    /** Builder for {@link CardTransactionListModel}. */
     public static final class Builder {
 
         private List<CardTransactionModel> transactions;

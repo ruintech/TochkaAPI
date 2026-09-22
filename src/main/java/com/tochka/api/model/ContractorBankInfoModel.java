@@ -7,10 +7,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * ContractorBankInfoModel
  *
- * @param schemeName БИК/SWIFT банка агента. Например: "RU.CBR.BIK" (необязательное)
- * @param identification БИК/SWIFT банка агента. Например: "000555777" (необязательное)
- * @param accountIdentification Номер кор. счета банка агента. Например: "000555777" (необязательное)
- * @param name Наименование банка агента. Например: "ПАО..." (необязательное)
+ * @param schemeName БИК/SWIFT банка агента. Example: "RU.CBR.BIK" (optional)
+ * @param identification БИК/SWIFT банка агента. Example: "000555777" (optional)
+ * @param accountIdentification Номер кор. счета банка агента. Example: "000555777" (optional)
+ * @param name Наименование банка агента. Example: "ПАО..." (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -20,12 +20,12 @@ public record ContractorBankInfoModel(
         @JsonProperty("accountIdentification") String accountIdentification,
         @JsonProperty("name") String name) {
 
-    /** Строитель {@link ContractorBankInfoModel}. */
+    /** Builder for {@link ContractorBankInfoModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .schemeName(this.schemeName)
@@ -34,7 +34,7 @@ public record ContractorBankInfoModel(
                 .name(this.name);
     }
 
-    /** Строитель {@link ContractorBankInfoModel}. */
+    /** Builder for {@link ContractorBankInfoModel}. */
     public static final class Builder {
 
         private FinancialInstitutionIdentificationEnum schemeName;
@@ -42,25 +42,25 @@ public record ContractorBankInfoModel(
         private String accountIdentification;
         private String name;
 
-        /** БИК/SWIFT банка агента. Например: "RU.CBR.BIK" */
+        /** БИК/SWIFT банка агента. Example: "RU.CBR.BIK" */
         public Builder schemeName(FinancialInstitutionIdentificationEnum schemeName) {
             this.schemeName = schemeName;
             return this;
         }
 
-        /** БИК/SWIFT банка агента. Например: "000555777" */
+        /** БИК/SWIFT банка агента. Example: "000555777" */
         public Builder identification(String identification) {
             this.identification = identification;
             return this;
         }
 
-        /** Номер кор. счета банка агента. Например: "000555777" */
+        /** Номер кор. счета банка агента. Example: "000555777" */
         public Builder accountIdentification(String accountIdentification) {
             this.accountIdentification = accountIdentification;
             return this;
         }
 
-        /** Наименование банка агента. Например: "ПАО..." */
+        /** Наименование банка агента. Example: "ПАО..." */
         public Builder name(String name) {
             this.name = name;
             return this;

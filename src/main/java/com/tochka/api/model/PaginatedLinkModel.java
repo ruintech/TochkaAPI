@@ -7,11 +7,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * PaginatedLinkModel
  *
- * @param self Self. Например: "https://enter.tochka.com/uapi"
- * @param first First. Например: "https://enter.tochka.com/uapi" (необязательное)
- * @param prev Prev. Например: "https://enter.tochka.com/uapi" (необязательное)
- * @param next Next. Например: "https://enter.tochka.com/uapi" (необязательное)
- * @param last Last. Например: "https://enter.tochka.com/uapi" (необязательное)
+ * @param self Self. Example: "https://enter.tochka.com/uapi"
+ * @param first First. Example: "https://enter.tochka.com/uapi" (optional)
+ * @param prev Prev. Example: "https://enter.tochka.com/uapi" (optional)
+ * @param next Next. Example: "https://enter.tochka.com/uapi" (optional)
+ * @param last Last. Example: "https://enter.tochka.com/uapi" (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -22,12 +22,12 @@ public record PaginatedLinkModel(
         @JsonProperty("next") String next,
         @JsonProperty("last") String last) {
 
-    /** Строитель {@link PaginatedLinkModel}. */
+    /** Builder for {@link PaginatedLinkModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .self(this.self)
@@ -37,7 +37,7 @@ public record PaginatedLinkModel(
                 .last(this.last);
     }
 
-    /** Строитель {@link PaginatedLinkModel}. */
+    /** Builder for {@link PaginatedLinkModel}. */
     public static final class Builder {
 
         private String self;
@@ -46,31 +46,31 @@ public record PaginatedLinkModel(
         private String next;
         private String last;
 
-        /** Self. Например: "https://enter.tochka.com/uapi" */
+        /** Self. Example: "https://enter.tochka.com/uapi" */
         public Builder self(String self) {
             this.self = self;
             return this;
         }
 
-        /** First. Например: "https://enter.tochka.com/uapi" */
+        /** First. Example: "https://enter.tochka.com/uapi" */
         public Builder first(String first) {
             this.first = first;
             return this;
         }
 
-        /** Prev. Например: "https://enter.tochka.com/uapi" */
+        /** Prev. Example: "https://enter.tochka.com/uapi" */
         public Builder prev(String prev) {
             this.prev = prev;
             return this;
         }
 
-        /** Next. Например: "https://enter.tochka.com/uapi" */
+        /** Next. Example: "https://enter.tochka.com/uapi" */
         public Builder next(String next) {
             this.next = next;
             return this;
         }
 
-        /** Last. Например: "https://enter.tochka.com/uapi" */
+        /** Last. Example: "https://enter.tochka.com/uapi" */
         public Builder last(String last) {
             this.last = last;
             return this;

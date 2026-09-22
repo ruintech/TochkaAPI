@@ -2,7 +2,7 @@ package com.tochka.api.exception;
 
 import java.util.List;
 
-/** 5xx: внутренняя ошибка на стороне банка. */
+/** 5xx: an internal error on the bank side. */
 public class TochkaServerException extends TochkaApiException {
 
     private static final long serialVersionUID = 1L;

@@ -9,21 +9,20 @@ import java.util.List;
 /**
  * AcquiringCreatePaymentOperationRequestModel
  *
- * @param customerCode Уникальный код клиента. Например: "300000092"
- * @param amount Сумма платежа. Например: "1234.00"
- * @param purpose Назначение платежа. Например: "Перевод за оказанные услуги"
- * @param redirectUrl URL адрес, куда будет переправлен клиент после оплаты услуги. Например:
- *        "https://example.com" (необязательное)
- * @param failRedirectUrl URL адрес, куда будет переправлен клиент в случае неуспешной оплаты. Например:
- *        "https://example.com/fail" (необязательное)
- * @param paymentMode Способ оплаты. Например: ["sbp", "card", "tinkoff", "dolyame"]
- * @param saveCard Предложить покупателю сохранить карту. Например: true (необязательное)
- * @param consumerId Идентификатор покупателя. Например: "fedac807-078d-45ac-a43b-5c01c57edbf8" (необязательное)
- * @param merchantId Идентификатор торговой точки в интернет-эквайринге. Например: "200000000001056"
- *        (необязательное)
- * @param preAuthorization Создать платёж с двухэтапной оплатой (необязательное)
- * @param ttl Время жизни платёжной ссылки в минутах (необязательное)
- * @param paymentLinkId Уникальный номер заказа (необязательное)
+ * @param customerCode Уникальный код клиента. Example: "300000092"
+ * @param amount Сумма платежа. Example: "1234.00"
+ * @param purpose Назначение платежа. Example: "Перевод за оказанные услуги"
+ * @param redirectUrl URL адрес, куда будет переправлен клиент после оплаты услуги. Example: "https://example.com"
+ *        (optional)
+ * @param failRedirectUrl URL адрес, куда будет переправлен клиент в случае неуспешной оплаты. Example:
+ *        "https://example.com/fail" (optional)
+ * @param paymentMode Способ оплаты. Example: ["sbp", "card", "tinkoff", "dolyame"]
+ * @param saveCard Предложить покупателю сохранить карту. Example: true (optional)
+ * @param consumerId Идентификатор покупателя. Example: "fedac807-078d-45ac-a43b-5c01c57edbf8" (optional)
+ * @param merchantId Идентификатор торговой точки в интернет-эквайринге. Example: "200000000001056" (optional)
+ * @param preAuthorization Создать платёж с двухэтапной оплатой (optional)
+ * @param ttl Время жизни платёжной ссылки в минутах (optional)
+ * @param paymentLinkId Уникальный номер заказа (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -41,12 +40,12 @@ public record AcquiringCreatePaymentOperationRequestModel(
         @JsonProperty("ttl") Integer ttl,
         @JsonProperty("paymentLinkId") String paymentLinkId) {
 
-    /** Строитель {@link AcquiringCreatePaymentOperationRequestModel}. */
+    /** Builder for {@link AcquiringCreatePaymentOperationRequestModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .customerCode(this.customerCode)
@@ -63,7 +62,7 @@ public record AcquiringCreatePaymentOperationRequestModel(
                 .paymentLinkId(this.paymentLinkId);
     }
 
-    /** Строитель {@link AcquiringCreatePaymentOperationRequestModel}. */
+    /** Builder for {@link AcquiringCreatePaymentOperationRequestModel}. */
     public static final class Builder {
 
         private String customerCode;
@@ -79,57 +78,56 @@ public record AcquiringCreatePaymentOperationRequestModel(
         private Integer ttl;
         private String paymentLinkId;
 
-        /** Уникальный код клиента. Например: "300000092" */
+        /** Уникальный код клиента. Example: "300000092" */
         public Builder customerCode(String customerCode) {
             this.customerCode = customerCode;
             return this;
         }
 
-        /** Сумма платежа. Например: "1234.00" */
+        /** Сумма платежа. Example: "1234.00" */
         public Builder amount(BigDecimal amount) {
             this.amount = amount;
             return this;
         }
 
-        /** Назначение платежа. Например: "Перевод за оказанные услуги" */
+        /** Назначение платежа. Example: "Перевод за оказанные услуги" */
         public Builder purpose(String purpose) {
             this.purpose = purpose;
             return this;
         }
 
-        /** URL адрес, куда будет переправлен клиент после оплаты услуги. Например:
-        "https://example.com" */
+        /** URL адрес, куда будет переправлен клиент после оплаты услуги. Example: "https://example.com" */
         public Builder redirectUrl(String redirectUrl) {
             this.redirectUrl = redirectUrl;
             return this;
         }
 
-        /** URL адрес, куда будет переправлен клиент в случае неуспешной оплаты. Например:
+        /** URL адрес, куда будет переправлен клиент в случае неуспешной оплаты. Example:
         "https://example.com/fail" */
         public Builder failRedirectUrl(String failRedirectUrl) {
             this.failRedirectUrl = failRedirectUrl;
             return this;
         }
 
-        /** Способ оплаты. Например: ["sbp", "card", "tinkoff", "dolyame"] */
+        /** Способ оплаты. Example: ["sbp", "card", "tinkoff", "dolyame"] */
         public Builder paymentMode(List<AcquiringPaymentMode> paymentMode) {
             this.paymentMode = paymentMode;
             return this;
         }
 
-        /** Предложить покупателю сохранить карту. Например: true */
+        /** Предложить покупателю сохранить карту. Example: true */
         public Builder saveCard(Boolean saveCard) {
             this.saveCard = saveCard;
             return this;
         }
 
-        /** Идентификатор покупателя. Например: "fedac807-078d-45ac-a43b-5c01c57edbf8" */
+        /** Идентификатор покупателя. Example: "fedac807-078d-45ac-a43b-5c01c57edbf8" */
         public Builder consumerId(String consumerId) {
             this.consumerId = consumerId;
             return this;
         }
 
-        /** Идентификатор торговой точки в интернет-эквайринге. Например: "200000000001056" */
+        /** Идентификатор торговой точки в интернет-эквайринге. Example: "200000000001056" */
         public Builder merchantId(String merchantId) {
             this.merchantId = merchantId;
             return this;

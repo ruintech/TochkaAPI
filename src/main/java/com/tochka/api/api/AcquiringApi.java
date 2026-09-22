@@ -17,9 +17,9 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Интернет-эквайринг: платёжные ссылки, возвраты, реестр и торговые точки.
+ * Internet acquiring: payment links, refunds, registry and retailers.
  *
- * <p>Экземпляр доступен через {@link com.tochka.api.TochkaClient}.
+ * <p>An instance is available from {@link com.tochka.api.TochkaClient}.
  */
 public final class AcquiringApi {
 
@@ -32,7 +32,7 @@ public final class AcquiringApi {
     /**
      * Capture Payment. Метод для списания средств при двухэтапной оплате
      *
-     * <p>Требуемые разрешения: {@code MakeAcquiringOperation}.
+     * <p>Required permissions: {@code MakeAcquiringOperation}.
      *
      * @param operationId Идентификатор подписки
      */
@@ -46,9 +46,9 @@ public final class AcquiringApi {
     /**
      * Create Payment Operation. Метод для создания ссылки на оплату
      *
-     * <p>Требуемые разрешения: {@code MakeAcquiringOperation}.
+     * <p>Required permissions: {@code MakeAcquiringOperation}.
      *
-     * @param request тело запроса
+     * @param request request body
      */
     public AcquiringCreatePaymentOperationResponseModel createPaymentOperation(AcquiringCreatePaymentOperationRequestModel request) {
         return transport.request("POST", "/acquiring/v1.0/payments")
@@ -60,9 +60,9 @@ public final class AcquiringApi {
     /**
      * Create Payment Operation With Receipt. Метод для создания ссылки на оплату и отправки чека
      *
-     * <p>Требуемые разрешения: {@code MakeAcquiringOperation}.
+     * <p>Required permissions: {@code MakeAcquiringOperation}.
      *
-     * @param request тело запроса
+     * @param request request body
      */
     public AcquiringCreatePaymentOperationWithReceiptResponseModel createPaymentOperationWithReceipt(AcquiringCreatePaymentOperationWithReceiptRequestModel request) {
         return transport.request("POST", "/acquiring/v1.0/payments_with_receipt")
@@ -77,7 +77,7 @@ public final class AcquiringApi {
      * Операция заблокирована на время выполнения возврата - *REFUNDED* - Осуществлен возврат -
      * *EXPIRED* - Истек срок действия
      *
-     * <p>Требуемые разрешения: {@code ReadAcquiringData}.
+     * <p>Required permissions: {@code ReadAcquiringData}.
      *
      * @param operationId Идентификатор платежа
      */
@@ -93,7 +93,7 @@ public final class AcquiringApi {
      * *APPROVED* - Операция одобрена (оплата прошла успешно) - *ON-REFUND* - Операция заблокирована на
      * время выполнения возврата - *REFUNDED* - Осуществлен возврат - *EXPIRED* - Истек срок действия
      *
-     * <p>Требуемые разрешения: {@code ReadAcquiringData}.
+     * <p>Required permissions: {@code ReadAcquiringData}.
      *
      * @param customerCode Уникальный код клиента
      */
@@ -104,7 +104,7 @@ public final class AcquiringApi {
                 .as(new TypeReference<List<AcquiringGetPaymentOperationListItemModel>>() {});
     }
 
-    /** Необязательные параметры метода {@code GetPaymentOperationList}. */
+    /** Optional parameters of {@code GetPaymentOperationList}. */
     public record GetPaymentOperationListOptions(
             String fromDate,
             String toDate,
@@ -116,7 +116,7 @@ public final class AcquiringApi {
             return new Builder();
         }
 
-        /** Строитель {@link GetPaymentOperationListOptions}. */
+        /** Builder for {@link GetPaymentOperationListOptions}. */
         public static final class Builder {
 
             private String fromDate;
@@ -166,10 +166,10 @@ public final class AcquiringApi {
      * *APPROVED* - Операция одобрена (оплата прошла успешно) - *ON-REFUND* - Операция заблокирована на
      * время выполнения возврата - *REFUNDED* - Осуществлен возврат - *EXPIRED* - Истек срок действия
      *
-     * <p>Требуемые разрешения: {@code ReadAcquiringData}.
+     * <p>Required permissions: {@code ReadAcquiringData}.
      *
      * @param customerCode Уникальный код клиента
-     * @param options необязательные параметры запроса; {@code null} — значения по умолчанию
+     * @param options optional query parameters; {@code null} means defaults
      */
     public List<AcquiringGetPaymentOperationListItemModel> getPaymentOperationList(String customerCode, GetPaymentOperationListOptions options) {
         return transport.request("GET", "/acquiring/v1.0/payments")
@@ -188,10 +188,10 @@ public final class AcquiringApi {
      * *APPROVED* - Операция одобрена (оплата прошла успешно) - *ON-REFUND* - Операция заблокирована на
      * время выполнения возврата - *REFUNDED* - Осуществлен возврат - *EXPIRED* - Истек срок действия
      *
-     * <p>Требуемые разрешения: {@code ReadAcquiringData}.
+     * <p>Required permissions: {@code ReadAcquiringData}.
      *
      * @param customerCode Уникальный код клиента
-     * @param options необязательные параметры запроса; {@code null} — значения по умолчанию
+     * @param options optional query parameters; {@code null} means defaults
      */
     public Page<AcquiringGetPaymentOperationListItemModel> getPaymentOperationListPage(String customerCode, GetPaymentOperationListOptions options) {
         return transport.request("GET", "/acquiring/v1.0/payments")
@@ -210,9 +210,9 @@ public final class AcquiringApi {
      * *APPROVED* - Операция одобрена (оплата прошла успешно) - *ON-REFUND* - Операция заблокирована на
      * время выполнения возврата - *REFUNDED* - Осуществлен возврат - *EXPIRED* - Истек срок действия
      *
-     * <p>Код клиента берётся из настроек клиента ({@code TochkaClient.builder().customerCode(...)}).
+     * <p>The customer code is taken from the client configuration ({@code TochkaClient.builder().customerCode(...)}).
      *
-     * <p>Требуемые разрешения: {@code ReadAcquiringData}.
+     * <p>Required permissions: {@code ReadAcquiringData}.
      */
     public List<AcquiringGetPaymentOperationListItemModel> getPaymentOperationList() {
         return transport.request("GET", "/acquiring/v1.0/payments")
@@ -226,11 +226,11 @@ public final class AcquiringApi {
      * *APPROVED* - Операция одобрена (оплата прошла успешно) - *ON-REFUND* - Операция заблокирована на
      * время выполнения возврата - *REFUNDED* - Осуществлен возврат - *EXPIRED* - Истек срок действия
      *
-     * <p>Код клиента берётся из настроек клиента ({@code TochkaClient.builder().customerCode(...)}).
+     * <p>The customer code is taken from the client configuration ({@code TochkaClient.builder().customerCode(...)}).
      *
-     * <p>Требуемые разрешения: {@code ReadAcquiringData}.
+     * <p>Required permissions: {@code ReadAcquiringData}.
      *
-     * @param options необязательные параметры запроса; {@code null} — значения по умолчанию
+     * @param options optional query parameters; {@code null} means defaults
      */
     public List<AcquiringGetPaymentOperationListItemModel> getPaymentOperationList(GetPaymentOperationListOptions options) {
         return transport.request("GET", "/acquiring/v1.0/payments")
@@ -249,11 +249,11 @@ public final class AcquiringApi {
      * *APPROVED* - Операция одобрена (оплата прошла успешно) - *ON-REFUND* - Операция заблокирована на
      * время выполнения возврата - *REFUNDED* - Осуществлен возврат - *EXPIRED* - Истек срок действия
      *
-     * <p>Код клиента берётся из настроек клиента ({@code TochkaClient.builder().customerCode(...)}).
+     * <p>The customer code is taken from the client configuration ({@code TochkaClient.builder().customerCode(...)}).
      *
-     * <p>Требуемые разрешения: {@code ReadAcquiringData}.
+     * <p>Required permissions: {@code ReadAcquiringData}.
      *
-     * @param options необязательные параметры запроса; {@code null} — значения по умолчанию
+     * @param options optional query parameters; {@code null} means defaults
      */
     public Page<AcquiringGetPaymentOperationListItemModel> getPaymentOperationListPage(GetPaymentOperationListOptions options) {
         return transport.request("GET", "/acquiring/v1.0/payments")
@@ -270,7 +270,7 @@ public final class AcquiringApi {
     /**
      * Get Payment Registry. Метод для получения реестра платежей по интернет-эквайрингу
      *
-     * <p>Требуемые разрешения: {@code ReadAcquiringData}.
+     * <p>Required permissions: {@code ReadAcquiringData}.
      *
      * @param customerCode Уникальный код клиента
      * @param merchantId Идентификатор торговой точки в интернет-эквайринге
@@ -285,7 +285,7 @@ public final class AcquiringApi {
                 .as(new TypeReference<List<AcquiringPaymentRegistryItemModel>>() {});
     }
 
-    /** Необязательные параметры метода {@code GetPaymentRegistry}. */
+    /** Optional parameters of {@code GetPaymentRegistry}. */
     public record GetPaymentRegistryOptions(
             String paymentId) {
 
@@ -293,7 +293,7 @@ public final class AcquiringApi {
             return new Builder();
         }
 
-        /** Строитель {@link GetPaymentRegistryOptions}. */
+        /** Builder for {@link GetPaymentRegistryOptions}. */
         public static final class Builder {
 
             private String paymentId;
@@ -313,12 +313,12 @@ public final class AcquiringApi {
     /**
      * Get Payment Registry. Метод для получения реестра платежей по интернет-эквайрингу
      *
-     * <p>Требуемые разрешения: {@code ReadAcquiringData}.
+     * <p>Required permissions: {@code ReadAcquiringData}.
      *
      * @param customerCode Уникальный код клиента
      * @param merchantId Идентификатор торговой точки в интернет-эквайринге
      * @param date Дата реестра
-     * @param options необязательные параметры запроса; {@code null} — значения по умолчанию
+     * @param options optional query parameters; {@code null} means defaults
      */
     public List<AcquiringPaymentRegistryItemModel> getPaymentRegistry(String customerCode, String merchantId, String date, GetPaymentRegistryOptions options) {
         return transport.request("GET", "/acquiring/v1.0/registry")
@@ -333,9 +333,9 @@ public final class AcquiringApi {
     /**
      * Get Payment Registry. Метод для получения реестра платежей по интернет-эквайрингу
      *
-     * <p>Код клиента берётся из настроек клиента ({@code TochkaClient.builder().customerCode(...)}).
+     * <p>The customer code is taken from the client configuration ({@code TochkaClient.builder().customerCode(...)}).
      *
-     * <p>Требуемые разрешения: {@code ReadAcquiringData}.
+     * <p>Required permissions: {@code ReadAcquiringData}.
      *
      * @param merchantId Идентификатор торговой точки в интернет-эквайринге
      * @param date Дата реестра
@@ -352,13 +352,13 @@ public final class AcquiringApi {
     /**
      * Get Payment Registry. Метод для получения реестра платежей по интернет-эквайрингу
      *
-     * <p>Код клиента берётся из настроек клиента ({@code TochkaClient.builder().customerCode(...)}).
+     * <p>The customer code is taken from the client configuration ({@code TochkaClient.builder().customerCode(...)}).
      *
-     * <p>Требуемые разрешения: {@code ReadAcquiringData}.
+     * <p>Required permissions: {@code ReadAcquiringData}.
      *
      * @param merchantId Идентификатор торговой точки в интернет-эквайринге
      * @param date Дата реестра
-     * @param options необязательные параметры запроса; {@code null} — значения по умолчанию
+     * @param options optional query parameters; {@code null} means defaults
      */
     public List<AcquiringPaymentRegistryItemModel> getPaymentRegistry(String merchantId, String date, GetPaymentRegistryOptions options) {
         return transport.request("GET", "/acquiring/v1.0/registry")
@@ -376,7 +376,7 @@ public final class AcquiringApi {
      * при создании платёжных ссылок, если торговых точек несколько. Зачем нужен {@code merchantId} — в
      * разделе «Платёжные ссылки (/docs/tochka-api/opisanie-metodov/platyozhnye-ssylki)».
      *
-     * <p>Требуемые разрешения: {@code ReadAcquiringData}.
+     * <p>Required permissions: {@code ReadAcquiringData}.
      *
      * @param customerCode Уникальный код клиента
      */
@@ -393,9 +393,9 @@ public final class AcquiringApi {
      * при создании платёжных ссылок, если торговых точек несколько. Зачем нужен {@code merchantId} — в
      * разделе «Платёжные ссылки (/docs/tochka-api/opisanie-metodov/platyozhnye-ssylki)».
      *
-     * <p>Код клиента берётся из настроек клиента ({@code TochkaClient.builder().customerCode(...)}).
+     * <p>The customer code is taken from the client configuration ({@code TochkaClient.builder().customerCode(...)}).
      *
-     * <p>Требуемые разрешения: {@code ReadAcquiringData}.
+     * <p>Required permissions: {@code ReadAcquiringData}.
      */
     public List<AcquiringRetailerModel> getRetailers() {
         return transport.request("GET", "/acquiring/v1.0/retailers")
@@ -408,10 +408,10 @@ public final class AcquiringApi {
      * Refund Payment Operation. Метод для возврата платежей, созданных через платёжную ссылку Возврат
      * возможен только для платежа со статусом APPROVED
      *
-     * <p>Требуемые разрешения: {@code MakeAcquiringOperation}.
+     * <p>Required permissions: {@code MakeAcquiringOperation}.
      *
      * @param operationId Идентификатор платежа
-     * @param amount Сумма платежа. Не больше суммы оплаты. Например: "1234.00"
+     * @param amount Сумма платежа. Не больше суммы оплаты. Example: "1234.00"
      */
     public AcquiringPaymentOperationRefundModel refundPaymentOperation(String operationId, BigDecimal amount) {
         return transport.request("POST", "/acquiring/v1.0/payments/{operationId}/refund")

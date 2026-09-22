@@ -18,12 +18,12 @@ public record DocumentCreateResponseModel(
         @JsonProperty("Links") LinkModel links,
         @JsonProperty("Meta") MetaModel meta) {
 
-    /** Строитель {@link DocumentCreateResponseModel}. */
+    /** Builder for {@link DocumentCreateResponseModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .data(this.data)
@@ -31,7 +31,7 @@ public record DocumentCreateResponseModel(
                 .meta(this.meta);
     }
 
-    /** Строитель {@link DocumentCreateResponseModel}. */
+    /** Builder for {@link DocumentCreateResponseModel}. */
     public static final class Builder {
 
         private DocumentCreateResponse data;

@@ -4,11 +4,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Оборачивает модель в конверт запроса API: тела методов вложены в объект {@code Data},
- * иногда — ещё на уровень глубже, например {@code {"Data": {"Statement": {...}}}}.
+ * Wraps a model into the API request envelope: request bodies are nested inside {@code Data},
+ * and sometimes one level deeper, for example {@code {"Data": {"Statement": {...}}}}.
  *
- * <p>Классы сервисов принимают сразу содержательную модель и оборачивают её этим помощником,
- * поэтому вручную собирать вложенные обёртки не нужно.
+ * <p>Service classes accept the meaningful model and wrap it with this helper, so the nested
+ * envelopes never have to be built by hand.
  */
 public final class Envelope {
 
@@ -16,10 +16,10 @@ public final class Envelope {
     }
 
     /**
-     * Строит вложенный объект по пути.
+     * Builds the nested object described by the path.
      *
-     * @param body тело запроса
-     * @param path имена полей от внешнего к внутреннему, например {@code "Data", "Statement"}
+     * @param body request body
+     * @param path field names from the outermost to the innermost, e.g. {@code "Data", "Statement"}
      */
     public static Map<String, Object> wrap(Object body, String... path) {
         if (path.length == 0) {

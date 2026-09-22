@@ -18,12 +18,12 @@ public record WebhookResponseModel(
         @JsonProperty("Links") LinkModel links,
         @JsonProperty("Meta") MetaModel meta) {
 
-    /** Строитель {@link WebhookResponseModel}. */
+    /** Builder for {@link WebhookResponseModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .data(this.data)
@@ -31,7 +31,7 @@ public record WebhookResponseModel(
                 .meta(this.meta);
     }
 
-    /** Строитель {@link WebhookResponseModel}. */
+    /** Builder for {@link WebhookResponseModel}. */
     public static final class Builder {
 
         private Webhook data;

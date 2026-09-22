@@ -15,18 +15,18 @@ import java.util.List;
 public record GetCashboxQRCodeListResponseModel(
         @JsonProperty("qrCodes") List<GetCashboxQRCodeListResponseItemModel> qrCodes) {
 
-    /** Строитель {@link GetCashboxQRCodeListResponseModel}. */
+    /** Builder for {@link GetCashboxQRCodeListResponseModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .qrCodes(this.qrCodes);
     }
 
-    /** Строитель {@link GetCashboxQRCodeListResponseModel}. */
+    /** Builder for {@link GetCashboxQRCodeListResponseModel}. */
     public static final class Builder {
 
         private List<GetCashboxQRCodeListResponseItemModel> qrCodes;

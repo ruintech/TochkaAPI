@@ -12,12 +12,12 @@ import java.util.List;
  *
  * @param positions Список позиций
  * @param date Дата выставления счета, приведенная к часовому поясу Москвы. Если не передана, то текущая
- *        дата.. Например: "2010-10-29" (необязательное)
- * @param totalAmount Сумма всех позиций с НДС. Например: "1234.56"
- * @param totalNds Сумма НДС. Например: "1234.56" (необязательное)
- * @param number Номер товарной накладной. Например: "1"
- * @param basedOn Документ, на основании которого вы выставляете накладную. Например: "Основание платежа"
- *        (необязательное)
+ *        дата.. Example: "2010-10-29" (optional)
+ * @param totalAmount Сумма всех позиций с НДС. Example: "1234.56"
+ * @param totalNds Сумма НДС. Example: "1234.56" (optional)
+ * @param number Номер товарной накладной. Example: "1"
+ * @param basedOn Документ, на основании которого вы выставляете накладную. Example: "Основание платежа"
+ *        (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -29,12 +29,12 @@ public record PackingListModel(
         @JsonProperty("number") String number,
         @JsonProperty("basedOn") String basedOn) {
 
-    /** Строитель {@link PackingListModel}. */
+    /** Builder for {@link PackingListModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .positions(this.positions)
@@ -45,7 +45,7 @@ public record PackingListModel(
                 .basedOn(this.basedOn);
     }
 
-    /** Строитель {@link PackingListModel}. */
+    /** Builder for {@link PackingListModel}. */
     public static final class Builder {
 
         private List<PositionModel> positions;
@@ -62,31 +62,31 @@ public record PackingListModel(
         }
 
         /** Дата выставления счета, приведенная к часовому поясу Москвы. Если не передана, то текущая
-        дата.. Например: "2010-10-29" */
+        дата.. Example: "2010-10-29" */
         public Builder date(LocalDate date) {
             this.date = date;
             return this;
         }
 
-        /** Сумма всех позиций с НДС. Например: "1234.56" */
+        /** Сумма всех позиций с НДС. Example: "1234.56" */
         public Builder totalAmount(BigDecimal totalAmount) {
             this.totalAmount = totalAmount;
             return this;
         }
 
-        /** Сумма НДС. Например: "1234.56" */
+        /** Сумма НДС. Example: "1234.56" */
         public Builder totalNds(BigDecimal totalNds) {
             this.totalNds = totalNds;
             return this;
         }
 
-        /** Номер товарной накладной. Например: "1" */
+        /** Номер товарной накладной. Example: "1" */
         public Builder number(String number) {
             this.number = number;
             return this;
         }
 
-        /** Документ, на основании которого вы выставляете накладную. Например: "Основание платежа" */
+        /** Документ, на основании которого вы выставляете накладную. Example: "Основание платежа" */
         public Builder basedOn(String basedOn) {
             this.basedOn = basedOn;
             return this;

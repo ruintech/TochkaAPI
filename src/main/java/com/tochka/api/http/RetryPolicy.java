@@ -4,13 +4,12 @@ import java.time.Duration;
 import java.util.Set;
 
 /**
- * Политика повторов запроса.
+ * Retry policy for API requests.
  *
- * <p>По умолчанию повторяются только идемпотентные методы ({@code GET}, {@code PUT},
- * {@code DELETE}) — повтор {@code POST} может создать второй платёж или вторую платёжную
- * ссылку, если первый запрос на самом деле дошёл до банка, а потерялся только ответ.
- * Исключение — код 429: он означает, что запрос точно не был обработан, поэтому повторяется
- * при любом методе.
+ * <p>By default only idempotent methods ({@code GET}, {@code PUT}, {@code DELETE}) are retried:
+ * repeating a {@code POST} can create a second payment or a second payment link if the first
+ * request did reach the bank and only the response was lost. Status 429 is the exception — it
+ * means the request was definitely not processed, so it is retried for any method.
  */
 public final class RetryPolicy {
 
@@ -32,12 +31,12 @@ public final class RetryPolicy {
         this.retryNonIdempotent = builder.retryNonIdempotent;
     }
 
-    /** Три попытки, экспоненциальная пауза от 500 мс, повтор на 429/500/502/503/504 и сетевых сбоях. */
+    /** Three attempts, exponential backoff from 500 ms, retries on 429/500/502/503/504 and network errors. */
     public static RetryPolicy defaults() {
         return builder().build();
     }
 
-    /** Повторы выключены. */
+    /** Retries disabled. */
     public static RetryPolicy none() {
         return builder().maxAttempts(1).build();
     }
@@ -51,11 +50,11 @@ public final class RetryPolicy {
     }
 
     /**
-     * Стоит ли повторить запрос, завершившийся ответом с указанным статусом.
+     * Whether a request that came back with the given status should be retried.
      *
-     * @param attempt    номер завершившейся попытки, начиная с 1
-     * @param method     HTTP-метод запроса
-     * @param statusCode статус ответа
+     * @param attempt    number of the attempt that just finished, starting at 1
+     * @param method     HTTP method of the request
+     * @param statusCode status of the response
      */
     public boolean shouldRetry(int attempt, String method, int statusCode) {
         if (attempt >= maxAttempts || !retryableStatuses.contains(statusCode)) {
@@ -65,10 +64,10 @@ public final class RetryPolicy {
     }
 
     /**
-     * Стоит ли повторить запрос, оборвавшийся на сетевой ошибке.
+     * Whether a request that failed with a network error should be retried.
      *
-     * @param attempt номер завершившейся попытки, начиная с 1
-     * @param method  HTTP-метод запроса
+     * @param attempt number of the attempt that just finished, starting at 1
+     * @param method  HTTP method of the request
      */
     public boolean shouldRetryAfterIoError(int attempt, String method) {
         return attempt < maxAttempts && isRetryableMethod(method);
@@ -79,10 +78,10 @@ public final class RetryPolicy {
     }
 
     /**
-     * Пауза перед следующей попыткой.
+     * Delay before the next attempt.
      *
-     * @param attempt    номер завершившейся попытки, начиная с 1
-     * @param retryAfter значение заголовка {@code Retry-After} в секундах, либо {@code null}
+     * @param attempt    number of the attempt that just finished, starting at 1
+     * @param retryAfter value of the {@code Retry-After} header in seconds, or {@code null}
      */
     public Duration backoff(int attempt, Long retryAfter) {
         if (retryAfter != null && retryAfter >= 0) {
@@ -95,7 +94,7 @@ public final class RetryPolicy {
         return Duration.ofMillis(capped + jitter);
     }
 
-    /** Строитель политики повторов. */
+    /** Builder for the retry policy. */
     public static final class Builder {
         private int maxAttempts = 3;
         private Duration initialBackoff = Duration.ofMillis(500);
@@ -104,7 +103,7 @@ public final class RetryPolicy {
         private Set<Integer> retryableStatuses = Set.of(429, 500, 502, 503, 504);
         private boolean retryNonIdempotent = false;
 
-        /** Общее количество попыток, включая первую. Значение 1 отключает повторы. */
+        /** Total number of attempts including the first one. A value of 1 disables retries. */
         public Builder maxAttempts(int maxAttempts) {
             if (maxAttempts < 1) {
                 throw new IllegalArgumentException("maxAttempts должен быть не меньше 1");
@@ -134,8 +133,8 @@ public final class RetryPolicy {
         }
 
         /**
-         * Разрешает повтор неидемпотентных методов ({@code POST}). Включайте осознанно: повтор
-         * создания платежа или платёжной ссылки может продублировать операцию.
+         * Allows retrying non-idempotent methods ({@code POST}). Enable it deliberately:
+         * repeating the creation of a payment or a payment link can duplicate the operation.
          */
         public Builder retryNonIdempotent(boolean retryNonIdempotent) {
             this.retryNonIdempotent = retryNonIdempotent;

@@ -2,7 +2,7 @@ package com.tochka.api.exception;
 
 import java.util.List;
 
-/** 403 Forbidden: у токена нет нужного разрешения (scope) либо указан чужой customerCode. */
+/** 403 Forbidden: the token lacks a permission (scope), or the customerCode belongs to someone else. */
 public class TochkaForbiddenException extends TochkaApiException {
 
     private static final long serialVersionUID = 1L;

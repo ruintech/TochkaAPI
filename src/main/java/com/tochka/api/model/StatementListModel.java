@@ -15,18 +15,18 @@ import java.util.List;
 public record StatementListModel(
         @JsonProperty("Statement") List<StatementModel> statement) {
 
-    /** Строитель {@link StatementListModel}. */
+    /** Builder for {@link StatementListModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .statement(this.statement);
     }
 
-    /** Строитель {@link StatementListModel}. */
+    /** Builder for {@link StatementListModel}. */
     public static final class Builder {
 
         private List<StatementModel> statement;

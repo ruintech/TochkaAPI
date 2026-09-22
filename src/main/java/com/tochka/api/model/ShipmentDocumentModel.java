@@ -9,7 +9,7 @@ import java.time.LocalDate;
  * ShipmentDocumentModel
  *
  * @param name Наименование документа об отгрузке
- * @param date Дата документа об отгрузке. Например: "2010-10-29"
+ * @param date Дата документа об отгрузке. Example: "2010-10-29"
  * @param number Номер документа об отгрузке
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -19,12 +19,12 @@ public record ShipmentDocumentModel(
         @JsonProperty("date") LocalDate date,
         @JsonProperty("number") String number) {
 
-    /** Строитель {@link ShipmentDocumentModel}. */
+    /** Builder for {@link ShipmentDocumentModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .name(this.name)
@@ -32,7 +32,7 @@ public record ShipmentDocumentModel(
                 .number(this.number);
     }
 
-    /** Строитель {@link ShipmentDocumentModel}. */
+    /** Builder for {@link ShipmentDocumentModel}. */
     public static final class Builder {
 
         private String name;
@@ -45,7 +45,7 @@ public record ShipmentDocumentModel(
             return this;
         }
 
-        /** Дата документа об отгрузке. Например: "2010-10-29" */
+        /** Дата документа об отгрузке. Example: "2010-10-29" */
         public Builder date(LocalDate date) {
             this.date = date;
             return this;

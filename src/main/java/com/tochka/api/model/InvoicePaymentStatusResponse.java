@@ -7,30 +7,30 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * InvoicePaymentStatusResponse
  *
- * @param paymentStatus Статус оплаты документа. Например: "payment_paid"
+ * @param paymentStatus Статус оплаты документа. Example: "payment_paid"
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record InvoicePaymentStatusResponse(
         @JsonProperty("paymentStatus") InvoicePaymentStatusEnum paymentStatus) {
 
-    /** Строитель {@link InvoicePaymentStatusResponse}. */
+    /** Builder for {@link InvoicePaymentStatusResponse}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .paymentStatus(this.paymentStatus);
     }
 
-    /** Строитель {@link InvoicePaymentStatusResponse}. */
+    /** Builder for {@link InvoicePaymentStatusResponse}. */
     public static final class Builder {
 
         private InvoicePaymentStatusEnum paymentStatus;
 
-        /** Статус оплаты документа. Например: "payment_paid" */
+        /** Статус оплаты документа. Example: "payment_paid" */
         public Builder paymentStatus(InvoicePaymentStatusEnum paymentStatus) {
             this.paymentStatus = paymentStatus;
             return this;

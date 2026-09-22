@@ -14,18 +14,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public record ContentInvoice(
         @JsonProperty("Invoice") InvoiceModel invoice) {
 
-    /** Строитель {@link ContentInvoice}. */
+    /** Builder for {@link ContentInvoice}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .invoice(this.invoice);
     }
 
-    /** Строитель {@link ContentInvoice}. */
+    /** Builder for {@link ContentInvoice}. */
     public static final class Builder {
 
         private InvoiceModel invoice;

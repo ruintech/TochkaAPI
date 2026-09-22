@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 /**
- * Событие, пришедшее в вебхуке. Конкретный тип определяется полем {@code webhookType}.
+ * An event delivered by a webhook. The concrete type is decided by the {@code webhookType} field.
  *
- * <p>Разбирать событие удобно проверкой типа:
+ * <p>The convenient way to handle it is a type check:
  *
  * <pre>{@code
  * WebhookEvent event = verifier.verify(requestBody);
@@ -17,8 +17,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
  * }
  * }</pre>
  *
- * <p>Интерфейс запечатан, поэтому на Java 21+ то же самое записывается через {@code switch}
- * с сопоставлением по образцу и проверкой полноты ветвей.
+ * <p>The interface is sealed, so on Java 21+ the same thing can be written as a {@code switch}
+ * with pattern matching and exhaustiveness checking.
  */
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
@@ -37,9 +37,9 @@ public sealed interface WebhookEvent
         permits IncomingPaymentEvent, OutgoingPaymentEvent, IncomingSbpPaymentEvent,
         IncomingSbpB2bPaymentEvent, AcquiringInternetPaymentEvent, UnknownWebhookEvent {
 
-    /** Тип события, например {@code incomingPayment}. */
+    /** Event type, for example {@code incomingPayment}. */
     String webhookType();
 
-    /** Уникальный код клиента, к которому относится событие. */
+    /** Customer code the event belongs to. */
     String customerCode();
 }

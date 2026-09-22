@@ -15,9 +15,9 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Подписки (рекуррентные платежи) по банковским картам.
+ * Subscriptions (recurring card payments).
  *
- * <p>Экземпляр доступен через {@link com.tochka.api.TochkaClient}.
+ * <p>An instance is available from {@link com.tochka.api.TochkaClient}.
  */
 public final class SubscriptionsApi {
 
@@ -32,10 +32,10 @@ public final class SubscriptionsApi {
      * когда нужно провести очередное списание, и указываете сумму. Про подписки без графика — в
      * разделе «Подписки (/docs/tochka-api/opisanie-metodov/podpiski-rekurrentnye-platezhi)».
      *
-     * <p>Требуемые разрешения: {@code MakeAcquiringOperation}.
+     * <p>Required permissions: {@code MakeAcquiringOperation}.
      *
      * @param operationId Идентификатор подписки
-     * @param amount Сумма платежа. Например: "1234.00"
+     * @param amount Сумма платежа. Example: "1234.00"
      */
     public Boolean chargeSubscription(String operationId, BigDecimal amount) {
         return transport.request("POST", "/acquiring/v1.0/subscriptions/{operationId}/charge")
@@ -51,9 +51,9 @@ public final class SubscriptionsApi {
      * подписки с графиком и без — в разделе «Подписки
      * (/docs/tochka-api/opisanie-metodov/podpiski-rekurrentnye-platezhi)».
      *
-     * <p>Требуемые разрешения: {@code MakeAcquiringOperation}.
+     * <p>Required permissions: {@code MakeAcquiringOperation}.
      *
-     * @param request тело запроса
+     * @param request request body
      */
     public AcquiringCreateSubscriptionResponseModel createSubscription(AcquiringCreateSubscriptionRequestModel request) {
         return transport.request("POST", "/acquiring/v1.0/subscriptions")
@@ -67,9 +67,9 @@ public final class SubscriptionsApi {
      * 54-ФЗ. Подходит, если по подписке нужно выдавать чеки. Про подписки и фискализацию — в разделе
      * «Подписки (/docs/tochka-api/opisanie-metodov/podpiski-rekurrentnye-platezhi)».
      *
-     * <p>Требуемые разрешения: {@code MakeAcquiringOperation}.
+     * <p>Required permissions: {@code MakeAcquiringOperation}.
      *
-     * @param request тело запроса
+     * @param request request body
      */
     public AcquiringCreateSubscriptionWithReceiptResponseModel createSubscriptionWithReceipt(AcquiringCreateSubscriptionWithReceiptRequestModel request) {
         return transport.request("POST", "/acquiring/v1.0/subscriptions_with_receipt")
@@ -83,7 +83,7 @@ public final class SubscriptionsApi {
      * Подробнее о подписках — в разделе «Подписки
      * (/docs/tochka-api/opisanie-metodov/podpiski-rekurrentnye-platezhi)».
      *
-     * <p>Требуемые разрешения: {@code ReadAcquiringData}.
+     * <p>Required permissions: {@code ReadAcquiringData}.
      *
      * @param customerCode Уникальный код клиента
      */
@@ -94,7 +94,7 @@ public final class SubscriptionsApi {
                 .as(new TypeReference<List<AcquiringSubscriptionListItemModel>>() {});
     }
 
-    /** Необязательные параметры метода {@code GetSubscriptionList}. */
+    /** Optional parameters of {@code GetSubscriptionList}. */
     public record GetSubscriptionListOptions(
             Integer page,
             Integer perPage,
@@ -104,7 +104,7 @@ public final class SubscriptionsApi {
             return new Builder();
         }
 
-        /** Строитель {@link GetSubscriptionListOptions}. */
+        /** Builder for {@link GetSubscriptionListOptions}. */
         public static final class Builder {
 
             private Integer page;
@@ -140,10 +140,10 @@ public final class SubscriptionsApi {
      * Подробнее о подписках — в разделе «Подписки
      * (/docs/tochka-api/opisanie-metodov/podpiski-rekurrentnye-platezhi)».
      *
-     * <p>Требуемые разрешения: {@code ReadAcquiringData}.
+     * <p>Required permissions: {@code ReadAcquiringData}.
      *
      * @param customerCode Уникальный код клиента
-     * @param options необязательные параметры запроса; {@code null} — значения по умолчанию
+     * @param options optional query parameters; {@code null} means defaults
      */
     public List<AcquiringSubscriptionListItemModel> getSubscriptionList(String customerCode, GetSubscriptionListOptions options) {
         return transport.request("GET", "/acquiring/v1.0/subscriptions")
@@ -160,10 +160,10 @@ public final class SubscriptionsApi {
      * Подробнее о подписках — в разделе «Подписки
      * (/docs/tochka-api/opisanie-metodov/podpiski-rekurrentnye-platezhi)».
      *
-     * <p>Требуемые разрешения: {@code ReadAcquiringData}.
+     * <p>Required permissions: {@code ReadAcquiringData}.
      *
      * @param customerCode Уникальный код клиента
-     * @param options необязательные параметры запроса; {@code null} — значения по умолчанию
+     * @param options optional query parameters; {@code null} means defaults
      */
     public Page<AcquiringSubscriptionListItemModel> getSubscriptionListPage(String customerCode, GetSubscriptionListOptions options) {
         return transport.request("GET", "/acquiring/v1.0/subscriptions")
@@ -180,9 +180,9 @@ public final class SubscriptionsApi {
      * Подробнее о подписках — в разделе «Подписки
      * (/docs/tochka-api/opisanie-metodov/podpiski-rekurrentnye-platezhi)».
      *
-     * <p>Код клиента берётся из настроек клиента ({@code TochkaClient.builder().customerCode(...)}).
+     * <p>The customer code is taken from the client configuration ({@code TochkaClient.builder().customerCode(...)}).
      *
-     * <p>Требуемые разрешения: {@code ReadAcquiringData}.
+     * <p>Required permissions: {@code ReadAcquiringData}.
      */
     public List<AcquiringSubscriptionListItemModel> getSubscriptionList() {
         return transport.request("GET", "/acquiring/v1.0/subscriptions")
@@ -196,11 +196,11 @@ public final class SubscriptionsApi {
      * Подробнее о подписках — в разделе «Подписки
      * (/docs/tochka-api/opisanie-metodov/podpiski-rekurrentnye-platezhi)».
      *
-     * <p>Код клиента берётся из настроек клиента ({@code TochkaClient.builder().customerCode(...)}).
+     * <p>The customer code is taken from the client configuration ({@code TochkaClient.builder().customerCode(...)}).
      *
-     * <p>Требуемые разрешения: {@code ReadAcquiringData}.
+     * <p>Required permissions: {@code ReadAcquiringData}.
      *
-     * @param options необязательные параметры запроса; {@code null} — значения по умолчанию
+     * @param options optional query parameters; {@code null} means defaults
      */
     public List<AcquiringSubscriptionListItemModel> getSubscriptionList(GetSubscriptionListOptions options) {
         return transport.request("GET", "/acquiring/v1.0/subscriptions")
@@ -217,11 +217,11 @@ public final class SubscriptionsApi {
      * Подробнее о подписках — в разделе «Подписки
      * (/docs/tochka-api/opisanie-metodov/podpiski-rekurrentnye-platezhi)».
      *
-     * <p>Код клиента берётся из настроек клиента ({@code TochkaClient.builder().customerCode(...)}).
+     * <p>The customer code is taken from the client configuration ({@code TochkaClient.builder().customerCode(...)}).
      *
-     * <p>Требуемые разрешения: {@code ReadAcquiringData}.
+     * <p>Required permissions: {@code ReadAcquiringData}.
      *
-     * @param options необязательные параметры запроса; {@code null} — значения по умолчанию
+     * @param options optional query parameters; {@code null} means defaults
      */
     public Page<AcquiringSubscriptionListItemModel> getSubscriptionListPage(GetSubscriptionListOptions options) {
         return transport.request("GET", "/acquiring/v1.0/subscriptions")
@@ -238,7 +238,7 @@ public final class SubscriptionsApi {
      * завершена и другие. Подробнее о подписках — в разделе «Подписки
      * (/docs/tochka-api/opisanie-metodov/podpiski-rekurrentnye-platezhi)».
      *
-     * <p>Требуемые разрешения: {@code ReadAcquiringData}.
+     * <p>Required permissions: {@code ReadAcquiringData}.
      *
      * @param operationId Идентификатор подписки
      */
@@ -255,7 +255,7 @@ public final class SubscriptionsApi {
      * подписках — в разделе «Подписки
      * (/docs/tochka-api/opisanie-metodov/podpiski-rekurrentnye-platezhi)».
      *
-     * <p>Требуемые разрешения: {@code MakeAcquiringOperation}.
+     * <p>Required permissions: {@code MakeAcquiringOperation}.
      *
      * @param operationId Идентификатор подписки
      * @param status Статус подписки

@@ -9,17 +9,17 @@ import java.util.List;
 /**
  * AccountModel
  *
- * @param customerCode Уникальный код клиента. Например: "300000092"
- * @param accountId Уникальный и неизменный идентификатор счёта. Например: "40817810802000000008/044525104"
- * @param transitAccount Идентификатор транзитного счета (необязательное)
- * @param status Статус счёта в форме кода. Например: "Enabled"
- * @param statusUpdateDateTime Дата и время изменения статуса счёта. Используется стандарт ISO8601. Например:
+ * @param customerCode Уникальный код клиента. Example: "300000092"
+ * @param accountId Уникальный и неизменный идентификатор счёта. Example: "40817810802000000008/044525104"
+ * @param transitAccount Идентификатор транзитного счета (optional)
+ * @param status Статус счёта в форме кода. Example: "Enabled"
+ * @param statusUpdateDateTime Дата и время изменения статуса счёта. Используется стандарт ISO8601. Example:
  *        "2019-01-01T06:06:06.364+00:00"
- * @param currency Валюта ведения счёта. Используется стандарт ISO 4217. Например: "RUB"
- * @param accountType Тип счёта (физическое или юридическое лицо). Например: "Personal"
- * @param accountSubType Подтип счёта. Например: "CurrentAccount"
- * @param registrationDate Дата регистрации счета. Например: "2020-10-20"
- * @param accountDetails Accountdetails (необязательное)
+ * @param currency Валюта ведения счёта. Используется стандарт ISO 4217. Example: "RUB"
+ * @param accountType Тип счёта (физическое или юридическое лицо). Example: "Personal"
+ * @param accountSubType Подтип счёта. Example: "CurrentAccount"
+ * @param registrationDate Дата регистрации счета. Example: "2020-10-20"
+ * @param accountDetails Accountdetails (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -35,12 +35,12 @@ public record AccountModel(
         @JsonProperty("registrationDate") LocalDate registrationDate,
         @JsonProperty("accountDetails") List<AccountDetailModel> accountDetails) {
 
-    /** Строитель {@link AccountModel}. */
+    /** Builder for {@link AccountModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .customerCode(this.customerCode)
@@ -55,7 +55,7 @@ public record AccountModel(
                 .accountDetails(this.accountDetails);
     }
 
-    /** Строитель {@link AccountModel}. */
+    /** Builder for {@link AccountModel}. */
     public static final class Builder {
 
         private String customerCode;
@@ -69,13 +69,13 @@ public record AccountModel(
         private LocalDate registrationDate;
         private List<AccountDetailModel> accountDetails;
 
-        /** Уникальный код клиента. Например: "300000092" */
+        /** Уникальный код клиента. Example: "300000092" */
         public Builder customerCode(String customerCode) {
             this.customerCode = customerCode;
             return this;
         }
 
-        /** Уникальный и неизменный идентификатор счёта. Например: "40817810802000000008/044525104" */
+        /** Уникальный и неизменный идентификатор счёта. Example: "40817810802000000008/044525104" */
         public Builder accountId(String accountId) {
             this.accountId = accountId;
             return this;
@@ -87,38 +87,38 @@ public record AccountModel(
             return this;
         }
 
-        /** Статус счёта в форме кода. Например: "Enabled" */
+        /** Статус счёта в форме кода. Example: "Enabled" */
         public Builder status(ExternalAccountStatusEnum status) {
             this.status = status;
             return this;
         }
 
-        /** Дата и время изменения статуса счёта. Используется стандарт ISO8601. Например:
+        /** Дата и время изменения статуса счёта. Используется стандарт ISO8601. Example:
         "2019-01-01T06:06:06.364+00:00" */
         public Builder statusUpdateDateTime(String statusUpdateDateTime) {
             this.statusUpdateDateTime = statusUpdateDateTime;
             return this;
         }
 
-        /** Валюта ведения счёта. Используется стандарт ISO 4217. Например: "RUB" */
+        /** Валюта ведения счёта. Используется стандарт ISO 4217. Example: "RUB" */
         public Builder currency(String currency) {
             this.currency = currency;
             return this;
         }
 
-        /** Тип счёта (физическое или юридическое лицо). Например: "Personal" */
+        /** Тип счёта (физическое или юридическое лицо). Example: "Personal" */
         public Builder accountType(ExternalTypeEnum accountType) {
             this.accountType = accountType;
             return this;
         }
 
-        /** Подтип счёта. Например: "CurrentAccount" */
+        /** Подтип счёта. Example: "CurrentAccount" */
         public Builder accountSubType(ExternalAccountSubTypeEnum accountSubType) {
             this.accountSubType = accountSubType;
             return this;
         }
 
-        /** Дата регистрации счета. Например: "2020-10-20" */
+        /** Дата регистрации счета. Example: "2020-10-20" */
         public Builder registrationDate(LocalDate registrationDate) {
             this.registrationDate = registrationDate;
             return this;

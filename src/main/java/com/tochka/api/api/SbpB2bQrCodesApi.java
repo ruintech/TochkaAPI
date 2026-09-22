@@ -7,9 +7,9 @@ import com.tochka.api.model.RegisterB2BQRCode;
 import com.tochka.api.model.RegisteredB2BQrCode;
 
 /**
- * СБП: B2B QR-коды для приёма платежей от ИП и организаций.
+ * SBP: B2B QR codes for payments from companies and sole proprietors.
  *
- * <p>Экземпляр доступен через {@link com.tochka.api.TochkaClient}.
+ * <p>An instance is available from {@link com.tochka.api.TochkaClient}.
  */
 public final class SbpB2bQrCodesApi {
 
@@ -24,7 +24,7 @@ public final class SbpB2bQrCodesApi {
      * QR-коды — в разделе «Работа с QR-кодами
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/rabota-s-qr-kodami)».
      *
-     * <p>Требуемые разрешения: {@code ReadSBPData}.
+     * <p>Required permissions: {@code ReadSBPData}.
      *
      * @param qrcId Идентификатор QR-кода в СБП
      */
@@ -35,7 +35,7 @@ public final class SbpB2bQrCodesApi {
                 .as(B2BQrCode.class);
     }
 
-    /** Необязательные параметры метода {@code GetB2BQrCode}. */
+    /** Optional parameters of {@code GetB2BQrCode}. */
     public record GetB2BQrCodeOptions(
             Integer width,
             Integer height) {
@@ -44,7 +44,7 @@ public final class SbpB2bQrCodesApi {
             return new Builder();
         }
 
-        /** Строитель {@link GetB2BQrCodeOptions}. */
+        /** Builder for {@link GetB2BQrCodeOptions}. */
         public static final class Builder {
 
             private Integer width;
@@ -73,10 +73,10 @@ public final class SbpB2bQrCodesApi {
      * QR-коды — в разделе «Работа с QR-кодами
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/rabota-s-qr-kodami)».
      *
-     * <p>Требуемые разрешения: {@code ReadSBPData}.
+     * <p>Required permissions: {@code ReadSBPData}.
      *
      * @param qrcId Идентификатор QR-кода в СБП
-     * @param options необязательные параметры запроса; {@code null} — значения по умолчанию
+     * @param options optional query parameters; {@code null} means defaults
      */
     public B2BQrCode getB2BQrCode(String qrcId, GetB2BQrCodeOptions options) {
         return transport.request("GET", "/sbp/v1.0/b2b-qr-code/{qrcId}")
@@ -92,11 +92,11 @@ public final class SbpB2bQrCodesApi {
      * физлиц. Сумма для такого кода обязательна. Как работать с B2B QR-кодами — в разделе «Работа с
      * QR-кодами (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/rabota-s-qr-kodami)».
      *
-     * <p>Требуемые разрешения: {@code EditSBPData}.
+     * <p>Required permissions: {@code EditSBPData}.
      *
      * @param merchantId Идентификатор ТСП
      * @param accountId Уникальный и неизменный идентификатор счёта юрлица
-     * @param request тело запроса
+     * @param request request body
      */
     public RegisteredB2BQrCode registerB2BQrCode(String merchantId, String accountId, RegisterB2BQRCode request) {
         return transport.request("POST", "/sbp/v1.0/b2b-qr-code/merchant/{merchantId}/{accountId}")

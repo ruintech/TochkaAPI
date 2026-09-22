@@ -6,9 +6,9 @@ import com.tochka.api.http.Transport;
 import com.tochka.api.model.ClosingDocumentCreateRequestModel;
 
 /**
- * Акты, накладные, счета-фактуры и УПД.
+ * Closing documents: acts, packing lists, invoices and UPD.
  *
- * <p>Экземпляр доступен через {@link com.tochka.api.TochkaClient}.
+ * <p>An instance is available from {@link com.tochka.api.TochkaClient}.
  */
 public final class ClosingDocumentsApi {
 
@@ -25,9 +25,9 @@ public final class ClosingDocumentsApi {
      * передать — в разделе «Закрывающие документы
      * (/docs/tochka-api/opisanie-metodov/vystavlenie-schetov-i-sozdanie-zakryvayushih-dokumentov/zakryvayushie-dokumenty)».
      *
-     * <p>Требуемые разрешения: {@code ManageInvoiceData}.
+     * <p>Required permissions: {@code ManageInvoiceData}.
      *
-     * @param request тело запроса
+     * @param request request body
      */
     public String createClosingDocument(ClosingDocumentCreateRequestModel request) {
         return transport.request("POST", "/invoice/v1.0/closing-documents")
@@ -42,7 +42,7 @@ public final class ClosingDocumentsApi {
      * создают заново. Подробнее о закрывающих документах — в разделе «Закрывающие документы
      * (/docs/tochka-api/opisanie-metodov/vystavlenie-schetov-i-sozdanie-zakryvayushih-dokumentov/zakryvayushie-dokumenty)».
      *
-     * <p>Требуемые разрешения: {@code ManageInvoiceData}.
+     * <p>Required permissions: {@code ManageInvoiceData}.
      *
      * @param customerCode Уникальный код клиента
      * @param documentId Уникальный идентификатор документа
@@ -60,7 +60,7 @@ public final class ClosingDocumentsApi {
      * сохранения или отправки. Подробнее о закрывающих документах — в разделе «Закрывающие документы
      * (/docs/tochka-api/opisanie-metodov/vystavlenie-schetov-i-sozdanie-zakryvayushih-dokumentov/zakryvayushie-dokumenty)».
      *
-     * <p>Требуемые разрешения: {@code ManageInvoiceData}.
+     * <p>Required permissions: {@code ManageInvoiceData}.
      *
      * @param customerCode Уникальный код клиента
      * @param documentId Уникальный идентификатор документа
@@ -77,7 +77,7 @@ public final class ClosingDocumentsApi {
      * например, контрагента. Подробнее о закрывающих документах — в разделе «Закрывающие документы
      * (/docs/tochka-api/opisanie-metodov/vystavlenie-schetov-i-sozdanie-zakryvayushih-dokumentov/zakryvayushie-dokumenty)».
      *
-     * <p>Требуемые разрешения: {@code ManageInvoiceData}.
+     * <p>Required permissions: {@code ManageInvoiceData}.
      *
      * @param customerCode Уникальный код клиента
      * @param documentId Уникальный идентификатор документа

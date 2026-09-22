@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/** Проверяет транспорт на локальном HTTP-сервере, без обращения к боевому API. */
+/** Exercises the transport against a local HTTP server, without touching the real API. */
 class TransportTest {
 
     private HttpServer server;
@@ -161,7 +161,7 @@ class TransportTest {
         assertEquals("23489", statement.statementId());
         assertEquals("POST", requests.get(0).method());
         assertTrue(requests.get(0).body().startsWith("{\"Data\":{\"Statement\":{"),
-                "тело запроса должно быть обёрнуто: " + requests.get(0).body());
+                "the request body must be wrapped: " + requests.get(0).body());
     }
 
     @Test
@@ -213,7 +213,7 @@ class TransportTest {
 
         assertThrows(TochkaServerException.class, () -> client.statements()
                 .initStatement(StatementInitReqModel.builder().accountId("1/2").build()));
-        assertEquals(1, attempts.get(), "повтор POST может продублировать операцию");
+        assertEquals(1, attempts.get(), "retrying a POST could duplicate the operation");
     }
 
     @Test

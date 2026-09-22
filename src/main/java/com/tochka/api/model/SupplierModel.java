@@ -7,9 +7,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * SupplierModel
  *
- * @param phone Номер телефона поставщика. Например: "+7999999999"
- * @param name Наименование поставщика. Например: "ООО Альтер"
- * @param taxCode ИНН поставщика. Например: "660000000000"
+ * @param phone Номер телефона поставщика. Example: "+7999999999"
+ * @param name Наименование поставщика. Example: "ООО Альтер"
+ * @param taxCode ИНН поставщика. Example: "660000000000"
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -18,12 +18,12 @@ public record SupplierModel(
         @JsonProperty("name") String name,
         @JsonProperty("taxCode") String taxCode) {
 
-    /** Строитель {@link SupplierModel}. */
+    /** Builder for {@link SupplierModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .phone(this.phone)
@@ -31,26 +31,26 @@ public record SupplierModel(
                 .taxCode(this.taxCode);
     }
 
-    /** Строитель {@link SupplierModel}. */
+    /** Builder for {@link SupplierModel}. */
     public static final class Builder {
 
         private String phone;
         private String name;
         private String taxCode;
 
-        /** Номер телефона поставщика. Например: "+7999999999" */
+        /** Номер телефона поставщика. Example: "+7999999999" */
         public Builder phone(String phone) {
             this.phone = phone;
             return this;
         }
 
-        /** Наименование поставщика. Например: "ООО Альтер" */
+        /** Наименование поставщика. Example: "ООО Альтер" */
         public Builder name(String name) {
             this.name = name;
             return this;
         }
 
-        /** ИНН поставщика. Например: "660000000000" */
+        /** ИНН поставщика. Example: "660000000000" */
         public Builder taxCode(String taxCode) {
             this.taxCode = taxCode;
             return this;

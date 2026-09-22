@@ -12,15 +12,14 @@ import java.util.List;
  *
  * @param positions Список позиций
  * @param date Дата выставления счета, приведенная к часовому поясу Москвы. Если не передана, то текущая
- *        дата.. Например: "2010-10-29" (необязательное)
- * @param totalAmount Сумма всех позиций с НДС. Например: "1234.56"
- * @param totalNds Сумма НДС. Например: "1234.56" (необязательное)
- * @param number Номер выставляемого счёта. Например: "1"
- * @param basedOn Документ, на основании которого выставляется счёт. Например: "Основание платежа"
- *        (необязательное)
- * @param comment Комментарий. Например: "Комментарий к платежу" (необязательное)
- * @param paymentExpiryDate Срок оплаты в виде даты, приведенной к часовому поясу Москвы. Например: "2020-01-20"
- *        (необязательное)
+ *        дата.. Example: "2010-10-29" (optional)
+ * @param totalAmount Сумма всех позиций с НДС. Example: "1234.56"
+ * @param totalNds Сумма НДС. Example: "1234.56" (optional)
+ * @param number Номер выставляемого счёта. Example: "1"
+ * @param basedOn Документ, на основании которого выставляется счёт. Example: "Основание платежа" (optional)
+ * @param comment Комментарий. Example: "Комментарий к платежу" (optional)
+ * @param paymentExpiryDate Срок оплаты в виде даты, приведенной к часовому поясу Москвы. Example: "2020-01-20"
+ *        (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -34,12 +33,12 @@ public record InvoiceModel(
         @JsonProperty("comment") String comment,
         @JsonProperty("paymentExpiryDate") LocalDate paymentExpiryDate) {
 
-    /** Строитель {@link InvoiceModel}. */
+    /** Builder for {@link InvoiceModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .positions(this.positions)
@@ -52,7 +51,7 @@ public record InvoiceModel(
                 .paymentExpiryDate(this.paymentExpiryDate);
     }
 
-    /** Строитель {@link InvoiceModel}. */
+    /** Builder for {@link InvoiceModel}. */
     public static final class Builder {
 
         private List<PositionModel> positions;
@@ -71,43 +70,43 @@ public record InvoiceModel(
         }
 
         /** Дата выставления счета, приведенная к часовому поясу Москвы. Если не передана, то текущая
-        дата.. Например: "2010-10-29" */
+        дата.. Example: "2010-10-29" */
         public Builder date(LocalDate date) {
             this.date = date;
             return this;
         }
 
-        /** Сумма всех позиций с НДС. Например: "1234.56" */
+        /** Сумма всех позиций с НДС. Example: "1234.56" */
         public Builder totalAmount(BigDecimal totalAmount) {
             this.totalAmount = totalAmount;
             return this;
         }
 
-        /** Сумма НДС. Например: "1234.56" */
+        /** Сумма НДС. Example: "1234.56" */
         public Builder totalNds(BigDecimal totalNds) {
             this.totalNds = totalNds;
             return this;
         }
 
-        /** Номер выставляемого счёта. Например: "1" */
+        /** Номер выставляемого счёта. Example: "1" */
         public Builder number(String number) {
             this.number = number;
             return this;
         }
 
-        /** Документ, на основании которого выставляется счёт. Например: "Основание платежа" */
+        /** Документ, на основании которого выставляется счёт. Example: "Основание платежа" */
         public Builder basedOn(String basedOn) {
             this.basedOn = basedOn;
             return this;
         }
 
-        /** Комментарий. Например: "Комментарий к платежу" */
+        /** Комментарий. Example: "Комментарий к платежу" */
         public Builder comment(String comment) {
             this.comment = comment;
             return this;
         }
 
-        /** Срок оплаты в виде даты, приведенной к часовому поясу Москвы. Например: "2020-01-20" */
+        /** Срок оплаты в виде даты, приведенной к часовому поясу Москвы. Example: "2020-01-20" */
         public Builder paymentExpiryDate(LocalDate paymentExpiryDate) {
             this.paymentExpiryDate = paymentExpiryDate;
             return this;

@@ -5,25 +5,25 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 
 /**
- * {@code incomingSbpPayment} — оплата по QR-коду: через Систему быстрых платежей либо цифровым
- * рублём. Приходит примерно за 5 секунд с момента зачисления.
+ * {@code incomingSbpPayment} — a QR code payment, made either through the Faster Payments System
+ * (SBP) or with digital rubles. Delivered about 5 seconds after the money arrives.
  *
- * <p>Способ оплаты различается по {@link #paymentType()}: {@code sbpPayment} — СБП,
- * {@code drPayment} — цифровой рубль. Набор заполненных полей зависит от способа.
+ * <p>The payment method is told apart by {@link #paymentType()}: {@code sbpPayment} for SBP,
+ * {@code drPayment} for digital rubles. Which fields are filled in depends on the method.
  *
- * @param operationId       идентификатор операции (для СБП — он же {@code trxId} при возврате)
- * @param qrcId             идентификатор QR-кода
- * @param amount            сумма операции
- * @param paymentType       способ оплаты: {@code sbpPayment} или {@code drPayment}
- * @param payerMobileNumber номер телефона покупателя (только СБП)
- * @param payerName         имя, отчество и первая буква фамилии покупателя
- * @param brandName         наименование ТСП
- * @param merchantId        идентификатор ТСП
- * @param purpose           назначение платежа
- * @param refTransactionId  идентификатор транзакции — нужен для возврата
- * @param drClientId        идентификатор клиента на Платформе цифрового рубля
- * @param webhookType       тип события, всегда {@code incomingSbpPayment}
- * @param customerCode      уникальный код клиента
+ * @param operationId       operation id (for SBP it doubles as {@code trxId} when refunding)
+ * @param qrcId             QR code id
+ * @param amount            operation amount
+ * @param paymentType       payment method: {@code sbpPayment} or {@code drPayment}
+ * @param payerMobileNumber buyer phone number (SBP only)
+ * @param payerName         buyer first name, patronymic and the initial of the last name
+ * @param brandName         merchant name
+ * @param merchantId        merchant id
+ * @param purpose           payment purpose
+ * @param refTransactionId  transaction id — required to issue a refund
+ * @param drClientId        client id on the digital ruble platform
+ * @param webhookType       event type, always {@code incomingSbpPayment}
+ * @param customerCode      customer code
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record IncomingSbpPaymentEvent(
@@ -41,12 +41,12 @@ public record IncomingSbpPaymentEvent(
         String webhookType,
         String customerCode) implements WebhookEvent {
 
-    /** Оплата прошла через Систему быстрых платежей. */
+    /** The payment went through the Faster Payments System. */
     public boolean isSbp() {
         return "sbpPayment".equals(paymentType);
     }
 
-    /** Оплата прошла цифровым рублём — такой платёж возвращается только в интернет-банке. */
+    /** The payment was made with digital rubles — such a payment can only be refunded in the internet bank. */
     public boolean isDigitalRuble() {
         return "drPayment".equals(paymentType);
     }

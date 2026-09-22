@@ -4,16 +4,16 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Страница списка вместе с блоками {@code Links} и {@code Meta} из ответа API.
+ * A page of a list together with the {@code Links} and {@code Meta} blocks of the API response.
  *
- * @param items      элементы текущей страницы
- * @param totalPages общее количество страниц
- * @param self       ссылка на текущую страницу
- * @param next       ссылка на следующую страницу, если она есть
- * @param prev       ссылка на предыдущую страницу, если она есть
- * @param first      ссылка на первую страницу
- * @param last       ссылка на последнюю страницу
- * @param <T>        тип элемента списка
+ * @param items      items of the current page
+ * @param totalPages total number of pages
+ * @param self       link to the current page
+ * @param next       link to the next page, when there is one
+ * @param prev       link to the previous page, when there is one
+ * @param first      link to the first page
+ * @param last       link to the last page
+ * @param <T>        list item type
  */
 public record Page<T>(List<T> items,
                       Integer totalPages,
@@ -27,7 +27,7 @@ public record Page<T>(List<T> items,
         items = items == null ? List.of() : List.copyOf(items);
     }
 
-    /** Есть ли следующая страница. */
+    /** Whether a next page exists. */
     public boolean hasNext() {
         return next != null && !next.isBlank();
     }

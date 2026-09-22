@@ -15,18 +15,18 @@ import java.util.List;
 public record AcquiringPaymentRegistryModel(
         @JsonProperty("Registry") List<AcquiringPaymentRegistryItemModel> registry) {
 
-    /** Строитель {@link AcquiringPaymentRegistryModel}. */
+    /** Builder for {@link AcquiringPaymentRegistryModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .registry(this.registry);
     }
 
-    /** Строитель {@link AcquiringPaymentRegistryModel}. */
+    /** Builder for {@link AcquiringPaymentRegistryModel}. */
     public static final class Builder {
 
         private List<AcquiringPaymentRegistryItemModel> registry;

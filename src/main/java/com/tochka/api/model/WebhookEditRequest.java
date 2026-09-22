@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * WebhookEditRequest
  *
- * @param webhooksList Новый список событий, на которые нужно подписаться. Например: ["incomingPayment"]
+ * @param webhooksList Новый список событий, на которые нужно подписаться. Example: ["incomingPayment"]
  * @param url url на который необходимо отправлять запрос
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -17,25 +17,25 @@ public record WebhookEditRequest(
         @JsonProperty("webhooksList") List<WebhookTypeEnum> webhooksList,
         @JsonProperty("url") String url) {
 
-    /** Строитель {@link WebhookEditRequest}. */
+    /** Builder for {@link WebhookEditRequest}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .webhooksList(this.webhooksList)
                 .url(this.url);
     }
 
-    /** Строитель {@link WebhookEditRequest}. */
+    /** Builder for {@link WebhookEditRequest}. */
     public static final class Builder {
 
         private List<WebhookTypeEnum> webhooksList;
         private String url;
 
-        /** Новый список событий, на которые нужно подписаться. Например: ["incomingPayment"] */
+        /** Новый список событий, на которые нужно подписаться. Example: ["incomingPayment"] */
         public Builder webhooksList(List<WebhookTypeEnum> webhooksList) {
             this.webhooksList = webhooksList;
             return this;

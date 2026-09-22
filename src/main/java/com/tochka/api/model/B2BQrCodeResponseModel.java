@@ -18,12 +18,12 @@ public record B2BQrCodeResponseModel(
         @JsonProperty("Links") LinkModel links,
         @JsonProperty("Meta") MetaModel meta) {
 
-    /** Строитель {@link B2BQrCodeResponseModel}. */
+    /** Builder for {@link B2BQrCodeResponseModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .data(this.data)
@@ -31,7 +31,7 @@ public record B2BQrCodeResponseModel(
                 .meta(this.meta);
     }
 
-    /** Строитель {@link B2BQrCodeResponseModel}. */
+    /** Builder for {@link B2BQrCodeResponseModel}. */
     public static final class Builder {
 
         private B2BQrCode data;

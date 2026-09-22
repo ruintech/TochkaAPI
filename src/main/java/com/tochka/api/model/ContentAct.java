@@ -14,18 +14,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public record ContentAct(
         @JsonProperty("Act") ActModel act) {
 
-    /** Строитель {@link ContentAct}. */
+    /** Builder for {@link ContentAct}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .act(this.act);
     }
 
-    /** Строитель {@link ContentAct}. */
+    /** Builder for {@link ContentAct}. */
     public static final class Builder {
 
         private ActModel act;

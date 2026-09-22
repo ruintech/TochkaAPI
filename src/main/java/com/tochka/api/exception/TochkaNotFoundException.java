@@ -2,7 +2,7 @@ package com.tochka.api.exception;
 
 import java.util.List;
 
-/** 404 Not Found: объект не найден. Также возвращается при неверном пути метода. */
+/** 404 Not Found: the object does not exist. Also returned when the method path is wrong. */
 public class TochkaNotFoundException extends TochkaApiException {
 
     private static final long serialVersionUID = 1L;

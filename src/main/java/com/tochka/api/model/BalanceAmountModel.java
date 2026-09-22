@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 /**
  * BalanceAmountModel
  *
- * @param amount Сумма. Например: 1234.56
- * @param currency Валюта ведения счета. Используется стандарт ISO 4217. Например: "RUB"
+ * @param amount Сумма. Example: 1234.56
+ * @param currency Валюта ведения счета. Используется стандарт ISO 4217. Example: "RUB"
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -17,31 +17,31 @@ public record BalanceAmountModel(
         @JsonProperty("amount") BigDecimal amount,
         @JsonProperty("currency") String currency) {
 
-    /** Строитель {@link BalanceAmountModel}. */
+    /** Builder for {@link BalanceAmountModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .amount(this.amount)
                 .currency(this.currency);
     }
 
-    /** Строитель {@link BalanceAmountModel}. */
+    /** Builder for {@link BalanceAmountModel}. */
     public static final class Builder {
 
         private BigDecimal amount;
         private String currency;
 
-        /** Сумма. Например: 1234.56 */
+        /** Сумма. Example: 1234.56 */
         public Builder amount(BigDecimal amount) {
             this.amount = amount;
             return this;
         }
 
-        /** Валюта ведения счета. Используется стандарт ISO 4217. Например: "RUB" */
+        /** Валюта ведения счета. Используется стандарт ISO 4217. Example: "RUB" */
         public Builder currency(String currency) {
             this.currency = currency;
             return this;

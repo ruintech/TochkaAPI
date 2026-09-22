@@ -7,16 +7,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * SecondSideModel
  *
- * @param accountId Уникальный и неизменный идентификатор счёта. Например: "40817810802000000008/044525104"
- *        (необязательное)
- * @param legalAddress Юридический адрес. Например: "624205, РОССИЯ, СВЕРДЛОВСКАЯ обл, ЛЕСНОЙ г, ЛЕНИНА ул, ДОМ 96,
- *        офис КВ. 19" (необязательное)
- * @param kpp КПП. Например: "668101001" (необязательное)
- * @param bankName Название банка. Например: "ООО БАНК ТОЧКА" (необязательное)
- * @param bankCorrAccount Корреспондентский счет банка. Например: "30101810745374525104" (необязательное)
- * @param taxCode ИНН покупателя или заказчика. Например: "660000000000"
- * @param type Тип покупателя или заказчика. Например: "company"
- * @param secondSideName Наименование покупателя или заказчика. Например: "ООО Студия дизайна М-АРТ" (необязательное)
+ * @param accountId Уникальный и неизменный идентификатор счёта. Example: "40817810802000000008/044525104"
+ *        (optional)
+ * @param legalAddress Юридический адрес. Example: "624205, РОССИЯ, СВЕРДЛОВСКАЯ обл, ЛЕСНОЙ г, ЛЕНИНА ул, ДОМ 96,
+ *        офис КВ. 19" (optional)
+ * @param kpp КПП. Example: "668101001" (optional)
+ * @param bankName Название банка. Example: "ООО БАНК ТОЧКА" (optional)
+ * @param bankCorrAccount Корреспондентский счет банка. Example: "30101810745374525104" (optional)
+ * @param taxCode ИНН покупателя или заказчика. Example: "660000000000"
+ * @param type Тип покупателя или заказчика. Example: "company"
+ * @param secondSideName Наименование покупателя или заказчика. Example: "ООО Студия дизайна М-АРТ" (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -30,12 +30,12 @@ public record SecondSideModel(
         @JsonProperty("type") CounterpartTypeEnum type,
         @JsonProperty("secondSideName") String secondSideName) {
 
-    /** Строитель {@link SecondSideModel}. */
+    /** Builder for {@link SecondSideModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .accountId(this.accountId)
@@ -48,7 +48,7 @@ public record SecondSideModel(
                 .secondSideName(this.secondSideName);
     }
 
-    /** Строитель {@link SecondSideModel}. */
+    /** Builder for {@link SecondSideModel}. */
     public static final class Builder {
 
         private String accountId;
@@ -60,50 +60,50 @@ public record SecondSideModel(
         private CounterpartTypeEnum type;
         private String secondSideName;
 
-        /** Уникальный и неизменный идентификатор счёта. Например: "40817810802000000008/044525104" */
+        /** Уникальный и неизменный идентификатор счёта. Example: "40817810802000000008/044525104" */
         public Builder accountId(String accountId) {
             this.accountId = accountId;
             return this;
         }
 
-        /** Юридический адрес. Например: "624205, РОССИЯ, СВЕРДЛОВСКАЯ обл, ЛЕСНОЙ г, ЛЕНИНА ул, ДОМ 96,
+        /** Юридический адрес. Example: "624205, РОССИЯ, СВЕРДЛОВСКАЯ обл, ЛЕСНОЙ г, ЛЕНИНА ул, ДОМ 96,
         офис КВ. 19" */
         public Builder legalAddress(String legalAddress) {
             this.legalAddress = legalAddress;
             return this;
         }
 
-        /** КПП. Например: "668101001" */
+        /** КПП. Example: "668101001" */
         public Builder kpp(String kpp) {
             this.kpp = kpp;
             return this;
         }
 
-        /** Название банка. Например: "ООО БАНК ТОЧКА" */
+        /** Название банка. Example: "ООО БАНК ТОЧКА" */
         public Builder bankName(String bankName) {
             this.bankName = bankName;
             return this;
         }
 
-        /** Корреспондентский счет банка. Например: "30101810745374525104" */
+        /** Корреспондентский счет банка. Example: "30101810745374525104" */
         public Builder bankCorrAccount(String bankCorrAccount) {
             this.bankCorrAccount = bankCorrAccount;
             return this;
         }
 
-        /** ИНН покупателя или заказчика. Например: "660000000000" */
+        /** ИНН покупателя или заказчика. Example: "660000000000" */
         public Builder taxCode(String taxCode) {
             this.taxCode = taxCode;
             return this;
         }
 
-        /** Тип покупателя или заказчика. Например: "company" */
+        /** Тип покупателя или заказчика. Example: "company" */
         public Builder type(CounterpartTypeEnum type) {
             this.type = type;
             return this;
         }
 
-        /** Наименование покупателя или заказчика. Например: "ООО Студия дизайна М-АРТ" */
+        /** Наименование покупателя или заказчика. Example: "ООО Студия дизайна М-АРТ" */
         public Builder secondSideName(String secondSideName) {
             this.secondSideName = secondSideName;
             return this;

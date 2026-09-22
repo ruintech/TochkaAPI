@@ -9,9 +9,9 @@ import com.tochka.api.model.ConsentResponseModel;
 import java.util.List;
 
 /**
- * Списки разрешений (consent) для авторизации по OAuth 2.0.
+ * Consents (permission lists) used by OAuth 2.0 authorization.
  *
- * <p>Экземпляр доступен через {@link com.tochka.api.TochkaClient}.
+ * <p>An instance is available from {@link com.tochka.api.TochkaClient}.
  */
 public final class ConsentsApi {
 
@@ -27,7 +27,7 @@ public final class ConsentsApi {
      * подтверждает. Как устроена авторизация по OAuth 2.0 — в разделе «Авторизация по OAuth 2.0
      * (/docs/tochka-api/algoritm-raboty-po-oauth-2.0)».
      *
-     * @param request тело запроса
+     * @param request request body
      */
     public List<ConsentResponseModel> createNewConsent(ConsentCreateRequest request) {
         return transport.request("POST", "/consent/v1.0/consents")
@@ -55,7 +55,7 @@ public final class ConsentsApi {
      * Помогает проверить, какие права выданы и подтверждены. Про разрешения и scope — в разделе
      * «Авторизация по OAuth 2.0 (/docs/tochka-api/algoritm-raboty-po-oauth-2.0)».
      *
-     * @param customerCode уникальный код клиента; {@code null} — взять код по умолчанию из клиента
+     * @param customerCode customer code; {@code null} takes the code configured on the client
      */
     public List<ConsentResponseModel> getAllConsentsList(String customerCode) {
         return transport.request("GET", "/consent/v1.0/consents")
@@ -69,7 +69,7 @@ public final class ConsentsApi {
      * Помогает проверить, какие права выданы и подтверждены. Про разрешения и scope — в разделе
      * «Авторизация по OAuth 2.0 (/docs/tochka-api/algoritm-raboty-po-oauth-2.0)».
      *
-     * <p>Код клиента берётся из настроек клиента ({@code TochkaClient.builder().customerCode(...)}).
+     * <p>The customer code is taken from the client configuration ({@code TochkaClient.builder().customerCode(...)}).
      */
     public List<ConsentResponseModel> getAllConsentsList() {
         return transport.request("GET", "/consent/v1.0/consents")
@@ -84,7 +84,7 @@ public final class ConsentsApi {
      * по OAuth 2.0 (/docs/tochka-api/algoritm-raboty-po-oauth-2.0)».
      *
      * @param consentId Уникальный идентификатор, предназначенный для идентификации разрешения
-     * @param customerCode уникальный код клиента; {@code null} — взять код по умолчанию из клиента
+     * @param customerCode customer code; {@code null} takes the code configured on the client
      */
     public ConsentModel getConsentInfo(String consentId, String customerCode) {
         return transport.request("GET", "/consent/v1.0/consents/{consentId}")
@@ -99,7 +99,7 @@ public final class ConsentsApi {
      * consentId}: статус, набор прав и срок действия. Про разрешения и scope — в разделе «Авторизация
      * по OAuth 2.0 (/docs/tochka-api/algoritm-raboty-po-oauth-2.0)».
      *
-     * <p>Код клиента берётся из настроек клиента ({@code TochkaClient.builder().customerCode(...)}).
+     * <p>The customer code is taken from the client configuration ({@code TochkaClient.builder().customerCode(...)}).
      *
      * @param consentId Уникальный идентификатор, предназначенный для идентификации разрешения
      */

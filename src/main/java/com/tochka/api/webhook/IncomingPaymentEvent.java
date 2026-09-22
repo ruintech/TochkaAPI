@@ -7,17 +7,17 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
- * {@code incomingPayment} — поступление на счёт по реквизитам. Приходит в течение 20 секунд
- * после зачисления.
+ * {@code incomingPayment} — an incoming bank transfer. Delivered within 20 seconds of the
+ * money arriving.
  *
- * @param payer          реквизиты плательщика
- * @param recipient      реквизиты получателя
- * @param purpose        назначение платежа
- * @param documentNumber номер документа
- * @param paymentId      уникальный идентификатор платежа, он же есть в выписке
- * @param date           дата платежа
- * @param webhookType    тип события, всегда {@code incomingPayment}
- * @param customerCode   уникальный код клиента
+ * @param payer          payer details
+ * @param recipient      recipient details
+ * @param purpose        payment purpose
+ * @param documentNumber document number
+ * @param paymentId      unique payment id, the same one that appears in the statement
+ * @param date           payment date
+ * @param webhookType    event type, always {@code incomingPayment}
+ * @param customerCode   customer code
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record IncomingPaymentEvent(
@@ -30,7 +30,7 @@ public record IncomingPaymentEvent(
         String webhookType,
         String customerCode) implements WebhookEvent {
 
-    /** Сумма платежа — берётся из реквизитов получателя. */
+    /** Payment amount — taken from the recipient details. */
     public BigDecimal amount() {
         return recipient == null ? null : recipient.amount();
     }

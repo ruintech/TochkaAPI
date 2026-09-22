@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * InvoiceCreateRequestModel
  *
- * @param accountId Уникальный и неизменный идентификатор счёта. Например: "40817810802000000008/044525104"
- * @param customerCode Уникальный код клиента. Например: "300000092"
+ * @param accountId Уникальный и неизменный идентификатор счёта. Example: "40817810802000000008/044525104"
+ * @param customerCode Уникальный код клиента. Example: "300000092"
  * @param secondSide Сторона заказчика/покупателя в сделке в документе
  * @param content Содержимое счета на оплату
  */
@@ -20,12 +20,12 @@ public record InvoiceCreateRequestModel(
         @JsonProperty("SecondSide") SecondSideModel secondSide,
         @JsonProperty("Content") ContentInvoice content) {
 
-    /** Строитель {@link InvoiceCreateRequestModel}. */
+    /** Builder for {@link InvoiceCreateRequestModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .accountId(this.accountId)
@@ -34,7 +34,7 @@ public record InvoiceCreateRequestModel(
                 .content(this.content);
     }
 
-    /** Строитель {@link InvoiceCreateRequestModel}. */
+    /** Builder for {@link InvoiceCreateRequestModel}. */
     public static final class Builder {
 
         private String accountId;
@@ -42,13 +42,13 @@ public record InvoiceCreateRequestModel(
         private SecondSideModel secondSide;
         private ContentInvoice content;
 
-        /** Уникальный и неизменный идентификатор счёта. Например: "40817810802000000008/044525104" */
+        /** Уникальный и неизменный идентификатор счёта. Example: "40817810802000000008/044525104" */
         public Builder accountId(String accountId) {
             this.accountId = accountId;
             return this;
         }
 
-        /** Уникальный код клиента. Например: "300000092" */
+        /** Уникальный код клиента. Example: "300000092" */
         public Builder customerCode(String customerCode) {
             this.customerCode = customerCode;
             return this;

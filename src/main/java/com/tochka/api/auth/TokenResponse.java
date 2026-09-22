@@ -8,15 +8,15 @@ import java.time.Instant;
 import java.util.Optional;
 
 /**
- * Ответ эндпоинта {@code /connect/token}.
+ * Response of the {@code /connect/token} endpoint.
  *
- * @param accessToken  токен доступа к методам API; живёт 24 часа
- * @param refreshToken токен обновления; живёт 30 дней. Отсутствует в потоке client_credentials
- * @param tokenType    тип токена, всегда {@code bearer}
- * @param expiresIn    срок жизни access-токена в секундах
- * @param state        произвольная строка, переданная при запросе подтверждения
- * @param userId       идентификатор пользователя, подтвердившего разрешения
- * @param obtainedAt   момент получения токена — по нему считается {@link #expiresAt()}
+ * @param accessToken  access token for API methods; lives for 24 hours
+ * @param refreshToken refresh token; lives for 30 days. Absent in the client_credentials flow
+ * @param tokenType    token type, always {@code bearer}
+ * @param expiresIn    lifetime of the access token in seconds
+ * @param state        arbitrary string passed when the consent was requested
+ * @param userId       id of the user who approved the permissions
+ * @param obtainedAt   the moment the token was obtained — {@link #expiresAt()} is based on it
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record TokenResponse(
@@ -28,7 +28,7 @@ public record TokenResponse(
         @JsonProperty("user_id") String userId,
         @JsonProperty("obtained_at") Instant obtainedAt) {
 
-    /** Момент истечения access-токена. */
+    /** The moment the access token expires. */
     public Optional<Instant> expiresAt() {
         if (expiresIn == null) {
             return Optional.empty();
@@ -38,9 +38,9 @@ public record TokenResponse(
     }
 
     /**
-     * Истёк ли токен с учётом запаса.
+     * Whether the token has expired, taking a safety margin into account.
      *
-     * @param safetyMargin запас: токен считается истёкшим заранее, чтобы не попасть в гонку
+     * @param safetyMargin margin that makes the token count as expired early, to avoid a race
      */
     public boolean isExpired(Duration safetyMargin) {
         return expiresAt()
@@ -48,7 +48,7 @@ public record TokenResponse(
                 .orElse(false);
     }
 
-    /** Копия с проставленным моментом получения. */
+    /** A copy with the moment of acquisition filled in. */
     public TokenResponse withObtainedAt(Instant instant) {
         return new TokenResponse(accessToken, refreshToken, tokenType, expiresIn, state, userId, instant);
     }

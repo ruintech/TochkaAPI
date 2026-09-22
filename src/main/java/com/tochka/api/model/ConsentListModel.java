@@ -15,18 +15,18 @@ import java.util.List;
 public record ConsentListModel(
         @JsonProperty("Consent") List<ConsentResponseModel> consent) {
 
-    /** Строитель {@link ConsentListModel}. */
+    /** Builder for {@link ConsentListModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .consent(this.consent);
     }
 
-    /** Строитель {@link ConsentListModel}. */
+    /** Builder for {@link ConsentListModel}. */
     public static final class Builder {
 
         private List<ConsentResponseModel> consent;

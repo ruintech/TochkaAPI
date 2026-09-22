@@ -28,33 +28,33 @@ import java.util.Base64;
 import java.util.Objects;
 
 /**
- * Проверяет подпись вебхука Точка Банка и превращает его в типизированное событие.
+ * Verifies the signature of a Tochka Bank webhook and turns it into a typed event.
  *
- * <p>В теле вебхука приходит не JSON, а «голая» строка JWT, подписанная алгоритмом RS256
- * (заголовок {@code Content-Type: text/plain}). Доверять данным можно только после проверки
- * подписи публичным ключом банка — иначе запрос мог прислать кто угодно.
+ * <p>A webhook body is not JSON but a bare JWT string signed with RS256 (the header says
+ * {@code Content-Type: text/plain}). The data may only be trusted after the signature is checked
+ * against the bank public key — otherwise anyone could have sent the request.
  *
- * <p>По умолчанию ключ берётся с {@value #TOCHKA_PUBLIC_KEY_URL}, кешируется на
- * {@link Builder#keyCacheTtl(Duration)} и автоматически перечитывается, если подпись перестала
- * сходиться, — так интеграция переживёт смену ключа банком. Поэтому обычно достаточно:
+ * <p>By default the key is taken from {@value #TOCHKA_PUBLIC_KEY_URL}, cached for
+ * {@link Builder#keyCacheTtl(Duration)} and re-read automatically once a signature stops
+ * matching, so the integration survives a key rotation. Usually this is all it takes:
  *
  * <pre>{@code
  * WebhookVerifier verifier = WebhookVerifier.usingTochkaPublicKey();
  *
- * // тело запроса — строка JWT целиком, Content-Type: text/plain
+ * // the request body is the whole JWT string, Content-Type: text/plain
  * WebhookEvent event = verifier.verify(requestBody);
  * }</pre>
  *
- * <p>Если приложение не должно ходить за ключом в рантайме, задайте его явно —
- * {@link Builder#publicKeyPem(String)} или {@link Builder#publicKey(PublicKey)}. Тогда следите
- * за сменой ключа сами: подписи перестанут сходиться, а обновить ключ будет некому.
+ * <p>If the application must not fetch anything at runtime, set the key explicitly with
+ * {@link Builder#publicKeyPem(String)} or {@link Builder#publicKey(PublicKey)}. Then watch for
+ * key rotation yourself: signatures will simply stop matching and nothing will refresh the key.
  *
- * <p>Отвечайте банку кодом 200: на любой другой ответ вебхук будет повторён 30 раз с
- * интервалом 10 секунд.
+ * <p>Answer the bank with status 200: on any other response the webhook is repeated 30 times
+ * at 10 second intervals.
  */
 public final class WebhookVerifier {
 
-    /** Адрес, по которому Точка публикует публичный ключ вебхуков (JWK). */
+    /** URL where Tochka publishes the webhook public key (JWK). */
     public static final String TOCHKA_PUBLIC_KEY_URL = "https://enter.tochka.com/doc/openapi/static/keys/public";
 
     private static final Base64.Decoder URL_DECODER = Base64.getUrlDecoder();
@@ -79,16 +79,16 @@ public final class WebhookVerifier {
     }
 
     /**
-     * Проверяющий с ключом, опубликованным банком по адресу {@value #TOCHKA_PUBLIC_KEY_URL}.
-     * Ключ скачивается при первой проверке и кешируется на 6 часов.
+     * A verifier using the key published by the bank at {@value #TOCHKA_PUBLIC_KEY_URL}. The key
+     * is downloaded on the first verification and cached for 6 hours.
      */
     public static WebhookVerifier usingTochkaPublicKey() {
         return builder().build();
     }
 
     private static HttpClient defaultHttpClient(SSLContext sslContext) {
-        // Ключ опубликован на enter.tochka.com, а это сертификаты Минцифры: без них рукопожатие
-        // оборвётся на PKIX ещё до запроса.
+        // The key lives on enter.tochka.com, which serves Ministry of Digital Development
+        // certificates: without them the handshake dies on PKIX before the request is sent.
         return HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(10))
                 .sslContext(sslContext != null ? sslContext : RussianTrustedCa.sslContext())
@@ -96,11 +96,11 @@ public final class WebhookVerifier {
     }
 
     /**
-     * Проверяет подпись и разбирает событие.
+     * Verifies the signature and parses the event.
      *
-     * @param jwt тело запроса — строка JWT целиком
-     * @return типизированное событие; неизвестный тип вернётся как {@link UnknownWebhookEvent}
-     * @throws WebhookVerificationException если подпись не сходится или формат некорректен
+     * @param jwt the request body — the whole JWT string
+     * @return a typed event; an unknown type comes back as {@link UnknownWebhookEvent}
+     * @throws WebhookVerificationException if the signature does not match or the format is wrong
      */
     public WebhookEvent verify(String jwt) {
         JsonNode payload = verifyToJson(jwt);
@@ -112,8 +112,8 @@ public final class WebhookVerifier {
     }
 
     /**
-     * Проверяет подпись и возвращает полезную нагрузку как дерево JSON — на случай, если нужны
-     * поля, которых ещё нет в типизированных событиях.
+     * Verifies the signature and returns the payload as a JSON tree — for the case when fields
+     * missing from the typed events are needed.
      */
     public JsonNode verifyToJson(String jwt) {
         String token = jwt == null ? "" : jwt.trim();
@@ -134,7 +134,7 @@ public final class WebhookVerifier {
         byte[] signature = decodeBase64Url(parts[2], "подпись");
 
         if (!verifySignature(resolveKey(false), signedData, signature)) {
-            // Заданный вручную ключ перечитывать неоткуда — в сеть ходим только за скачанным.
+            // A manually supplied key has nowhere to be re-read from: only a downloaded one is refetched.
             boolean verifiedAfterRefresh = staticKey == null
                     && verifySignature(resolveKey(true), signedData, signature);
             if (!verifiedAfterRefresh) {
@@ -198,9 +198,9 @@ public final class WebhookVerifier {
     }
 
     /**
-     * Разбирает публичный ключ из PEM (в том числе из сертификата) или из JWKS.
+     * Parses a public key from PEM (including from a certificate) or from JWKS.
      *
-     * @param material содержимое PEM-файла или JSON вида {@code {"keys":[{"kty":"RSA",...}]}}
+     * @param material contents of a PEM file, or JSON such as {@code {"keys":[{"kty":"RSA",...}]}}
      */
     public static PublicKey parseKey(String material) {
         String trimmed = material == null ? "" : material.trim();
@@ -270,7 +270,7 @@ public final class WebhookVerifier {
         }
     }
 
-    /** Строитель {@link WebhookVerifier}. */
+    /** Builder for {@link WebhookVerifier}. */
     public static final class Builder {
         private PublicKey publicKey;
         private URI publicKeyUrl = URI.create(TOCHKA_PUBLIC_KEY_URL);
@@ -278,44 +278,44 @@ public final class WebhookVerifier {
         private HttpClient httpClient;
         private SSLContext sslContext;
 
-        /** Готовый публичный ключ. */
+        /** A ready public key. */
         public Builder publicKey(PublicKey publicKey) {
             this.publicKey = publicKey;
             return this;
         }
 
-        /** Публичный ключ в формате PEM — как есть, вместе со строками {@code BEGIN}/{@code END}. */
+        /** A public key in PEM format — as is, including the {@code BEGIN}/{@code END} lines. */
         public Builder publicKeyPem(String pem) {
             this.publicKey = parseKey(pem);
             return this;
         }
 
         /**
-         * Адрес, по которому опубликован публичный ключ (PEM или JWK). По умолчанию —
-         * {@value WebhookVerifier#TOCHKA_PUBLIC_KEY_URL}. Ключ кешируется на
-         * {@link #keyCacheTtl(Duration)} и перечитывается, если подпись перестала сходиться.
+         * URL where the public key is published (PEM or JWK). Defaults to
+         * {@value WebhookVerifier#TOCHKA_PUBLIC_KEY_URL}. The key is cached for
+         * {@link #keyCacheTtl(Duration)} and re-read once a signature stops matching.
          */
         public Builder publicKeyUrl(URI publicKeyUrl) {
             this.publicKeyUrl = Objects.requireNonNull(publicKeyUrl, "publicKeyUrl");
             return this;
         }
 
-        /** Время жизни кеша ключа; по умолчанию 6 часов. */
+        /** Key cache lifetime; 6 hours by default. */
         public Builder keyCacheTtl(Duration keyCacheTtl) {
             this.keyCacheTtl = keyCacheTtl;
             return this;
         }
 
-        /** Свой HTTP-клиент для загрузки ключа. */
+        /** A custom HTTP client for downloading the key. */
         public Builder httpClient(HttpClient httpClient) {
             this.httpClient = httpClient;
             return this;
         }
 
         /**
-         * SSL-контекст для загрузки ключа. По умолчанию используется
-         * {@link RussianTrustedCa#sslContext()} — без сертификатов Минцифры соединение с
-         * {@code enter.tochka.com} не установится.
+         * SSL context used to download the key. Defaults to {@link RussianTrustedCa#sslContext()}:
+         * without the Ministry of Digital Development certificates a connection to
+         * {@code enter.tochka.com} cannot be established.
          */
         public Builder sslContext(SSLContext sslContext) {
             this.sslContext = sslContext;

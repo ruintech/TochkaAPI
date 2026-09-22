@@ -7,10 +7,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * ActivateCashboxQrCodeRequestModel
  *
- * @param amount Сумма в копейках.. Например: "500000"
- * @param currency Currency. Валюта операции (необязательное)
- * @param paymentPurpose Назначение платежа. Например: "Оплата по счету № 1 от 01.01.2021. Без НДС" (необязательное)
- * @param ttl Период использования QR-кода в минутах. Например: 7 (необязательное)
+ * @param amount Сумма в копейках.. Example: "500000"
+ * @param currency Currency. Валюта операции (optional)
+ * @param paymentPurpose Назначение платежа. Example: "Оплата по счету № 1 от 01.01.2021. Без НДС" (optional)
+ * @param ttl Период использования QR-кода в минутах. Example: 7 (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -20,12 +20,12 @@ public record ActivateCashboxQrCodeRequestModel(
         @JsonProperty("paymentPurpose") String paymentPurpose,
         @JsonProperty("ttl") Integer ttl) {
 
-    /** Строитель {@link ActivateCashboxQrCodeRequestModel}. */
+    /** Builder for {@link ActivateCashboxQrCodeRequestModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .amount(this.amount)
@@ -34,7 +34,7 @@ public record ActivateCashboxQrCodeRequestModel(
                 .ttl(this.ttl);
     }
 
-    /** Строитель {@link ActivateCashboxQrCodeRequestModel}. */
+    /** Builder for {@link ActivateCashboxQrCodeRequestModel}. */
     public static final class Builder {
 
         private Long amount;
@@ -42,7 +42,7 @@ public record ActivateCashboxQrCodeRequestModel(
         private String paymentPurpose;
         private Integer ttl;
 
-        /** Сумма в копейках.. Например: "500000" */
+        /** Сумма в копейках.. Example: "500000" */
         public Builder amount(Long amount) {
             this.amount = amount;
             return this;
@@ -54,13 +54,13 @@ public record ActivateCashboxQrCodeRequestModel(
             return this;
         }
 
-        /** Назначение платежа. Например: "Оплата по счету № 1 от 01.01.2021. Без НДС" */
+        /** Назначение платежа. Example: "Оплата по счету № 1 от 01.01.2021. Без НДС" */
         public Builder paymentPurpose(String paymentPurpose) {
             this.paymentPurpose = paymentPurpose;
             return this;
         }
 
-        /** Период использования QR-кода в минутах. Например: 7 */
+        /** Период использования QR-кода в минутах. Example: 7 */
         public Builder ttl(Integer ttl) {
             this.ttl = ttl;
             return this;

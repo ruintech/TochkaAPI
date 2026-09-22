@@ -14,18 +14,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public record ActivateCashboxQrCodeRequestDataModel(
         @JsonProperty("Data") ActivateCashboxQrCodeRequestModel data) {
 
-    /** Строитель {@link ActivateCashboxQrCodeRequestDataModel}. */
+    /** Builder for {@link ActivateCashboxQrCodeRequestDataModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .data(this.data);
     }
 
-    /** Строитель {@link ActivateCashboxQrCodeRequestDataModel}. */
+    /** Builder for {@link ActivateCashboxQrCodeRequestDataModel}. */
     public static final class Builder {
 
         private ActivateCashboxQrCodeRequestModel data;

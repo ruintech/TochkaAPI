@@ -5,15 +5,15 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
- * Авторизация по OAuth 2.0 с автоматическим обновлением access-токена по refresh-токену.
+ * OAuth 2.0 authorization that refreshes the access token automatically using the refresh token.
  *
- * <p>Access-токен живёт 24 часа, refresh — 30 дней. Клиент обновляет пару сам, когда до
- * истечения остаётся меньше {@link Builder#safetyMargin(Duration)}. Новый refresh-токен
- * приходит вместе с новым access-токеном и заменяет прежний, поэтому сохраняйте его через
- * {@link Builder#onTokenRefreshed(Consumer)} — иначе после перезапуска приложения придётся
- * заново проходить подтверждение разрешений.
+ * <p>The access token lives for 24 hours, the refresh token for 30 days. The pair is renewed as
+ * soon as less than {@link Builder#safetyMargin(Duration)} is left. A new refresh token arrives
+ * together with the new access token and replaces the previous one, so persist it via
+ * {@link Builder#onTokenRefreshed(Consumer)} — otherwise the consent has to be approved again
+ * after an application restart.
  *
- * <p>Класс потокобезопасен: одновременные запросы не приведут к нескольким обновлениям подряд.
+ * <p>The class is thread-safe: concurrent requests will not trigger several refreshes in a row.
  */
 public final class OAuth2Authorization implements Authorization {
 
@@ -39,7 +39,7 @@ public final class OAuth2Authorization implements Authorization {
         return "Bearer " + currentToken().accessToken();
     }
 
-    /** Текущий токен; при необходимости он будет обновлён прямо в этом вызове. */
+    /** The current token; it is refreshed inside this call when needed. */
     public synchronized TokenResponse currentToken() {
         if (token.isExpired(safetyMargin) && token.refreshToken() != null) {
             refresh();
@@ -47,7 +47,7 @@ public final class OAuth2Authorization implements Authorization {
         return token;
     }
 
-    /** Принудительно обновляет пару токенов, не дожидаясь истечения текущей. */
+    /** Refreshes the token pair right away, without waiting for the current one to expire. */
     public synchronized TokenResponse refresh() {
         TokenResponse refreshed = client.refresh(token.refreshToken());
         this.token = refreshed;
@@ -57,7 +57,7 @@ public final class OAuth2Authorization implements Authorization {
         return refreshed;
     }
 
-    /** Строитель {@link OAuth2Authorization}. */
+    /** Builder for {@link OAuth2Authorization}. */
     public static final class Builder {
         private OAuth2Client client;
         private TokenResponse token;
@@ -69,28 +69,28 @@ public final class OAuth2Authorization implements Authorization {
             return this;
         }
 
-        /** Пара токенов, полученная методом {@link OAuth2Client#exchangeCode}. */
+        /** The token pair obtained from {@link OAuth2Client#exchangeCode}. */
         public Builder token(TokenResponse token) {
             this.token = token;
             return this;
         }
 
         /**
-         * Восстановление состояния после перезапуска: сохранённый refresh-токен. Access-токен
-         * будет получен при первом же запросе.
+         * Restores state after a restart from a stored refresh token. The access token is
+         * obtained on the very first request.
          */
         public Builder refreshToken(String refreshToken) {
             this.token = new TokenResponse(null, refreshToken, "bearer", 0L, null, null, null);
             return this;
         }
 
-        /** За сколько до истечения обновлять токен; по умолчанию 5 минут. */
+        /** How long before expiry the token is refreshed; 5 minutes by default. */
         public Builder safetyMargin(Duration safetyMargin) {
             this.safetyMargin = safetyMargin;
             return this;
         }
 
-        /** Вызывается после каждого обновления — сюда стоит повесить сохранение refresh-токена. */
+        /** Called after every refresh — the right place to persist the refresh token. */
         public Builder onTokenRefreshed(Consumer<TokenResponse> onTokenRefreshed) {
             this.onTokenRefreshed = onTokenRefreshed;
             return this;

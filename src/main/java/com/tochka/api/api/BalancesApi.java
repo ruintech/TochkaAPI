@@ -7,9 +7,9 @@ import com.tochka.api.model.CardTransactionModel;
 import java.util.List;
 
 /**
- * Остатки по счетам и авторизованные карточные операции.
+ * Account balances and authorized card transactions.
  *
- * <p>Экземпляр доступен через {@link com.tochka.api.TochkaClient}.
+ * <p>An instance is available from {@link com.tochka.api.TochkaClient}.
  */
 public final class BalancesApi {
 
@@ -27,7 +27,7 @@ public final class BalancesApi {
      * реальном времени, не дожидаясь выписки. Как устроен резерв и карточные операции — в разделе
      * «Баланс счёта (/docs/tochka-api/opisanie-metodov/balans-schyota)».
      *
-     * <p>Требуемые разрешения: {@code ReadBalances}.
+     * <p>Required permissions: {@code ReadBalances}.
      *
      * @param accountId Идентификатор счета
      */
@@ -45,7 +45,7 @@ public final class BalancesApi {
      * то, как посчитать доступную сумму — в разделе «Баланс счёта
      * (/docs/tochka-api/opisanie-metodov/balans-schyota)».
      *
-     * <p>Требуемые разрешения: {@code ReadBalances}.
+     * <p>Required permissions: {@code ReadBalances}.
      *
      * @param accountId Идентификатор счета
      */
@@ -62,7 +62,7 @@ public final class BalancesApi {
      * а не вызывать метод для каждого счёта. Про типы баланса и формат ответа — в разделе «Баланс
      * счёта (/docs/tochka-api/opisanie-metodov/balans-schyota)»
      *
-     * <p>Требуемые разрешения: {@code ReadBalances}.
+     * <p>Required permissions: {@code ReadBalances}.
      */
     public List<BalanceModel> getBalancesList() {
         return transport.request("GET", "/open-banking/v1.0/balances")

@@ -17,7 +17,7 @@ class RetryPolicyTest {
 
         assertTrue(policy.shouldRetry(1, "GET", 503));
         assertTrue(policy.shouldRetry(2, "DELETE", 500));
-        assertFalse(policy.shouldRetry(3, "GET", 500), "третья попытка — последняя");
+        assertFalse(policy.shouldRetry(3, "GET", 500), "the third attempt is the last one");
         assertFalse(policy.shouldRetry(1, "GET", 400));
     }
 
@@ -26,7 +26,7 @@ class RetryPolicyTest {
         RetryPolicy policy = RetryPolicy.defaults();
 
         assertFalse(policy.shouldRetry(1, "POST", 500));
-        assertTrue(policy.shouldRetry(1, "POST", 429), "429 означает, что запрос не был обработан");
+        assertTrue(policy.shouldRetry(1, "POST", 429), "429 means the request was not processed");
     }
 
     @Test

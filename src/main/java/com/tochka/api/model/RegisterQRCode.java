@@ -7,16 +7,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * RegisterQRCode
  *
- * @param amount Сумма в копейках. Поле обязательно для заполнения, если тип QR = QR-Dynamic (необязательное)
- * @param currency Валюта операции. Например: "RUB" (необязательное)
- * @param paymentPurpose Назначение платежа. Например: "Оплата по счету № 1 от 01.01.2021. Без НДС"
- * @param qrcType Тип QR-кода. Например: "01"
- * @param imageParams Параметры изображения (необязательное)
- * @param sourceName Название источника. Cистема, создавшая QR-код (необязательное)
- * @param ttl Период использования QR-кода в минутах. Задается, только если тип QR = QR-Dynamic
- *        (необязательное)
+ * @param amount Сумма в копейках. Поле обязательно для заполнения, если тип QR = QR-Dynamic (optional)
+ * @param currency Валюта операции. Example: "RUB" (optional)
+ * @param paymentPurpose Назначение платежа. Example: "Оплата по счету № 1 от 01.01.2021. Без НДС"
+ * @param qrcType Тип QR-кода. Example: "01"
+ * @param imageParams Параметры изображения (optional)
+ * @param sourceName Название источника. Cистема, создавшая QR-код (optional)
+ * @param ttl Период использования QR-кода в минутах. Задается, только если тип QR = QR-Dynamic (optional)
  * @param redirectUrl URL адрес. Ссылка для автоматического возврата плательщика из приложения банка в приложение
- *        или на сайт ТСП (необязательное)
+ *        или на сайт ТСП (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -30,12 +29,12 @@ public record RegisterQRCode(
         @JsonProperty("ttl") Integer ttl,
         @JsonProperty("redirectUrl") String redirectUrl) {
 
-    /** Строитель {@link RegisterQRCode}. */
+    /** Builder for {@link RegisterQRCode}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .amount(this.amount)
@@ -48,7 +47,7 @@ public record RegisterQRCode(
                 .redirectUrl(this.redirectUrl);
     }
 
-    /** Строитель {@link RegisterQRCode}. */
+    /** Builder for {@link RegisterQRCode}. */
     public static final class Builder {
 
         private Long amount;
@@ -66,19 +65,19 @@ public record RegisterQRCode(
             return this;
         }
 
-        /** Валюта операции. Например: "RUB" */
+        /** Валюта операции. Example: "RUB" */
         public Builder currency(String currency) {
             this.currency = currency;
             return this;
         }
 
-        /** Назначение платежа. Например: "Оплата по счету № 1 от 01.01.2021. Без НДС" */
+        /** Назначение платежа. Example: "Оплата по счету № 1 от 01.01.2021. Без НДС" */
         public Builder paymentPurpose(String paymentPurpose) {
             this.paymentPurpose = paymentPurpose;
             return this;
         }
 
-        /** Тип QR-кода. Например: "01" */
+        /** Тип QR-кода. Example: "01" */
         public Builder qrcType(QrTypeEnum qrcType) {
             this.qrcType = qrcType;
             return this;

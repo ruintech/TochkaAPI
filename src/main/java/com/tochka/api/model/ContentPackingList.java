@@ -14,18 +14,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public record ContentPackingList(
         @JsonProperty("PackingList") PackingListModel packingList) {
 
-    /** Строитель {@link ContentPackingList}. */
+    /** Builder for {@link ContentPackingList}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .packingList(this.packingList);
     }
 
-    /** Строитель {@link ContentPackingList}. */
+    /** Builder for {@link ContentPackingList}. */
     public static final class Builder {
 
         private PackingListModel packingList;

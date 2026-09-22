@@ -6,9 +6,9 @@ import com.tochka.api.model.AccountModel;
 import java.util.List;
 
 /**
- * Счета компании: список и реквизиты.
+ * Company accounts: list and details.
  *
- * <p>Экземпляр доступен через {@link com.tochka.api.TochkaClient}.
+ * <p>An instance is available from {@link com.tochka.api.TochkaClient}.
  */
 public final class AccountsApi {
 
@@ -23,7 +23,7 @@ public final class AccountsApi {
      * валюту и другие параметры. Подробнее о счетах — в разделе «Счета
      * (/docs/tochka-api/opisanie-metodov/scheta)».
      *
-     * <p>Требуемые разрешения: {@code ReadAccountsBasic, ReadAccountsDetail}.
+     * <p>Required permissions: {@code ReadAccountsBasic, ReadAccountsDetail}.
      *
      * @param accountId Уникальный и неизменный идентификатор счёта
      */
@@ -39,7 +39,7 @@ public final class AccountsApi {
      * удобно начинать: {@code accountId} нужен для запросов баланса, выписок и других операций по
      * счёту. Подробнее о счетах — в разделе «Счета (/docs/tochka-api/opisanie-metodov/scheta)».
      *
-     * <p>Требуемые разрешения: {@code ReadAccountsBasic, ReadAccountsDetail}.
+     * <p>Required permissions: {@code ReadAccountsBasic, ReadAccountsDetail}.
      */
     public List<AccountModel> getAccountsList() {
         return transport.request("GET", "/open-banking/v1.0/accounts")

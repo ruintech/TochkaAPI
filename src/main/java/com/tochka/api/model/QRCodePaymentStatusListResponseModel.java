@@ -18,12 +18,12 @@ public record QRCodePaymentStatusListResponseModel(
         @JsonProperty("Links") LinkModel links,
         @JsonProperty("Meta") MetaModel meta) {
 
-    /** Строитель {@link QRCodePaymentStatusListResponseModel}. */
+    /** Builder for {@link QRCodePaymentStatusListResponseModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .data(this.data)
@@ -31,7 +31,7 @@ public record QRCodePaymentStatusListResponseModel(
                 .meta(this.meta);
     }
 
-    /** Строитель {@link QRCodePaymentStatusListResponseModel}. */
+    /** Builder for {@link QRCodePaymentStatusListResponseModel}. */
     public static final class Builder {
 
         private QRCodePaymentStatusListResponse data;

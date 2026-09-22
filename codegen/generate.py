@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
-"""Генератор Java-моделей и классов сервисов из OpenAPI-спецификации Точка Банка.
+"""Generates Java models and service classes from the Tochka Bank OpenAPI specification.
 
-Запуск:  python3 codegen/generate.py [путь/к/swagger.json]
+Usage:  python3 codegen/generate.py [path/to/swagger.json]
 
-Перезаписывает только пакеты com.tochka.api.model и com.tochka.api.api — рукописное
-ядро клиента (http, auth, webhook, tls) генератор не трогает.
+Only the com.tochka.api.model and com.tochka.api.api packages are overwritten; the
+hand-written client core (http, auth, webhook, tls) is never touched.
+
+Text taken from the specification (field titles, method descriptions, examples) is copied
+into the generated javadoc as is, so it stays in Russian — that is how the bank writes it.
 """
 
 import json
@@ -31,7 +34,7 @@ JAVA_KEYWORDS = {
     "volatile", "while", "true", "false", "null", "record", "var", "yield",
 }
 
-# Схемы, чьи имена в спецификации содержат служебные префиксы модулей питон-бэкенда.
+# Schemas whose specification names carry internal module prefixes of the bank's backend.
 SCHEMA_NAME_OVERRIDES = {
     "application__invoice__models__enums__PaymentStatusEnum": "InvoicePaymentStatusEnum",
     "application__sbp__models__enums__PaymentStatusEnum": "SbpQrCodePaymentStatusEnum",
@@ -45,28 +48,28 @@ SCHEMA_NAME_OVERRIDES = {
     "ReceiptItemModel-Output": "ReceiptItemOutputModel",
 }
 
-# Тег OpenAPI -> класс сервиса и заголовок javadoc.
+# OpenAPI tag -> service class name and its javadoc summary.
 TAG_TO_API = OrderedDict([
-    ("Работа со счетами", ("AccountsApi", "Счета компании: список и реквизиты.")),
-    ("Работа с балансами счетов", ("BalancesApi", "Остатки по счетам и авторизованные карточные операции.")),
-    ("Работа с выписками", ("StatementsApi", "Выписки по счёту: заказ, получение и список.")),
-    ("Работа с клиентами", ("CustomersApi", "Компании, подключённые к вашему доступу в API.")),
-    ("Работа с платежами", ("PaymentsApi", "Платёжные поручения: создание платежа на подпись и его статус.")),
-    ("Работа с платёжными ссылками", ("AcquiringApi", "Интернет-эквайринг: платёжные ссылки, возвраты, реестр и торговые точки.")),
-    ("Работа с подписками", ("SubscriptionsApi", "Подписки (рекуррентные платежи) по банковским картам.")),
-    ("Работа с выставлением счетов", ("InvoicesApi", "Счета на оплату для юрлиц и ИП.")),
-    ("Работа с закрывающими документами", ("ClosingDocumentsApi", "Акты, накладные, счета-фактуры и УПД.")),
-    ("Работа с вебхуками", ("WebhooksApi", "Подписка на события по счетам и платежам.")),
-    ("Работа с разрешениями", ("ConsentsApi", "Списки разрешений (consent) для авторизации по OAuth 2.0.")),
-    ("Сервис СБП: Работа с ЮЛ", ("SbpLegalEntitiesApi", "СБП: регистрация юрлица и его счета.")),
-    ("Сервис СБП: Работа с ТСП", ("SbpMerchantsApi", "СБП: торгово-сервисные предприятия (торговые точки).")),
-    ("Сервис СБП: Работа с QR-кодами", ("SbpQrCodesApi", "СБП: статические и динамические QR-коды.")),
-    ("Сервис СБП: Работа с кассовыми QR-кодами", ("SbpCashboxQrCodesApi", "СБП: кассовые QR-коды — один код, много оплат с переактивацией.")),
-    ("Сервис СБП: работа с B2B QR-кодами", ("SbpB2bQrCodesApi", "СБП: B2B QR-коды для приёма платежей от ИП и организаций.")),
-    ("Сервис СБП: Работа с возвратами", ("SbpRefundsApi", "СБП: возвраты платежей, принятых по QR-кодам.")),
+    ("Работа со счетами", ("AccountsApi", "Company accounts: list and details.")),
+    ("Работа с балансами счетов", ("BalancesApi", "Account balances and authorized card transactions.")),
+    ("Работа с выписками", ("StatementsApi", "Account statements: ordering, retrieval and listing.")),
+    ("Работа с клиентами", ("CustomersApi", "Companies connected to your API access.")),
+    ("Работа с платежами", ("PaymentsApi", "Payment orders: creating a payment for signing and checking its status.")),
+    ("Работа с платёжными ссылками", ("AcquiringApi", "Internet acquiring: payment links, refunds, registry and retailers.")),
+    ("Работа с подписками", ("SubscriptionsApi", "Subscriptions (recurring card payments).")),
+    ("Работа с выставлением счетов", ("InvoicesApi", "Invoices for companies and sole proprietors.")),
+    ("Работа с закрывающими документами", ("ClosingDocumentsApi", "Closing documents: acts, packing lists, invoices and UPD.")),
+    ("Работа с вебхуками", ("WebhooksApi", "Webhook subscriptions for account and payment events.")),
+    ("Работа с разрешениями", ("ConsentsApi", "Consents (permission lists) used by OAuth 2.0 authorization.")),
+    ("Сервис СБП: Работа с ЮЛ", ("SbpLegalEntitiesApi", "SBP: legal entity registration and its accounts.")),
+    ("Сервис СБП: Работа с ТСП", ("SbpMerchantsApi", "SBP: merchants (points of sale).")),
+    ("Сервис СБП: Работа с QR-кодами", ("SbpQrCodesApi", "SBP: static and dynamic QR codes.")),
+    ("Сервис СБП: Работа с кассовыми QR-кодами", ("SbpCashboxQrCodesApi", "SBP: cashbox QR codes — one code, many payments, reactivated before each one.")),
+    ("Сервис СБП: работа с B2B QR-кодами", ("SbpB2bQrCodesApi", "SBP: B2B QR codes for payments from companies and sole proprietors.")),
+    ("Сервис СБП: Работа с возвратами", ("SbpRefundsApi", "SBP: refunds of payments accepted via QR codes.")),
 ])
 
-# Путь в поле пути -> тип параметра Java, отличный от String.
+# Path parameter name -> Java type other than String, plus how to render it as a string.
 PATH_PARAM_OVERRIDES = {
     "qrcIds": ("java.util.List<String>", 'String.join(",", {name})'),
 }
@@ -100,7 +103,7 @@ def camel(name):
     result = pascal(name)
     if not result:
         return "value"
-    # Сохраняем аббревиатуры вида URL, ID: опускаем только первую букву.
+    # Keep acronyms such as URL or ID intact: only the first letter is lowercased.
     result = result[0].lower() + result[1:]
     if result in JAVA_KEYWORDS:
         result += "Value"
@@ -128,7 +131,7 @@ def javadoc_escape(text):
     text = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
     text = text.replace("*/", "*&#47;").replace("@", "&#64;")
     text = " ".join(text.split())
-    # Markdown из описаний спецификации приводим к разметке javadoc.
+    # Convert the markdown used in specification descriptions into javadoc markup.
     text = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r"\1 (\2)", text)
     text = re.sub(r"`([^`]+)`", r"{&#64;code \1}", text)
     text = text.replace("{&#64;code ", "{@code ")
@@ -137,7 +140,7 @@ def javadoc_escape(text):
 
 
 def wrap_javadoc(text, indent="", first_prefix=""):
-    """Складывает текст в строки javadoc шириной около 100 символов."""
+    """Wraps text into javadoc lines of roughly 100 characters."""
     words = text.split()
     lines = []
     current = first_prefix
@@ -169,17 +172,17 @@ class Generator:
         duplicates = [n for n in self.class_names.values()
                       if list(self.class_names.values()).count(n) > 1]
         if duplicates:
-            raise SystemExit("Конфликт имён классов: %s" % sorted(set(duplicates)))
+            raise SystemExit("Class name conflict: %s" % sorted(set(duplicates)))
         self.files_written = []
 
-    # --- работа со схемами -------------------------------------------------
+    # --- schema helpers ----------------------------------------------------
 
     def ref_name(self, schema):
         ref = schema.get("$ref")
         return ref.split("/")[-1] if ref else None
 
     def resolve(self, schema):
-        """Разворачивает $ref до самой схемы."""
+        """Follows $ref until the actual schema is reached."""
         seen = 0
         while "$ref" in schema and seen < 10:
             schema = self.schemas[self.ref_name(schema)]
@@ -223,11 +226,11 @@ class Generator:
         examples = schema.get("examples")
         if examples:
             sample = ", ".join(json.dumps(e, ensure_ascii=False) for e in examples[:2])
-            text = (text + ". " if text else "") + "Например: " + sample
+            text = (text + ". " if text else "") + "Example: " + sample
         enum_ref = self.ref_name(schema)
         return javadoc_escape(text)
 
-    # --- генерация моделей -------------------------------------------------
+    # --- model generation --------------------------------------------------
 
     def generate_models(self):
         for name, schema in sorted(self.schemas.items()):
@@ -246,9 +249,9 @@ class Generator:
         for line in wrap_javadoc(title):
             lines.append(" * " + line)
         lines += [" *",
-                  " * <p>Неизвестное значение, которого ещё нет в этой версии библиотеки,",
-                  " * разбирается в {@code null}, а не приводит к ошибке — используйте",
-                  " * {@link #parse(String)}, если незнакомое значение должно быть ошибкой.",
+                  " * <p>A value that is not yet known to this version of the library is parsed",
+                  " * as {@code null} instead of failing; use {@link #parse(String)} when an",
+                  " * unknown value must be an error.",
                   " */",
                   "public enum %s {" % class_name, ""]
         values = schema["enum"]
@@ -268,12 +271,12 @@ class Generator:
                   "    %s(String value) {" % class_name,
                   "        this.value = value;",
                   "    }", "",
-                  "    /** Значение, как оно передаётся в JSON. */",
+                  "    /** The value as it is sent over the wire. */",
                   "    @JsonValue",
                   "    public String value() {",
                   "        return this.value;",
                   "    }", "",
-                  "    /** Разбирает значение из JSON; неизвестное значение даёт {@code null}. */",
+                  "    /** Parses a wire value; an unknown one yields {@code null}. */",
                   "    @JsonCreator",
                   "    public static %s fromValue(String value) {" % class_name,
                   "        if (value == null) {",
@@ -286,7 +289,7 @@ class Generator:
                   "        }",
                   "        return null;",
                   "    }", "",
-                  "    /** Разбирает значение, выбрасывая исключение на неизвестном. */",
+                  "    /** Parses a wire value, throwing on an unknown one. */",
                   "    public static %s parse(String value) {" % class_name,
                   "        %s parsed = fromValue(value);" % class_name,
                   "        if (parsed == null) {",
@@ -327,7 +330,7 @@ class Generator:
             lines.append(" *")
             for field in fields:
                 doc = field["doc"] or field["json"]
-                mark = "" if field["required"] else " (необязательное)"
+                mark = "" if field["required"] else " (optional)"
                 wrapped = wrap_javadoc(doc + mark, indent="    ")
                 lines.append(" * @param %s %s" % (field["name"], wrapped[0] if wrapped else field["json"]))
                 for extra in wrapped[1:]:
@@ -351,18 +354,18 @@ class Generator:
         return "\n".join(lines)
 
     def render_builder(self, class_name, fields):
-        lines = ["    /** Строитель {@link %s}. */" % class_name,
+        lines = ["    /** Builder for {@link %s}. */" % class_name,
                  "    public static Builder builder() {",
                  "        return new Builder();",
                  "    }", "",
-                 "    /** Копия строителя, заполненная значениями этого объекта. */",
+                 "    /** A builder pre-filled with the values of this object. */",
                  "    public Builder toBuilder() {",
                  "        return new Builder()"]
         for index, field in enumerate(fields):
             suffix = ";" if index == len(fields) - 1 else ""
             lines.append("                .%s(this.%s)%s" % (field["name"], field["name"], suffix))
         lines += ["    }", "",
-                  "    /** Строитель {@link %s}. */" % class_name,
+                  "    /** Builder for {@link %s}. */" % class_name,
                   "    public static final class Builder {", ""]
         for field in fields:
             lines.append("        private %s %s;" % (field["type"], field["name"]))
@@ -395,10 +398,10 @@ class Generator:
             handle.write(source)
         self.files_written.append(path)
 
-    # --- генерация классов сервисов ---------------------------------------
+    # --- service class generation ------------------------------------------
 
     def response_plan(self, op):
-        """Возвращает (вид, путь_в_конверте, java-тип, пагинация) для успешного ответа."""
+        """Returns (kind, envelope_path, java_type, paginated) for the successful response."""
         content = op.get("responses", {}).get("200", {}).get("content", {})
         if "application/pdf" in content or "application/octet-stream" in content:
             return ("binary", [], "BinaryContent", False)
@@ -430,7 +433,7 @@ class Generator:
         return ("json", path, self.java_type(node), paginated)
 
     def request_plan(self, op):
-        """Возвращает (путь_обёртки, java-тип, имя параметра) для тела запроса."""
+        """Returns (envelope_path, java_type, parameter_name, doc) for the request body."""
         body = op.get("requestBody")
         if not body:
             return None
@@ -454,7 +457,7 @@ class Generator:
         param = camel(name) if name else "request"
         if param == "data":
             param = "request"
-        return (path, java, param, self.field_doc(node) or "тело запроса")
+        return (path, java, param, self.field_doc(node) or "request body")
 
     def generate_apis(self):
         by_tag = OrderedDict((tag, []) for tag in TAG_TO_API)
@@ -464,7 +467,7 @@ class Generator:
                     continue
                 tag = op["tags"][0]
                 if tag not in by_tag:
-                    raise SystemExit("Неизвестный тег: %s" % tag)
+                    raise SystemExit("Unknown OpenAPI tag, add it to TAG_TO_API: %s" % tag)
                 by_tag[tag].append((method.upper(), path, op))
 
         for tag, operations in by_tag.items():
@@ -483,7 +486,7 @@ class Generator:
         for line in wrap_javadoc(javadoc_escape(summary)):
             lines.append(" * " + line)
         lines += [" *",
-                  " * <p>Экземпляр доступен через {@link com.tochka.api.TochkaClient}.",
+                  " * <p>An instance is available from {@link com.tochka.api.TochkaClient}.",
                   " */",
                   "public final class %s {" % class_name, "",
                   "    private final Transport transport;", "",
@@ -548,7 +551,7 @@ class Generator:
                 statements.append('                .header("customer-code", %s != null ? %s : transport.defaultCustomerCode())'
                                   % (java_name, java_name))
                 signature.append(("String", java_name))
-                docs.append((java_name, "уникальный код клиента; {@code null} — взять код по умолчанию из клиента"))
+                docs.append((java_name, "customer code; {@code null} takes the code configured on the client"))
 
         header_customer_code = None
         for param in header_params:
@@ -571,7 +574,7 @@ class Generator:
         if options_class:
             lines.extend(self.render_options_class(options_class, optional_query, imports))
             option_signature = signature + [(options_class, "options")]
-            option_docs = docs + [("options", "необязательные параметры запроса; {@code null} — значения по умолчанию")]
+            option_docs = docs + [("options", "optional query parameters; {@code null} means defaults")]
             option_statements = list(statements)
             for param in optional_query:
                 option_statements.append('                .query("%s", options == null ? null : options.%s())'
@@ -655,7 +658,7 @@ class Generator:
             lines.append("     * " + line)
         if default_customer_code:
             lines += ["     *",
-                      "     * <p>Код клиента берётся из настроек клиента"
+                      "     * <p>The customer code is taken from the client configuration"
                       " ({@code TochkaClient.builder().customerCode(...)})."]
         scopes = []
         for entry in op.get("security", []):
@@ -663,7 +666,7 @@ class Generator:
                 scopes.extend(values)
         if scopes:
             lines += ["     *",
-                      "     * <p>Требуемые разрешения: {@code %s}." % ", ".join(scopes)]
+                      "     * <p>Required permissions: {@code %s}." % ", ".join(scopes)]
         if docs:
             lines.append("     *")
             for param_name, text in docs:
@@ -721,7 +724,7 @@ class Generator:
         for field in fields:
             self.register_imports(field["type"], imports)
 
-        lines = ["    /** Необязательные параметры метода {@code %s}. */" % class_name.replace("Options", ""),
+        lines = ["    /** Optional parameters of {@code %s}. */" % class_name.replace("Options", ""),
                  "    public record %s(" % class_name]
         for index, field in enumerate(fields):
             suffix = "," if index < len(fields) - 1 else ") {"
@@ -730,7 +733,7 @@ class Generator:
                   "        public static Builder builder() {",
                   "            return new Builder();",
                   "        }", "",
-                  "        /** Строитель {@link %s}. */" % class_name,
+                  "        /** Builder for {@link %s}. */" % class_name,
                   "        public static final class Builder {", ""]
         for field in fields:
             lines.append("            private %s %s;" % (self.simple(field["type"]), field["name"]))
@@ -751,7 +754,7 @@ class Generator:
                   "    }", ""]
         return lines
 
-    # --- импорты -----------------------------------------------------------
+    # --- imports -----------------------------------------------------------
 
     def register_imports(self, java_type, imports):
         for match in re.findall(r"java\.[a-z.]+\.[A-Z][A-Za-z0-9_]*", java_type):
@@ -769,7 +772,7 @@ JAVA_LANG_PATTERN = re.compile(r"\b(java\.(?:util|math|time)\.[A-Z][A-Za-z0-9_]*
 
 
 def compact_imports(source):
-    """Заменяет полные имена java.* на короткие и добавляет соответствующие импорты."""
+    """Replaces fully qualified java.* names with simple ones and adds the imports."""
     lines = source.split("\n")
     found = set()
     for index, line in enumerate(lines):
@@ -830,7 +833,7 @@ def main():
             handle.write(source)
 
     version = spec["info"]["version"]
-    print("OpenAPI %s: сгенерировано %d моделей и %d классов сервисов"
+    print("OpenAPI %s: generated %d models and %d service classes"
           % (version, models, len(generator.files_written) - models))
 
 

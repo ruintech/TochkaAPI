@@ -10,9 +10,9 @@ import com.tochka.api.model.PaymentStatusResponseModel;
 import java.util.List;
 
 /**
- * Платёжные поручения: создание платежа на подпись и его статус.
+ * Payment orders: creating a payment for signing and checking its status.
  *
- * <p>Экземпляр доступен через {@link com.tochka.api.TochkaClient}.
+ * <p>An instance is available from {@link com.tochka.api.TochkaClient}.
  */
 public final class PaymentsApi {
 
@@ -32,9 +32,9 @@ public final class PaymentsApi {
      * устроена отправка платежа и его статусы — в разделе «Платёжные поручения
      * (/docs/tochka-api/opisanie-metodov/platezhi)».
      *
-     * <p>Требуемые разрешения: {@code CreatePaymentForSign}.
+     * <p>Required permissions: {@code CreatePaymentForSign}.
      *
-     * @param request тело запроса
+     * @param request request body
      */
     public PaymentForSignResponseModel createPaymentForSign(PaymentForSignRequestModel request) {
         return transport.request("POST", "/payment/v1.0/for-sign")
@@ -48,7 +48,7 @@ public final class PaymentsApi {
      * API, и вручную в интернет-банке. Подробнее об исходящих платежах — в разделе «Платёжные
      * поручения (/docs/tochka-api/opisanie-metodov/platezhi)».
      *
-     * <p>Требуемые разрешения: {@code CreatePaymentForSign}.
+     * <p>Required permissions: {@code CreatePaymentForSign}.
      *
      * @param customerCode Уникальный код клиента
      */
@@ -64,9 +64,9 @@ public final class PaymentsApi {
      * API, и вручную в интернет-банке. Подробнее об исходящих платежах — в разделе «Платёжные
      * поручения (/docs/tochka-api/opisanie-metodov/platezhi)».
      *
-     * <p>Код клиента берётся из настроек клиента ({@code TochkaClient.builder().customerCode(...)}).
+     * <p>The customer code is taken from the client configuration ({@code TochkaClient.builder().customerCode(...)}).
      *
-     * <p>Требуемые разрешения: {@code CreatePaymentForSign}.
+     * <p>Required permissions: {@code CreatePaymentForSign}.
      */
     public List<PaymentForSignListItemModel> getPaymentForSignList() {
         return transport.request("GET", "/payment/v1.0/for-sign")
@@ -80,7 +80,7 @@ public final class PaymentsApi {
      * обработку, оплачен, отменён или отклонён. Что означают статусы платежа вы можете прочитать в
      * разделе «Платёжные поручения (/docs/tochka-api/opisanie-metodov/platezhi)».
      *
-     * <p>Требуемые разрешения: {@code CreatePaymentForSign, CreatePaymentOrder}.
+     * <p>Required permissions: {@code CreatePaymentForSign, CreatePaymentOrder}.
      *
      * @param requestId Идентификатор запроса
      */

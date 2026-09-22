@@ -20,30 +20,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Доверие к TLS-сертификатам Национального удостоверяющего центра Минцифры России, на которых
- * работает {@code enter.tochka.com}.
+ * Trust for the TLS certificates of the Russian Ministry of Digital Development certification
+ * authority, which {@code enter.tochka.com} runs on.
  *
- * <p>JVM использует собственное хранилище доверенных сертификатов и не читает системное, а
- * корневой и выпускающий сертификаты Минцифры не входят в стандартный {@code cacerts}. Без них
- * соединение обрывается с {@code PKIX path building failed} ещё до отправки запроса.
+ * <p>The JVM keeps its own trust store and never reads the system one, and neither the root nor
+ * the issuing certificate of the ministry is part of the standard {@code cacerts}. Without them
+ * the connection dies with {@code PKIX path building failed} before a request is even sent.
  *
- * <p>Оба сертификата (RSA-варианты, единственные, которые понимает JVM без ГОСТ-провайдера)
- * лежат в ресурсах библиотеки, поэтому обычно достаточно одной строки:
+ * <p>Both certificates (the RSA variants, the only ones the JVM understands without a GOST
+ * provider) ship in the library resources, and the client uses them by default, so usually
+ * nothing has to be configured. The context is also available on its own:
  *
  * <pre>{@code
- * TochkaClient client = TochkaClient.builder()
- *         .jwt(token)
- *         .sslContext(RussianTrustedCa.sslContext())
- *         .build();
+ * SSLContext ssl = RussianTrustedCa.sslContext();
  * }</pre>
  *
- * <p>Полученный контекст доверяет сертификатам Минцифры <em>в дополнение</em> к публичным
- * удостоверяющим центрам из {@code cacerts}, поэтому его безопасно использовать и для
- * остальных соединений приложения.
+ * <p>The resulting context trusts the ministry certificates <em>in addition</em> to the public
+ * authorities from {@code cacerts}, so it is safe to use for the rest of the application too.
  *
- * <p>Проверить настройку можно обращением к тестовому домену банка
- * {@code https://tls-test.tochka.com/api} — он уже работает на сертификатах Минцифры и
- * отвечает {@code {"status":"ok"}}.
+ * <p>The setup can be checked against the bank test domain
+ * {@code https://tls-test.tochka.com/api}: it already runs on the ministry certificates and
+ * answers {@code {"status":"ok"}}.
  */
 public final class RussianTrustedCa {
 
@@ -56,8 +53,8 @@ public final class RussianTrustedCa {
     }
 
     /**
-     * SSL-контекст, доверяющий сертификатам Минцифры и всем публичным центрам из стандартного
-     * хранилища JVM. Собирается один раз и переиспользуется.
+     * An SSL context trusting the ministry certificates and every public authority from the
+     * standard JVM trust store. Built once and reused.
      */
     public static SSLContext sslContext() {
         SSLContext context = defaultContext;
@@ -73,10 +70,10 @@ public final class RussianTrustedCa {
     }
 
     /**
-     * SSL-контекст со своими сертификатами вместо встроенных — например, если вы держите
-     * актуальные копии в собственном каталоге.
+     * An SSL context with your own certificates instead of the bundled ones — for example when
+     * you keep up-to-date copies in your own directory.
      *
-     * @param pemFiles PEM-файлы сертификатов (формат DER не поддерживается)
+     * @param pemFiles certificate files in PEM format (DER is not supported)
      */
     public static SSLContext sslContextFrom(Path... pemFiles) {
         List<X509Certificate> certificates = new ArrayList<>();
@@ -90,7 +87,7 @@ public final class RussianTrustedCa {
         return sslContext(certificates);
     }
 
-    /** SSL-контекст, доверяющий переданным сертификатам в дополнение к стандартному хранилищу. */
+    /** An SSL context trusting the given certificates in addition to the standard trust store. */
     public static SSLContext sslContext(List<X509Certificate> extraCertificates) {
         try {
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
@@ -117,7 +114,7 @@ public final class RussianTrustedCa {
         }
     }
 
-    /** Встроенные сертификаты: корневой Russian Trusted Root CA и выпускающий Russian Trusted Sub CA. */
+    /** The bundled certificates: Russian Trusted Root CA and Russian Trusted Sub CA. */
     public static List<X509Certificate> certificates() {
         List<X509Certificate> certificates = new ArrayList<>();
         certificates.addAll(readResource(ROOT_RESOURCE));

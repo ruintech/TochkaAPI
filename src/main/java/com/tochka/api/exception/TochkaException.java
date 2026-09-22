@@ -1,6 +1,6 @@
 package com.tochka.api.exception;
 
-/** Базовое исключение клиента Точка Банка. */
+/** Base exception of the Tochka Bank client. */
 public class TochkaException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;

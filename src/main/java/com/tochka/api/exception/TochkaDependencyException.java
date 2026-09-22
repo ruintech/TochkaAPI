@@ -2,7 +2,7 @@ package com.tochka.api.exception;
 
 import java.util.List;
 
-/** 424 Failed Dependency: смежный сервис банка не ответил. Запрос имеет смысл повторить. */
+/** 424 Failed Dependency: a downstream service of the bank did not answer. Worth retrying. */
 public class TochkaDependencyException extends TochkaApiException {
 
     private static final long serialVersionUID = 1L;

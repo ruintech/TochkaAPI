@@ -18,12 +18,12 @@ public record SBPRefundStatusModel(
         @JsonProperty("Links") LinkModel links,
         @JsonProperty("Meta") MetaModel meta) {
 
-    /** Строитель {@link SBPRefundStatusModel}. */
+    /** Builder for {@link SBPRefundStatusModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .data(this.data)
@@ -31,7 +31,7 @@ public record SBPRefundStatusModel(
                 .meta(this.meta);
     }
 
-    /** Строитель {@link SBPRefundStatusModel}. */
+    /** Builder for {@link SBPRefundStatusModel}. */
     public static final class Builder {
 
         private SBPRefundStatus data;

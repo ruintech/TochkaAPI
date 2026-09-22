@@ -16,7 +16,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeParseException;
 
-/** Настроенный {@link ObjectMapper} для моделей API Точки. */
+/** The {@link ObjectMapper} configured for Tochka API models. */
 public final class Json {
 
     private static final ObjectMapper MAPPER = createMapper();
@@ -25,12 +25,12 @@ public final class Json {
     }
 
     /**
-     * Маппер, которым клиент сериализует запросы и разбирает ответы.
+     * The mapper the client uses to serialize requests and parse responses.
      *
-     * <p>Отличия от умолчаний Jackson: неизвестные поля ответа игнорируются (банк добавляет
-     * поля без смены версии API), {@code null}-поля не попадают в тело запроса, даты пишутся
-     * строками ISO-8601, а {@code date-time} читается терпимо — часть полей API отдаёт в виде
-     * чистой даты.
+     * <p>Differences from the Jackson defaults: unknown response fields are ignored (the bank
+     * adds fields without bumping the API version), {@code null} fields are left out of request
+     * bodies, dates are written as ISO-8601 strings, and {@code date-time} is parsed leniently —
+     * some fields arrive as a plain date.
      */
     public static ObjectMapper mapper() {
         return MAPPER;
@@ -50,8 +50,9 @@ public final class Json {
     }
 
     /**
-     * Читает {@link OffsetDateTime} и из полного ISO-8601, и из чистой даты вида
-     * {@code 2018-03-29} — так, например, приходит {@code paymentDate} в списке платежей на подпись.
+     * Reads {@link OffsetDateTime} both from a full ISO-8601 value and from a plain date such as
+     * {@code 2018-03-29} — that is how {@code paymentDate} arrives in the list of payments
+     * awaiting signature.
      */
     private static final class LenientOffsetDateTimeDeserializer extends JsonDeserializer<OffsetDateTime> {
 

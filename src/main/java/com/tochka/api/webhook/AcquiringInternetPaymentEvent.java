@@ -5,29 +5,29 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 
 /**
- * {@code acquiringInternetPayment} — оплата по платёжной ссылке: картой, через СБП, цифровым
- * рублём или через «Долями». Приходит за 5–10 секунд с момента оплаты.
+ * {@code acquiringInternetPayment} — a payment made through a payment link: by card, through SBP,
+ * with digital rubles or via «Долями». Delivered 5–10 seconds after the payment.
  *
- * <p>Это же событие используется в двухэтапной оплате: {@code AUTHORIZED} означает, что деньги
- * заморожены на карте покупателя и их ещё нужно списать методом
- * {@code acquiring().capturePayment(...)}, {@code APPROVED} — что оплата завершена.
+ * <p>The same event serves two-stage payments: {@code AUTHORIZED} means the money is held on the
+ * buyer card and still has to be captured with {@code acquiring().capturePayment(...)}, while
+ * {@code APPROVED} means the payment is complete.
  *
- * @param operationId   идентификатор платежа
- * @param amount        сумма платежа
- * @param paymentType   способ оплаты: {@code card}, {@code sbp}, {@code digitalRuble}, {@code dolyame}
- * @param status        статус платежа: {@code AUTHORIZED} или {@code APPROVED}
- * @param paymentLinkId номер заказа, переданный при создании ссылки или подписки
- * @param purpose       назначение платежа
- * @param merchantId    идентификатор торговой точки
- * @param consumerId    идентификатор покупателя, если карта была сохранена
- * @param transactionId идентификатор платежа в СБП
- * @param qrcId         идентификатор QR-кода при оплате через СБП
- * @param payerName     данные покупателя при оплате через СБП
- * @param maskedPan     маскированный номер карты, например {@code 220445******0792}
- * @param cardType      платёжная система карты, например {@code MIR}
- * @param tokenCardId   токен карты покупателя
- * @param webhookType   тип события, всегда {@code acquiringInternetPayment}
- * @param customerCode  уникальный код клиента
+ * @param operationId   payment id
+ * @param amount        payment amount
+ * @param paymentType   payment method: {@code card}, {@code sbp}, {@code digitalRuble}, {@code dolyame}
+ * @param status        payment status: {@code AUTHORIZED} or {@code APPROVED}
+ * @param paymentLinkId order number passed when the link or the subscription was created
+ * @param purpose       payment purpose
+ * @param merchantId    retailer id
+ * @param consumerId    buyer id, when the card was saved
+ * @param transactionId payment id within SBP
+ * @param qrcId         QR code id for SBP payments
+ * @param payerName     buyer details for SBP payments
+ * @param maskedPan     masked card number, for example {@code 220445******0792}
+ * @param cardType      card payment system, for example {@code MIR}
+ * @param tokenCardId   token of the buyer card
+ * @param webhookType   event type, always {@code acquiringInternetPayment}
+ * @param customerCode  customer code
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record AcquiringInternetPaymentEvent(
@@ -48,12 +48,12 @@ public record AcquiringInternetPaymentEvent(
         String webhookType,
         String customerCode) implements WebhookEvent {
 
-    /** Деньги списаны, оплата завершена. */
+    /** The money is captured, the payment is complete. */
     public boolean isApproved() {
         return "APPROVED".equals(status);
     }
 
-    /** Деньги заморожены на карте покупателя и ждут списания — двухэтапная оплата. */
+    /** The money is held on the buyer card and awaits capture — a two-stage payment. */
     public boolean isAuthorized() {
         return "AUTHORIZED".equals(status);
     }

@@ -3,8 +3,8 @@ package com.tochka.api.webhook;
 import com.tochka.api.exception.TochkaException;
 
 /**
- * Вебхук не прошёл проверку подписи или имеет некорректный формат. Такой запрос обрабатывать
- * нельзя: он пришёл не от Точка Банка либо был изменён по дороге.
+ * A webhook failed signature verification or is malformed. Such a request must not be processed:
+ * it did not come from Tochka Bank, or it was modified on the way.
  */
 public class WebhookVerificationException extends TochkaException {
 

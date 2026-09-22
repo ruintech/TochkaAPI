@@ -7,10 +7,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * BalanceModel
  *
- * @param accountId Уникальный и неизменный идентификатор счёта. Например: "40817810802000000008/044525104"
- * @param creditDebitIndicator Определяет является баланс кредитовым или дебетовым. Например: "Credit"
- * @param type Тип баланса, заполняется согласно ISO 20022. Например: "OpeningAvailable"
- * @param dateTime Дата и время построения отчета. Используется стандарт ISO8601. Например:
+ * @param accountId Уникальный и неизменный идентификатор счёта. Example: "40817810802000000008/044525104"
+ * @param creditDebitIndicator Определяет является баланс кредитовым или дебетовым. Example: "Credit"
+ * @param type Тип баланса, заполняется согласно ISO 20022. Example: "OpeningAvailable"
+ * @param dateTime Дата и время построения отчета. Используется стандарт ISO8601. Example:
  *        "2019-01-01T06:06:06.364+00:00"
  * @param amount Amount
  */
@@ -23,12 +23,12 @@ public record BalanceModel(
         @JsonProperty("dateTime") String dateTime,
         @JsonProperty("Amount") BalanceAmountModel amount) {
 
-    /** Строитель {@link BalanceModel}. */
+    /** Builder for {@link BalanceModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .accountId(this.accountId)
@@ -38,7 +38,7 @@ public record BalanceModel(
                 .amount(this.amount);
     }
 
-    /** Строитель {@link BalanceModel}. */
+    /** Builder for {@link BalanceModel}. */
     public static final class Builder {
 
         private String accountId;
@@ -47,25 +47,25 @@ public record BalanceModel(
         private String dateTime;
         private BalanceAmountModel amount;
 
-        /** Уникальный и неизменный идентификатор счёта. Например: "40817810802000000008/044525104" */
+        /** Уникальный и неизменный идентификатор счёта. Example: "40817810802000000008/044525104" */
         public Builder accountId(String accountId) {
             this.accountId = accountId;
             return this;
         }
 
-        /** Определяет является баланс кредитовым или дебетовым. Например: "Credit" */
+        /** Определяет является баланс кредитовым или дебетовым. Example: "Credit" */
         public Builder creditDebitIndicator(ExternalBalanceTypeEnum creditDebitIndicator) {
             this.creditDebitIndicator = creditDebitIndicator;
             return this;
         }
 
-        /** Тип баланса, заполняется согласно ISO 20022. Например: "OpeningAvailable" */
+        /** Тип баланса, заполняется согласно ISO 20022. Example: "OpeningAvailable" */
         public Builder type(ExternalBalanceStaticTypeEnum type) {
             this.type = type;
             return this;
         }
 
-        /** Дата и время построения отчета. Используется стандарт ISO8601. Например:
+        /** Дата и время построения отчета. Используется стандарт ISO8601. Example:
         "2019-01-01T06:06:06.364+00:00" */
         public Builder dateTime(String dateTime) {
             this.dateTime = dateTime;

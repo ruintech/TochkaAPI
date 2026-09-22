@@ -16,9 +16,9 @@ import com.tochka.api.model.RegisterCashboxQrCodeResponseModel;
 import java.util.List;
 
 /**
- * СБП: кассовые QR-коды — один код, много оплат с переактивацией.
+ * SBP: cashbox QR codes — one code, many payments, reactivated before each one.
  *
- * <p>Экземпляр доступен через {@link com.tochka.api.TochkaClient}.
+ * <p>An instance is available from {@link com.tochka.api.TochkaClient}.
  */
 public final class SbpCashboxQrCodesApi {
 
@@ -34,10 +34,10 @@ public final class SbpCashboxQrCodesApi {
      * оплату кассовым QR-кодом — в разделе «Работа с QR-кодами
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/rabota-s-qr-kodami)».
      *
-     * <p>Требуемые разрешения: {@code EditSBPData}.
+     * <p>Required permissions: {@code EditSBPData}.
      *
      * @param qrcId Идентификатор QR-кода в СБП
-     * @param request тело запроса
+     * @param request request body
      */
     public ActivateCashboxQrCodeResponseModel activateCashboxQrcode(String qrcId, ActivateCashboxQrCodeRequestModel request) {
         return transport.request("POST", "/sbp/v1.0/cashbox-qr-code/{qrcId}/activate")
@@ -52,10 +52,10 @@ public final class SbpCashboxQrCodesApi {
      * QR-коду. Про кассовые QR-коды — в разделе «Работа с QR-кодами
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/rabota-s-qr-kodami)».
      *
-     * <p>Требуемые разрешения: {@code EditSBPData}.
+     * <p>Required permissions: {@code EditSBPData}.
      *
      * @param qrcId Идентификатор QR-кода в СБП
-     * @param accountId Уникальный и неизменный идентификатор счёта. Например: "40817810802000000008/044525104"
+     * @param accountId Уникальный и неизменный идентификатор счёта. Example: "40817810802000000008/044525104"
      */
     public ChangeCashboxQRCodeAccountResponseModel changeCashboxQrcodeAccount(String qrcId, String accountId) {
         return transport.request("POST", "/sbp/v1.0/cashbox-qr-code/{qrcId}/account")
@@ -70,7 +70,7 @@ public final class SbpCashboxQrCodesApi {
      * покупатель передумал оплачивать. Про кассовые QR-коды — в разделе «Работа с QR-кодами
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/rabota-s-qr-kodami)».
      *
-     * <p>Требуемые разрешения: {@code EditSBPData}.
+     * <p>Required permissions: {@code EditSBPData}.
      *
      * @param qrcId Идентификатор QR-кода в СБП
      */
@@ -86,10 +86,10 @@ public final class SbpCashboxQrCodesApi {
      * QR-коды — в разделе «Работа с QR-кодами
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/rabota-s-qr-kodami)».
      *
-     * <p>Требуемые разрешения: {@code ReadSBPData}.
+     * <p>Required permissions: {@code ReadSBPData}.
      *
      * @param qrcId Идентификатор QR-кода в СБП
-     * @param request тело запроса
+     * @param request request body
      */
     public CashboxQrCodeResponseModel getCashboxQrcode(String qrcId, GetCashboxQRCodeRequestModel request) {
         return transport.request("POST", "/sbp/v1.0/cashbox-qr-code/{qrcId}")
@@ -104,7 +104,7 @@ public final class SbpCashboxQrCodesApi {
      * QR-коды — в разделе «Работа с QR-кодами
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/rabota-s-qr-kodami)».
      *
-     * <p>Требуемые разрешения: {@code ReadSBPData}.
+     * <p>Required permissions: {@code ReadSBPData}.
      *
      * @param merchantId Идентификатор ТСП
      * @param accountId Уникальный и неизменный идентификатор счёта
@@ -122,7 +122,7 @@ public final class SbpCashboxQrCodesApi {
      * и её статус. Про кассовые QR-коды — в разделе «Работа с QR-кодами
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/rabota-s-qr-kodami)».
      *
-     * <p>Требуемые разрешения: {@code ReadSBPData}.
+     * <p>Required permissions: {@code ReadSBPData}.
      *
      * @param qrcId Идентификатор QR-кода в СБП
      * @param paramsId Идентификатор активных значений параметров QR-кода
@@ -140,7 +140,7 @@ public final class SbpCashboxQrCodesApi {
      * оплаты или оплата обрабатывается. Про кассовые QR-коды — в разделе «Работа с QR-кодами
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/rabota-s-qr-kodami)».
      *
-     * <p>Требуемые разрешения: {@code ReadSBPData}.
+     * <p>Required permissions: {@code ReadSBPData}.
      *
      * @param qrcId Идентификатор QR-кода в СБП
      */
@@ -157,9 +157,9 @@ public final class SbpCashboxQrCodesApi {
      * кассовыми QR-кодами — в разделе «Работа с QR-кодами
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/rabota-s-qr-kodami)».
      *
-     * <p>Требуемые разрешения: {@code EditSBPData}.
+     * <p>Required permissions: {@code EditSBPData}.
      *
-     * @param request тело запроса
+     * @param request request body
      */
     public RegisterCashboxQrCodeResponseModel registerCashboxQrcode(RegisterCashboxQrCodeRequestModel request) {
         return transport.request("POST", "/sbp/v1.0/cashbox-qr-code")

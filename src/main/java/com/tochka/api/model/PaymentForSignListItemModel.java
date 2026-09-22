@@ -9,39 +9,38 @@ import java.time.OffsetDateTime;
 /**
  * PaymentForSignListItemModel
  *
- * @param accountCode Номер счёта отправителя. Например: "40702810840020002503" (необязательное)
- * @param bankCode БИК отправителя. Например: "044525104" (необязательное)
- * @param counterpartyBankBic БИК получателя. Например: "044525104"
- * @param counterpartyAccountNumber Счёт получателя. Например: "40702810840020002504"
- * @param counterpartyINN ИНН получателя длинна строки. Допустимые значения "0", 10 или 12 значное число. Например:
- *        "5001038736" (необязательное)
- * @param counterpartyKPP КПП получателя. Допустимые значения "0" или 9 значное число. Например: "500101001"
- *        (необязательное)
- * @param counterpartyName Наименование получателя платежа. Например: "ООО \"БАЙКАЛ-СЕРВИС ТК\""
- * @param paymentAmount Сумма платежа. Например: 700.33
- * @param paymentDate Дата последней смены статуса платежа. Например: "2018-03-29"
- * @param paymentNumber Номер платежа. Например: "9195" (необязательное)
- * @param paymentPurpose Назначение платежа. Например: "Оплата по счету № 1 от 01.01.2021. Без НДС"
- * @param payerINN ИНН за кого платят. Допустимые значения "0", 10 или 12 значное число. Например: "5001038736"
- *        (необязательное)
- * @param payerKPP КПП за кого платят. Допустимые значения "0" или 9 значное число. Например: "500101001"
- *        (необязательное)
- * @param counterpartyBankCorrAccount Кор. счёт банка получателя. Например: "30101810745374525104" (необязательное)
- * @param paymentPriority Приоритет платежа. Например: "5" (необязательное)
- * @param codePurpose Поле 20. Например: "1" (необязательное)
- * @param supplierBillId Код УИН (поле 22). Например: "1" (необязательное)
- * @param budgetPaymentCode Код выплат из бюджета на ФЛ (поле 110). Например: "1" (необязательное)
- * @param email Email для отправки платежного поручения. Например: "ivanov&#64;mail.com" (необязательное)
- * @param taxInfoDocumentDate Дата документа (поле 109). Используется стандарт ISO8601. Допустимо значение "0". Например:
- *        "2018-03-29" (необязательное)
- * @param taxInfoDocumentNumber Номера документа (поле 108). Например: "12" (необязательное)
- * @param taxInfoKBK КБК (поле 104). Например: "18210202020061000160" (необязательное)
- * @param taxInfoOKATO ОКАТО (поле 105). Например: "65401364000" (необязательное)
- * @param taxInfoPeriod Налоговый период (поле 107). Допустимо значение "0". Например: "МС.08.2009" (необязательное)
- * @param taxInfoReasonCode Основание (поле 106). Например: "ТП" (необязательное)
- * @param taxInfoStatus Статус (поле 101). Например: "08" (необязательное)
- * @param gisPhoneNumber Номер телефона для ГИС ГМП. Например: "+79999999999" (необязательное)
- * @param gisEmail Адрес электронной почты для ГИС ГМП. Например: "ivanov&#64;mail.com" (необязательное)
+ * @param accountCode Номер счёта отправителя. Example: "40702810840020002503" (optional)
+ * @param bankCode БИК отправителя. Example: "044525104" (optional)
+ * @param counterpartyBankBic БИК получателя. Example: "044525104"
+ * @param counterpartyAccountNumber Счёт получателя. Example: "40702810840020002504"
+ * @param counterpartyINN ИНН получателя длинна строки. Допустимые значения "0", 10 или 12 значное число. Example:
+ *        "5001038736" (optional)
+ * @param counterpartyKPP КПП получателя. Допустимые значения "0" или 9 значное число. Example: "500101001" (optional)
+ * @param counterpartyName Наименование получателя платежа. Example: "ООО \"БАЙКАЛ-СЕРВИС ТК\""
+ * @param paymentAmount Сумма платежа. Example: 700.33
+ * @param paymentDate Дата последней смены статуса платежа. Example: "2018-03-29"
+ * @param paymentNumber Номер платежа. Example: "9195" (optional)
+ * @param paymentPurpose Назначение платежа. Example: "Оплата по счету № 1 от 01.01.2021. Без НДС"
+ * @param payerINN ИНН за кого платят. Допустимые значения "0", 10 или 12 значное число. Example: "5001038736"
+ *        (optional)
+ * @param payerKPP КПП за кого платят. Допустимые значения "0" или 9 значное число. Example: "500101001"
+ *        (optional)
+ * @param counterpartyBankCorrAccount Кор. счёт банка получателя. Example: "30101810745374525104" (optional)
+ * @param paymentPriority Приоритет платежа. Example: "5" (optional)
+ * @param codePurpose Поле 20. Example: "1" (optional)
+ * @param supplierBillId Код УИН (поле 22). Example: "1" (optional)
+ * @param budgetPaymentCode Код выплат из бюджета на ФЛ (поле 110). Example: "1" (optional)
+ * @param email Email для отправки платежного поручения. Example: "ivanov&#64;mail.com" (optional)
+ * @param taxInfoDocumentDate Дата документа (поле 109). Используется стандарт ISO8601. Допустимо значение "0". Example:
+ *        "2018-03-29" (optional)
+ * @param taxInfoDocumentNumber Номера документа (поле 108). Example: "12" (optional)
+ * @param taxInfoKBK КБК (поле 104). Example: "18210202020061000160" (optional)
+ * @param taxInfoOKATO ОКАТО (поле 105). Example: "65401364000" (optional)
+ * @param taxInfoPeriod Налоговый период (поле 107). Допустимо значение "0". Example: "МС.08.2009" (optional)
+ * @param taxInfoReasonCode Основание (поле 106). Example: "ТП" (optional)
+ * @param taxInfoStatus Статус (поле 101). Example: "08" (optional)
+ * @param gisPhoneNumber Номер телефона для ГИС ГМП. Example: "+79999999999" (optional)
+ * @param gisEmail Адрес электронной почты для ГИС ГМП. Example: "ivanov&#64;mail.com" (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -75,12 +74,12 @@ public record PaymentForSignListItemModel(
         @JsonProperty("gisPhoneNumber") String gisPhoneNumber,
         @JsonProperty("gisEmail") String gisEmail) {
 
-    /** Строитель {@link PaymentForSignListItemModel}. */
+    /** Builder for {@link PaymentForSignListItemModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .accountCode(this.accountCode)
@@ -113,7 +112,7 @@ public record PaymentForSignListItemModel(
                 .gisEmail(this.gisEmail);
     }
 
-    /** Строитель {@link PaymentForSignListItemModel}. */
+    /** Builder for {@link PaymentForSignListItemModel}. */
     public static final class Builder {
 
         private String accountCode;
@@ -145,171 +144,171 @@ public record PaymentForSignListItemModel(
         private String gisPhoneNumber;
         private String gisEmail;
 
-        /** Номер счёта отправителя. Например: "40702810840020002503" */
+        /** Номер счёта отправителя. Example: "40702810840020002503" */
         public Builder accountCode(String accountCode) {
             this.accountCode = accountCode;
             return this;
         }
 
-        /** БИК отправителя. Например: "044525104" */
+        /** БИК отправителя. Example: "044525104" */
         public Builder bankCode(String bankCode) {
             this.bankCode = bankCode;
             return this;
         }
 
-        /** БИК получателя. Например: "044525104" */
+        /** БИК получателя. Example: "044525104" */
         public Builder counterpartyBankBic(String counterpartyBankBic) {
             this.counterpartyBankBic = counterpartyBankBic;
             return this;
         }
 
-        /** Счёт получателя. Например: "40702810840020002504" */
+        /** Счёт получателя. Example: "40702810840020002504" */
         public Builder counterpartyAccountNumber(String counterpartyAccountNumber) {
             this.counterpartyAccountNumber = counterpartyAccountNumber;
             return this;
         }
 
-        /** ИНН получателя длинна строки. Допустимые значения "0", 10 или 12 значное число. Например:
+        /** ИНН получателя длинна строки. Допустимые значения "0", 10 или 12 значное число. Example:
         "5001038736" */
         public Builder counterpartyINN(String counterpartyINN) {
             this.counterpartyINN = counterpartyINN;
             return this;
         }
 
-        /** КПП получателя. Допустимые значения "0" или 9 значное число. Например: "500101001" */
+        /** КПП получателя. Допустимые значения "0" или 9 значное число. Example: "500101001" */
         public Builder counterpartyKPP(String counterpartyKPP) {
             this.counterpartyKPP = counterpartyKPP;
             return this;
         }
 
-        /** Наименование получателя платежа. Например: "ООО \"БАЙКАЛ-СЕРВИС ТК\"" */
+        /** Наименование получателя платежа. Example: "ООО \"БАЙКАЛ-СЕРВИС ТК\"" */
         public Builder counterpartyName(String counterpartyName) {
             this.counterpartyName = counterpartyName;
             return this;
         }
 
-        /** Сумма платежа. Например: 700.33 */
+        /** Сумма платежа. Example: 700.33 */
         public Builder paymentAmount(BigDecimal paymentAmount) {
             this.paymentAmount = paymentAmount;
             return this;
         }
 
-        /** Дата последней смены статуса платежа. Например: "2018-03-29" */
+        /** Дата последней смены статуса платежа. Example: "2018-03-29" */
         public Builder paymentDate(OffsetDateTime paymentDate) {
             this.paymentDate = paymentDate;
             return this;
         }
 
-        /** Номер платежа. Например: "9195" */
+        /** Номер платежа. Example: "9195" */
         public Builder paymentNumber(String paymentNumber) {
             this.paymentNumber = paymentNumber;
             return this;
         }
 
-        /** Назначение платежа. Например: "Оплата по счету № 1 от 01.01.2021. Без НДС" */
+        /** Назначение платежа. Example: "Оплата по счету № 1 от 01.01.2021. Без НДС" */
         public Builder paymentPurpose(String paymentPurpose) {
             this.paymentPurpose = paymentPurpose;
             return this;
         }
 
-        /** ИНН за кого платят. Допустимые значения "0", 10 или 12 значное число. Например: "5001038736" */
+        /** ИНН за кого платят. Допустимые значения "0", 10 или 12 значное число. Example: "5001038736" */
         public Builder payerINN(String payerINN) {
             this.payerINN = payerINN;
             return this;
         }
 
-        /** КПП за кого платят. Допустимые значения "0" или 9 значное число. Например: "500101001" */
+        /** КПП за кого платят. Допустимые значения "0" или 9 значное число. Example: "500101001" */
         public Builder payerKPP(String payerKPP) {
             this.payerKPP = payerKPP;
             return this;
         }
 
-        /** Кор. счёт банка получателя. Например: "30101810745374525104" */
+        /** Кор. счёт банка получателя. Example: "30101810745374525104" */
         public Builder counterpartyBankCorrAccount(String counterpartyBankCorrAccount) {
             this.counterpartyBankCorrAccount = counterpartyBankCorrAccount;
             return this;
         }
 
-        /** Приоритет платежа. Например: "5" */
+        /** Приоритет платежа. Example: "5" */
         public Builder paymentPriority(String paymentPriority) {
             this.paymentPriority = paymentPriority;
             return this;
         }
 
-        /** Поле 20. Например: "1" */
+        /** Поле 20. Example: "1" */
         public Builder codePurpose(String codePurpose) {
             this.codePurpose = codePurpose;
             return this;
         }
 
-        /** Код УИН (поле 22). Например: "1" */
+        /** Код УИН (поле 22). Example: "1" */
         public Builder supplierBillId(String supplierBillId) {
             this.supplierBillId = supplierBillId;
             return this;
         }
 
-        /** Код выплат из бюджета на ФЛ (поле 110). Например: "1" */
+        /** Код выплат из бюджета на ФЛ (поле 110). Example: "1" */
         public Builder budgetPaymentCode(String budgetPaymentCode) {
             this.budgetPaymentCode = budgetPaymentCode;
             return this;
         }
 
-        /** Email для отправки платежного поручения. Например: "ivanov&#64;mail.com" */
+        /** Email для отправки платежного поручения. Example: "ivanov&#64;mail.com" */
         public Builder email(String email) {
             this.email = email;
             return this;
         }
 
-        /** Дата документа (поле 109). Используется стандарт ISO8601. Допустимо значение "0". Например:
+        /** Дата документа (поле 109). Используется стандарт ISO8601. Допустимо значение "0". Example:
         "2018-03-29" */
         public Builder taxInfoDocumentDate(String taxInfoDocumentDate) {
             this.taxInfoDocumentDate = taxInfoDocumentDate;
             return this;
         }
 
-        /** Номера документа (поле 108). Например: "12" */
+        /** Номера документа (поле 108). Example: "12" */
         public Builder taxInfoDocumentNumber(String taxInfoDocumentNumber) {
             this.taxInfoDocumentNumber = taxInfoDocumentNumber;
             return this;
         }
 
-        /** КБК (поле 104). Например: "18210202020061000160" */
+        /** КБК (поле 104). Example: "18210202020061000160" */
         public Builder taxInfoKBK(String taxInfoKBK) {
             this.taxInfoKBK = taxInfoKBK;
             return this;
         }
 
-        /** ОКАТО (поле 105). Например: "65401364000" */
+        /** ОКАТО (поле 105). Example: "65401364000" */
         public Builder taxInfoOKATO(String taxInfoOKATO) {
             this.taxInfoOKATO = taxInfoOKATO;
             return this;
         }
 
-        /** Налоговый период (поле 107). Допустимо значение "0". Например: "МС.08.2009" */
+        /** Налоговый период (поле 107). Допустимо значение "0". Example: "МС.08.2009" */
         public Builder taxInfoPeriod(String taxInfoPeriod) {
             this.taxInfoPeriod = taxInfoPeriod;
             return this;
         }
 
-        /** Основание (поле 106). Например: "ТП" */
+        /** Основание (поле 106). Example: "ТП" */
         public Builder taxInfoReasonCode(String taxInfoReasonCode) {
             this.taxInfoReasonCode = taxInfoReasonCode;
             return this;
         }
 
-        /** Статус (поле 101). Например: "08" */
+        /** Статус (поле 101). Example: "08" */
         public Builder taxInfoStatus(String taxInfoStatus) {
             this.taxInfoStatus = taxInfoStatus;
             return this;
         }
 
-        /** Номер телефона для ГИС ГМП. Например: "+79999999999" */
+        /** Номер телефона для ГИС ГМП. Example: "+79999999999" */
         public Builder gisPhoneNumber(String gisPhoneNumber) {
             this.gisPhoneNumber = gisPhoneNumber;
             return this;
         }
 
-        /** Адрес электронной почты для ГИС ГМП. Например: "ivanov&#64;mail.com" */
+        /** Адрес электронной почты для ГИС ГМП. Example: "ivanov&#64;mail.com" */
         public Builder gisEmail(String gisEmail) {
             this.gisEmail = gisEmail;
             return this;

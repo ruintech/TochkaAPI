@@ -7,10 +7,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Account
  *
- * @param accountId Уникальный и неизменный идентификатор счёта. Например: "40817810802000000008/044525104"
- * @param status Статус объекта. Например: "Active"
- * @param createdAt Время регистрации. Например: "2019-01-01T06:06:06.364+00:00"
- * @param legalId Идентификатор зарегистрированного юрлица в СБП (12 символов). Например: "LF0000000001"
+ * @param accountId Уникальный и неизменный идентификатор счёта. Example: "40817810802000000008/044525104"
+ * @param status Статус объекта. Example: "Active"
+ * @param createdAt Время регистрации. Example: "2019-01-01T06:06:06.364+00:00"
+ * @param legalId Идентификатор зарегистрированного юрлица в СБП (12 символов). Example: "LF0000000001"
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -20,12 +20,12 @@ public record Account(
         @JsonProperty("createdAt") String createdAt,
         @JsonProperty("legalId") String legalId) {
 
-    /** Строитель {@link Account}. */
+    /** Builder for {@link Account}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .accountId(this.accountId)
@@ -34,7 +34,7 @@ public record Account(
                 .legalId(this.legalId);
     }
 
-    /** Строитель {@link Account}. */
+    /** Builder for {@link Account}. */
     public static final class Builder {
 
         private String accountId;
@@ -42,25 +42,25 @@ public record Account(
         private String createdAt;
         private String legalId;
 
-        /** Уникальный и неизменный идентификатор счёта. Например: "40817810802000000008/044525104" */
+        /** Уникальный и неизменный идентификатор счёта. Example: "40817810802000000008/044525104" */
         public Builder accountId(String accountId) {
             this.accountId = accountId;
             return this;
         }
 
-        /** Статус объекта. Например: "Active" */
+        /** Статус объекта. Example: "Active" */
         public Builder status(StatusEnum status) {
             this.status = status;
             return this;
         }
 
-        /** Время регистрации. Например: "2019-01-01T06:06:06.364+00:00" */
+        /** Время регистрации. Example: "2019-01-01T06:06:06.364+00:00" */
         public Builder createdAt(String createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        /** Идентификатор зарегистрированного юрлица в СБП (12 символов). Например: "LF0000000001" */
+        /** Идентификатор зарегистрированного юрлица в СБП (12 символов). Example: "LF0000000001" */
         public Builder legalId(String legalId) {
             this.legalId = legalId;
             return this;

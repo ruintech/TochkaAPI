@@ -14,18 +14,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public record AcquiringGetSubscriptionStatusResponseModel(
         @JsonProperty("status") AcquiringSubscriptionStatus status) {
 
-    /** Строитель {@link AcquiringGetSubscriptionStatusResponseModel}. */
+    /** Builder for {@link AcquiringGetSubscriptionStatusResponseModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .status(this.status);
     }
 
-    /** Строитель {@link AcquiringGetSubscriptionStatusResponseModel}. */
+    /** Builder for {@link AcquiringGetSubscriptionStatusResponseModel}. */
     public static final class Builder {
 
         private AcquiringSubscriptionStatus status;

@@ -12,14 +12,13 @@ import java.util.List;
  *
  * @param positions Список позиций
  * @param date Дата выставления счета, приведенная к часовому поясу Москвы. Если не передана, то текущая
- *        дата.. Например: "2010-10-29" (необязательное)
- * @param totalAmount Сумма всех позиций с НДС. Например: "1234.56"
- * @param totalNds Сумма НДС. Например: "1234.56" (необязательное)
- * @param function Функция документа. Например: "dop"
- * @param number Номер УПД. Например: "1"
- * @param basedOn Документ, на основании которого выставляется счёт. Например: "Основание платежа"
- *        (необязательное)
- * @param shipmentDocuments Реквизиты документа, подтверждающего отгрузку товаров, работ или услуг (необязательное)
+ *        дата.. Example: "2010-10-29" (optional)
+ * @param totalAmount Сумма всех позиций с НДС. Example: "1234.56"
+ * @param totalNds Сумма НДС. Example: "1234.56" (optional)
+ * @param function Функция документа. Example: "dop"
+ * @param number Номер УПД. Example: "1"
+ * @param basedOn Документ, на основании которого выставляется счёт. Example: "Основание платежа" (optional)
+ * @param shipmentDocuments Реквизиты документа, подтверждающего отгрузку товаров, работ или услуг (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -33,12 +32,12 @@ public record UpdModel(
         @JsonProperty("basedOn") String basedOn,
         @JsonProperty("shipmentDocuments") List<ShipmentDocumentModel> shipmentDocuments) {
 
-    /** Строитель {@link UpdModel}. */
+    /** Builder for {@link UpdModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .positions(this.positions)
@@ -51,7 +50,7 @@ public record UpdModel(
                 .shipmentDocuments(this.shipmentDocuments);
     }
 
-    /** Строитель {@link UpdModel}. */
+    /** Builder for {@link UpdModel}. */
     public static final class Builder {
 
         private List<PositionModel> positions;
@@ -70,37 +69,37 @@ public record UpdModel(
         }
 
         /** Дата выставления счета, приведенная к часовому поясу Москвы. Если не передана, то текущая
-        дата.. Например: "2010-10-29" */
+        дата.. Example: "2010-10-29" */
         public Builder date(LocalDate date) {
             this.date = date;
             return this;
         }
 
-        /** Сумма всех позиций с НДС. Например: "1234.56" */
+        /** Сумма всех позиций с НДС. Example: "1234.56" */
         public Builder totalAmount(BigDecimal totalAmount) {
             this.totalAmount = totalAmount;
             return this;
         }
 
-        /** Сумма НДС. Например: "1234.56" */
+        /** Сумма НДС. Example: "1234.56" */
         public Builder totalNds(BigDecimal totalNds) {
             this.totalNds = totalNds;
             return this;
         }
 
-        /** Функция документа. Например: "dop" */
+        /** Функция документа. Example: "dop" */
         public Builder function(UpdFunctionEnum function) {
             this.function = function;
             return this;
         }
 
-        /** Номер УПД. Например: "1" */
+        /** Номер УПД. Example: "1" */
         public Builder number(String number) {
             this.number = number;
             return this;
         }
 
-        /** Документ, на основании которого выставляется счёт. Например: "Основание платежа" */
+        /** Документ, на основании которого выставляется счёт. Example: "Основание платежа" */
         public Builder basedOn(String basedOn) {
             this.basedOn = basedOn;
             return this;

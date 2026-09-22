@@ -8,9 +8,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Событие неизвестного типа — например, {@code customWebhook} или новый тип, появившийся в API
- * позже этой версии библиотеки. Полезная нагрузка доступна как карта полей, так что обработчик
- * не сломается на незнакомом событии.
+ * An event of an unknown type — {@code customWebhook}, or a type added to the API after this
+ * version of the library. The payload is exposed as a field map, so a handler does not break on
+ * an unfamiliar event.
  */
 public final class UnknownWebhookEvent implements WebhookEvent {
 
@@ -21,7 +21,7 @@ public final class UnknownWebhookEvent implements WebhookEvent {
         fields.put(name, value);
     }
 
-    /** Все поля события как есть. */
+    /** All event fields as they arrived. */
     @JsonAnyGetter
     public Map<String, Object> fields() {
         return fields;

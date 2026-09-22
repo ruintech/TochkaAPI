@@ -15,18 +15,18 @@ import java.util.List;
 public record AcquiringSubscriptionListResponseModel(
         @JsonProperty("Subscription") List<AcquiringSubscriptionListItemModel> subscription) {
 
-    /** Строитель {@link AcquiringSubscriptionListResponseModel}. */
+    /** Builder for {@link AcquiringSubscriptionListResponseModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .subscription(this.subscription);
     }
 
-    /** Строитель {@link AcquiringSubscriptionListResponseModel}. */
+    /** Builder for {@link AcquiringSubscriptionListResponseModel}. */
     public static final class Builder {
 
         private List<AcquiringSubscriptionListItemModel> subscription;

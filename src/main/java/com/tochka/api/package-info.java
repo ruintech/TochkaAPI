@@ -1,19 +1,21 @@
 /**
- * Java-клиент открытого API Точка Банка.
+ * Java client for the open API of Tochka Bank.
  *
- * <p>Точка входа — {@link com.tochka.api.TochkaClient}: он собирает HTTP-клиент, авторизацию и
- * даёт доступ к сервисам по разделам API ({@code accounts()}, {@code balances()},
- * {@code acquiring()}, {@code sbpQrCodes()} и другим).
+ * <p>{@link com.tochka.api.TochkaClient} is the entry point: it wires up the HTTP client and the
+ * authorization, and exposes one service per API section ({@code accounts()},
+ * {@code balances()}, {@code acquiring()}, {@code sbpQrCodes()} and the rest).
  *
- * <p>Остальные пакеты:
+ * <p>The other packages:
  * <ul>
- *   <li>{@code com.tochka.api.api} — методы API, сгенерированные из спецификации;</li>
- *   <li>{@code com.tochka.api.model} — модели запросов и ответов;</li>
- *   <li>{@code com.tochka.api.auth} — авторизация по JWT и по OAuth 2.0;</li>
- *   <li>{@code com.tochka.api.webhook} — проверка подписи вебхуков и типизированные события;</li>
- *   <li>{@code com.tochka.api.tls} — сертификаты Минцифры для TLS;</li>
- *   <li>{@code com.tochka.api.http} — транспорт: повторы, логирование, конверты, файлы;</li>
- *   <li>{@code com.tochka.api.exception} — исключения клиента.</li>
+ *   <li>{@code com.tochka.api.api} — API methods generated from the specification;</li>
+ *   <li>{@code com.tochka.api.model} — request and response models;</li>
+ *   <li>{@code com.tochka.api.auth} — JWT and OAuth 2.0 authorization;</li>
+ *   <li>{@code com.tochka.api.webhook} — webhook signature verification and typed events;</li>
+ *   <li>{@code com.tochka.api.tls} — Ministry of Digital Development certificates for TLS;</li>
+ *   <li>{@code com.tochka.api.http} — transport: retries, logging, envelopes, files;</li>
+ *   <li>{@code com.tochka.api.exception} — client exceptions.</li>
  * </ul>
+ *
+ * <p>Javadoc of the generated packages quotes the specification, so its text is in Russian.
  */
 package com.tochka.api;

@@ -8,30 +8,30 @@ import java.math.BigDecimal;
 /**
  * AcquiringChargeSubscriptionRequestModel
  *
- * @param amount Сумма платежа. Например: "1234.00"
+ * @param amount Сумма платежа. Example: "1234.00"
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record AcquiringChargeSubscriptionRequestModel(
         @JsonProperty("amount") BigDecimal amount) {
 
-    /** Строитель {@link AcquiringChargeSubscriptionRequestModel}. */
+    /** Builder for {@link AcquiringChargeSubscriptionRequestModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .amount(this.amount);
     }
 
-    /** Строитель {@link AcquiringChargeSubscriptionRequestModel}. */
+    /** Builder for {@link AcquiringChargeSubscriptionRequestModel}. */
     public static final class Builder {
 
         private BigDecimal amount;
 
-        /** Сумма платежа. Например: "1234.00" */
+        /** Сумма платежа. Example: "1234.00" */
         public Builder amount(BigDecimal amount) {
             this.amount = amount;
             return this;

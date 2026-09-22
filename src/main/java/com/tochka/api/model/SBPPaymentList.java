@@ -15,18 +15,18 @@ import java.util.List;
 public record SBPPaymentList(
         @JsonProperty("Payments") List<SBPPayment> payments) {
 
-    /** Строитель {@link SBPPaymentList}. */
+    /** Builder for {@link SBPPaymentList}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .payments(this.payments);
     }
 
-    /** Строитель {@link SBPPaymentList}. */
+    /** Builder for {@link SBPPaymentList}. */
     public static final class Builder {
 
         private List<SBPPayment> payments;

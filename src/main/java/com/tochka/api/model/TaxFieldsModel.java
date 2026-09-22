@@ -7,14 +7,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * TaxFieldsModel
  *
- * @param originatorStatus Статус плательщика бюджетного платежа (необязательное)
- * @param kbk КБК (необязательное)
- * @param oktmo ОКТМО (необязательное)
- * @param base Основание налогового платежа (необязательное)
- * @param documentNumber Номер налогового документа (необязательное)
- * @param documentDate Дата налогового документа (необязательное)
- * @param type Вид платежа (необязательное)
- * @param field107 Налоговой период / код таможенного органа (необязательное)
+ * @param originatorStatus Статус плательщика бюджетного платежа (optional)
+ * @param kbk КБК (optional)
+ * @param oktmo ОКТМО (optional)
+ * @param base Основание налогового платежа (optional)
+ * @param documentNumber Номер налогового документа (optional)
+ * @param documentDate Дата налогового документа (optional)
+ * @param type Вид платежа (optional)
+ * @param field107 Налоговой период / код таможенного органа (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -28,12 +28,12 @@ public record TaxFieldsModel(
         @JsonProperty("type") String type,
         @JsonProperty("field107") String field107) {
 
-    /** Строитель {@link TaxFieldsModel}. */
+    /** Builder for {@link TaxFieldsModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .originatorStatus(this.originatorStatus)
@@ -46,7 +46,7 @@ public record TaxFieldsModel(
                 .field107(this.field107);
     }
 
-    /** Строитель {@link TaxFieldsModel}. */
+    /** Builder for {@link TaxFieldsModel}. */
     public static final class Builder {
 
         private String originatorStatus;

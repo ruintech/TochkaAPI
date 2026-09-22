@@ -8,16 +8,16 @@ import java.math.BigDecimal;
 /**
  * AcquiringCreateSubscriptionResponseModel
  *
- * @param purpose Назначение платежа. Например: "Перевод за оказанные услуги"
- * @param amount Сумма платежа, которая будет списываться в указанный клиентом период. Например: "1234.00"
- * @param status Статус платежа. Например: "CREATED" (необязательное)
- * @param operationId Идентификатор платежа. Например: "48232c9a-ce82-1593-3cb6-5c85a1ffef8f"
- * @param paymentLink Ссылка на оплату. Например:
+ * @param purpose Назначение платежа. Example: "Перевод за оказанные услуги"
+ * @param amount Сумма платежа, которая будет списываться в указанный клиентом период. Example: "1234.00"
+ * @param status Статус платежа. Example: "CREATED" (optional)
+ * @param operationId Идентификатор платежа. Example: "48232c9a-ce82-1593-3cb6-5c85a1ffef8f"
+ * @param paymentLink Ссылка на оплату. Example:
  *        "https://merch.example.com/order/?uuid=16ea4c54-bf1d-4e6a-a1ef-53ad55666e43"
- * @param consumerId Идентификатор покупателя. Например: "fedac807-078d-45ac-a43b-5c01c57edbf8" (необязательное)
- * @param recurring Рекуррентная подписка (необязательное)
- * @param options Опции подписки (необязательное)
- * @param paymentLinkId Уникальный номер заказа (необязательное)
+ * @param consumerId Идентификатор покупателя. Example: "fedac807-078d-45ac-a43b-5c01c57edbf8" (optional)
+ * @param recurring Рекуррентная подписка (optional)
+ * @param options Опции подписки (optional)
+ * @param paymentLinkId Уникальный номер заказа (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -32,12 +32,12 @@ public record AcquiringCreateSubscriptionResponseModel(
         @JsonProperty("Options") AcquiringSubscriptionOutputOptions options,
         @JsonProperty("paymentLinkId") String paymentLinkId) {
 
-    /** Строитель {@link AcquiringCreateSubscriptionResponseModel}. */
+    /** Builder for {@link AcquiringCreateSubscriptionResponseModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .purpose(this.purpose)
@@ -51,7 +51,7 @@ public record AcquiringCreateSubscriptionResponseModel(
                 .paymentLinkId(this.paymentLinkId);
     }
 
-    /** Строитель {@link AcquiringCreateSubscriptionResponseModel}. */
+    /** Builder for {@link AcquiringCreateSubscriptionResponseModel}. */
     public static final class Builder {
 
         private String purpose;
@@ -64,38 +64,38 @@ public record AcquiringCreateSubscriptionResponseModel(
         private AcquiringSubscriptionOutputOptions options;
         private String paymentLinkId;
 
-        /** Назначение платежа. Например: "Перевод за оказанные услуги" */
+        /** Назначение платежа. Example: "Перевод за оказанные услуги" */
         public Builder purpose(String purpose) {
             this.purpose = purpose;
             return this;
         }
 
-        /** Сумма платежа, которая будет списываться в указанный клиентом период. Например: "1234.00" */
+        /** Сумма платежа, которая будет списываться в указанный клиентом период. Example: "1234.00" */
         public Builder amount(BigDecimal amount) {
             this.amount = amount;
             return this;
         }
 
-        /** Статус платежа. Например: "CREATED" */
+        /** Статус платежа. Example: "CREATED" */
         public Builder status(AcquiringCreatedStatus status) {
             this.status = status;
             return this;
         }
 
-        /** Идентификатор платежа. Например: "48232c9a-ce82-1593-3cb6-5c85a1ffef8f" */
+        /** Идентификатор платежа. Example: "48232c9a-ce82-1593-3cb6-5c85a1ffef8f" */
         public Builder operationId(String operationId) {
             this.operationId = operationId;
             return this;
         }
 
-        /** Ссылка на оплату. Например:
+        /** Ссылка на оплату. Example:
         "https://merch.example.com/order/?uuid=16ea4c54-bf1d-4e6a-a1ef-53ad55666e43" */
         public Builder paymentLink(String paymentLink) {
             this.paymentLink = paymentLink;
             return this;
         }
 
-        /** Идентификатор покупателя. Например: "fedac807-078d-45ac-a43b-5c01c57edbf8" */
+        /** Идентификатор покупателя. Example: "fedac807-078d-45ac-a43b-5c01c57edbf8" */
         public Builder consumerId(String consumerId) {
             this.consumerId = consumerId;
             return this;

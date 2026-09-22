@@ -10,18 +10,16 @@ import java.util.List;
 /**
  * StatementModel
  *
- * @param accountId Уникальный и неизменный идентификатор счёта. Например: "40817810802000000008/044525104"
- * @param statementId Идентификатор ресурса выписки. Например: "23489" (необязательное)
- * @param status Статус готовности выписки. Например: "Ready"
- * @param startDateTime Дата начала выписки. Используется стандарт ISO8601. Например: "2019-01-01"
- * @param endDateTime Дата окончания выписки. Используется стандарт ISO8601. Например: "2019-01-01"
- * @param creationDateTime Дата и время создания ресурса. Используется стандарт ISO8601. Например:
+ * @param accountId Уникальный и неизменный идентификатор счёта. Example: "40817810802000000008/044525104"
+ * @param statementId Идентификатор ресурса выписки. Example: "23489" (optional)
+ * @param status Статус готовности выписки. Example: "Ready"
+ * @param startDateTime Дата начала выписки. Используется стандарт ISO8601. Example: "2019-01-01"
+ * @param endDateTime Дата окончания выписки. Используется стандарт ISO8601. Example: "2019-01-01"
+ * @param creationDateTime Дата и время создания ресурса. Используется стандарт ISO8601. Example:
  *        "2019-01-01T06:06:06.364+00:00"
- * @param startDateBalance Баланс на начало запрашиваемого периода выписки в валюте счета. Например: 1234.5
- *        (необязательное)
- * @param endDateBalance Баланс на конец запрашиваемого периода выписки в валюте счета. Например: 1234.5
- *        (необязательное)
- * @param transaction Transaction (необязательное)
+ * @param startDateBalance Баланс на начало запрашиваемого периода выписки в валюте счета. Example: 1234.5 (optional)
+ * @param endDateBalance Баланс на конец запрашиваемого периода выписки в валюте счета. Example: 1234.5 (optional)
+ * @param transaction Transaction (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -36,12 +34,12 @@ public record StatementModel(
         @JsonProperty("endDateBalance") BigDecimal endDateBalance,
         @JsonProperty("Transaction") List<TransactionModel> transaction) {
 
-    /** Строитель {@link StatementModel}. */
+    /** Builder for {@link StatementModel}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .accountId(this.accountId)
@@ -55,7 +53,7 @@ public record StatementModel(
                 .transaction(this.transaction);
     }
 
-    /** Строитель {@link StatementModel}. */
+    /** Builder for {@link StatementModel}. */
     public static final class Builder {
 
         private String accountId;
@@ -68,50 +66,50 @@ public record StatementModel(
         private BigDecimal endDateBalance;
         private List<TransactionModel> transaction;
 
-        /** Уникальный и неизменный идентификатор счёта. Например: "40817810802000000008/044525104" */
+        /** Уникальный и неизменный идентификатор счёта. Example: "40817810802000000008/044525104" */
         public Builder accountId(String accountId) {
             this.accountId = accountId;
             return this;
         }
 
-        /** Идентификатор ресурса выписки. Например: "23489" */
+        /** Идентификатор ресурса выписки. Example: "23489" */
         public Builder statementId(String statementId) {
             this.statementId = statementId;
             return this;
         }
 
-        /** Статус готовности выписки. Например: "Ready" */
+        /** Статус готовности выписки. Example: "Ready" */
         public Builder status(StatementStatus status) {
             this.status = status;
             return this;
         }
 
-        /** Дата начала выписки. Используется стандарт ISO8601. Например: "2019-01-01" */
+        /** Дата начала выписки. Используется стандарт ISO8601. Example: "2019-01-01" */
         public Builder startDateTime(LocalDate startDateTime) {
             this.startDateTime = startDateTime;
             return this;
         }
 
-        /** Дата окончания выписки. Используется стандарт ISO8601. Например: "2019-01-01" */
+        /** Дата окончания выписки. Используется стандарт ISO8601. Example: "2019-01-01" */
         public Builder endDateTime(LocalDate endDateTime) {
             this.endDateTime = endDateTime;
             return this;
         }
 
-        /** Дата и время создания ресурса. Используется стандарт ISO8601. Например:
+        /** Дата и время создания ресурса. Используется стандарт ISO8601. Example:
         "2019-01-01T06:06:06.364+00:00" */
         public Builder creationDateTime(String creationDateTime) {
             this.creationDateTime = creationDateTime;
             return this;
         }
 
-        /** Баланс на начало запрашиваемого периода выписки в валюте счета. Например: 1234.5 */
+        /** Баланс на начало запрашиваемого периода выписки в валюте счета. Example: 1234.5 */
         public Builder startDateBalance(BigDecimal startDateBalance) {
             this.startDateBalance = startDateBalance;
             return this;
         }
 
-        /** Баланс на конец запрашиваемого периода выписки в валюте счета. Например: 1234.5 */
+        /** Баланс на конец запрашиваемого периода выписки в валюте счета. Example: 1234.5 */
         public Builder endDateBalance(BigDecimal endDateBalance) {
             this.endDateBalance = endDateBalance;
             return this;

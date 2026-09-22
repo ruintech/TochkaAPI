@@ -9,9 +9,9 @@ import com.tochka.api.model.StatusEnum;
 import java.util.List;
 
 /**
- * СБП: торгово-сервисные предприятия (торговые точки).
+ * SBP: merchants (points of sale).
  *
- * <p>Экземпляр доступен через {@link com.tochka.api.TochkaClient}.
+ * <p>An instance is available from {@link com.tochka.api.TochkaClient}.
  */
 public final class SbpMerchantsApi {
 
@@ -26,7 +26,7 @@ public final class SbpMerchantsApi {
      * регистрацию и работу с ТСП — в разделе «Регистрация ЮЛ или ТСП
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/registraciya-yul-i-tsp)».
      *
-     * <p>Требуемые разрешения: {@code ReadSBPData}.
+     * <p>Required permissions: {@code ReadSBPData}.
      *
      * @param merchantId Идентификатор ТСП
      */
@@ -42,7 +42,7 @@ public final class SbpMerchantsApi {
      * регистрацию и работу с ТСП — в разделе «Регистрация ЮЛ или ТСП
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/registraciya-yul-i-tsp)».
      *
-     * <p>Требуемые разрешения: {@code ReadSBPData}.
+     * <p>Required permissions: {@code ReadSBPData}.
      *
      * @param legalId Идентификатор зарегистрированного юрлица в СБП (12 символов)
      */
@@ -59,10 +59,10 @@ public final class SbpMerchantsApi {
      * {@code merchantId}. Как зарегистрировать ЮЛ и торговую точку — в разделе «Регистрация ЮЛ или ТСП
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/registraciya-yul-i-tsp)».
      *
-     * <p>Требуемые разрешения: {@code EditSBPData}.
+     * <p>Required permissions: {@code EditSBPData}.
      *
      * @param legalId Идентификатор зарегистрированного юрлица в СБП (12 символов)
-     * @param request тело запроса
+     * @param request request body
      */
     public String registerMerchant(String legalId, RegisterMerchant request) {
         return transport.request("POST", "/sbp/v1.0/merchant/legal-entity/{legalId}")
@@ -77,10 +77,10 @@ public final class SbpMerchantsApi {
      * или возобновляет. Про работу с ТСП — в разделе «Регистрация ЮЛ или ТСП
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/registraciya-yul-i-tsp)».
      *
-     * <p>Требуемые разрешения: {@code EditSBPData}.
+     * <p>Required permissions: {@code EditSBPData}.
      *
      * @param merchantId Идентификатор ТСП
-     * @param status Статус объекта. Например: "Active"
+     * @param status Статус объекта. Example: "Active"
      */
     public Boolean setMerchantStatus(String merchantId, StatusEnum status) {
         return transport.request("PUT", "/sbp/v1.0/merchant/{merchantId}")

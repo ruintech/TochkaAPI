@@ -166,7 +166,7 @@ class WebhookVerifierTest {
 
     @Test
     void rejectsMalformedToken() {
-        assertThrows(WebhookVerificationException.class, () -> verifier.verify("не-jwt"));
+        assertThrows(WebhookVerificationException.class, () -> verifier.verify("not-a-jwt"));
         assertThrows(WebhookVerificationException.class, () -> verifier.verify(""));
     }
 
@@ -186,7 +186,7 @@ class WebhookVerifierTest {
 
     @Test
     void verifiesRealWebhookWithKeyPublishedByTheBank() throws Exception {
-        // Ключ, опубликованный банком, и пример вебхука incomingPayment из документации.
+        // The key published by the bank, and the incomingPayment sample from the documentation.
         WebhookVerifier bankVerifier = WebhookVerifier.builder()
                 .publicKeyPem(readResource("/tochka_webhook_public_key.json"))
                 .build();
@@ -209,7 +209,7 @@ class WebhookVerifierTest {
 
     private static String readResource(String name) throws Exception {
         try (var stream = WebhookVerifierTest.class.getResourceAsStream(name)) {
-            assertNotNull(stream, "нет ресурса " + name);
+            assertNotNull(stream, "missing resource " + name);
             return new String(stream.readAllBytes(), StandardCharsets.UTF_8).trim();
         }
     }

@@ -8,9 +8,9 @@ import java.math.BigDecimal;
 /**
  * CashboxQrCodeOutputCommission
  *
- * @param mcc MCC код (необязательное)
- * @param percent Размер комиссии в процентах (необязательное)
- * @param description Описание (необязательное)
+ * @param mcc MCC код (optional)
+ * @param percent Размер комиссии в процентах (optional)
+ * @param description Описание (optional)
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -19,12 +19,12 @@ public record CashboxQrCodeOutputCommission(
         @JsonProperty("percent") BigDecimal percent,
         @JsonProperty("description") String description) {
 
-    /** Строитель {@link CashboxQrCodeOutputCommission}. */
+    /** Builder for {@link CashboxQrCodeOutputCommission}. */
     public static Builder builder() {
         return new Builder();
     }
 
-    /** Копия строителя, заполненная значениями этого объекта. */
+    /** A builder pre-filled with the values of this object. */
     public Builder toBuilder() {
         return new Builder()
                 .mcc(this.mcc)
@@ -32,7 +32,7 @@ public record CashboxQrCodeOutputCommission(
                 .description(this.description);
     }
 
-    /** Строитель {@link CashboxQrCodeOutputCommission}. */
+    /** Builder for {@link CashboxQrCodeOutputCommission}. */
     public static final class Builder {
 
         private String mcc;
