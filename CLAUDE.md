@@ -6,40 +6,37 @@ Java-клиент открытого API Точка Банка. Язык код�
 
 ## Команды
 
-`mvn` нет в PATH: используется Maven, встроенный в IntelliJ IDEA.
+`mvn` нет в PATH — в репозитории есть Maven Wrapper, им и пользуйтесь (та же версия, что в CI):
 
 ```bash
-MVN=~/Applications/IntelliJ\ IDEA.app/Contents/plugins/maven-plugin/lib/maven3/bin/mvn
+./mvnw verify                                       # тесты + jar + sources + javadoc
+./mvnw test -Dtest=WebhookVerifierTest              # один класс
+./mvnw test -Dtest='TransportTest#retriesIdempotentRequestAfterServerError'   # один тест
+./mvnw -o verify                                    # офлайн, когда зависимости уже скачаны
 
-"$MVN" test                                        # все тесты
-"$MVN" test -Dtest=WebhookVerifierTest             # один класс
-"$MVN" test -Dtest='TransportTest#retriesIdempotentRequestAfterServerError'   # один тест
-"$MVN" package                                     # jar + sources jar
-"$MVN" -o test                                     # офлайн, когда зависимости уже скачаны
-
-python3 codegen/generate.py                        # перегенерация моделей и сервисов
+python3 codegen/generate.py                         # перегенерация моделей и сервисов
 ```
+
+Javadoc собирается с `failOnWarnings` и `doclint=all,-missing`, поэтому сломанная документация
+валит `verify` — отдельная проверка не нужна.
 
 Тесты не ходят в сеть и должны оставаться такими: HTTP проверяется на локальном
 `com.sun.net.httpserver.HttpServer`, подписи вебхуков — на сгенерированной паре RSA-ключей и на
 зафиксированных фикстурах в `src/test/resources`.
 
-Javadoc проходит строгий doclint без замечаний — это стоит сохранять:
-
-```bash
-javadoc -quiet -encoding UTF-8 -d /tmp/jd -Xdoclint:all,-missing \
-  -cp "$(find ~/.m2/repository/com/fasterxml -name '*.jar' | tr '\n' ':')" \
-  $(find src/main/java -name '*.java')
-```
-
 ## Обновление API
 
-Спецификация — `swagger.json` (сейчас `v1.98.1-stable`). Порядок обновления:
+Спецификация лежит в `swagger.json` (сейчас `v1.98.1-stable`).
+
+Обычно обновлять её вручную не нужно: workflow `.github/workflows/update-spec.yml` раз в неделю
+скачивает спеку, перегенерирует код, поднимает версию и открывает PR. Вручную то же самое:
 
 ```bash
-curl -o swagger.json https://enter.tochka.com/doc/openapi/swagger.json
+# enter.tochka.com отдаёт только цепочку Минцифры, в системных хранилищах её нет
+curl -fsSL --cacert src/main/resources/com/tochka/api/tls/russian_trusted_root_ca.pem \
+  -o swagger.json https://enter.tochka.com/doc/openapi/swagger.json
 python3 codegen/generate.py     # печатает версию спеки и количество файлов
-"$MVN" test
+./mvnw verify
 ```
 
 Генератор **полностью стирает и пересоздаёт** `src/main/java/com/tochka/api/model` и
@@ -53,7 +50,8 @@ python3 codegen/generate.py     # печатает версию спеки и к
   `SCHEMA_NAME_OVERRIDES`). Оба случая намеренно останавливают генерацию, а не молча портят код.
 - **`git diff --stat` по `api/`** — новые методы видно по изменению сигнатур; если метод исчез,
   это ломающее изменение API, а не баг генератора.
-- **Версия в `pom.xml`** повторяет версию спеки (`1.98.1-SNAPSHOT`) — поднимите её.
+- **Версия в `pom.xml`** повторяет версию спеки: `v1.98.1-stable` → `1.98.1-SNAPSHOT`. Ставится
+  через `./mvnw versions:set -DnewVersion=... -DgenerateBackupPoms=false`.
 - **`JsonNode` в сигнатурах моделей** — признак конструкции, которую генератор не умеет. В
   текущей спеке нет ни одного `allOf`/`oneOf`/`anyOf`, и `java_type()` на них не рассчитан: такая
   схема молча превратится в `JsonNode` или `Map<String, Object>`. Если появились — учить
@@ -137,6 +135,24 @@ RSA 3072). Скачивается лениво, кешируется на 6 ча
 реального примера вебхука из документации зафиксированным ключом банка
 (`src/test/resources`). Если банк сменит ключ, этот тест упадёт — тогда нужно обновить обе
 фикстуры, а не ослаблять проверку.
+
+## CI
+
+`.github/workflows/`:
+
+| Файл | Когда | Что делает |
+| --- | --- | --- |
+| `ci.yml` | push в main, PR | `./mvnw verify` на JDK 17 и 21 + проверка, что генерация соответствует спеке |
+| `update-spec.yml` | по понедельникам, вручную | скачивает спеку, регенерирует, поднимает версию, открывает PR |
+| `release.yml` | тег `v*.*.*`, вручную | `./mvnw deploy` во внутренний Nexus |
+
+Сгенерированный код **коммитится**, а не собирается на лету: иначе один и тот же коммит собирался
+бы по-разному в разные дни, а изменение API проезжало бы в артефакт без ревью. Шаг `codegen`
+в `ci.yml` запускает генератор и падает, если `git diff` непустой.
+
+Публикация берёт адреса из переменных репозитория `NEXUS_RELEASES_URL` и `NEXUS_SNAPSHOTS_URL`,
+учётные данные — из секретов `NEXUS_USERNAME` и `NEXUS_PASSWORD`. Они подставляются в
+`.mvn/ci-settings.xml` через `${env.*}`, на диск не пишутся.
 
 ## Ручная проверка на песочнице
 

@@ -372,20 +372,32 @@ JsonNode raw = client.transport()
 ## Регенерация из спецификации
 
 Модели и классы сервисов генерируются из `swagger.json`; рукописное ядро (`http`, `auth`,
-`webhook`, `tls`) генератор не трогает.
+`webhook`, `tls`) генератор не трогает. Сгенерированный код коммитится в репозиторий — сборка
+любого коммита воспроизводима, а изменения API видны в ревью.
+
+Следить за обновлениями вручную не нужно: раз в неделю CI скачивает свежую спецификацию и, если
+она изменилась, открывает PR с перегенерированным кодом и поднятой версией. Тот же процесс
+руками:
 
 ```bash
-curl -o swagger.json https://enter.tochka.com/doc/openapi/swagger.json
+# enter.tochka.com отдаёт только цепочку Минцифры — её нет в системных хранилищах
+curl -fsSL --cacert src/main/resources/com/tochka/api/tls/russian_trusted_root_ca.pem \
+  -o swagger.json https://enter.tochka.com/doc/openapi/swagger.json
 python3 codegen/generate.py
-mvn -q test
+./mvnw verify
 ```
+
+Правки в `src/main/java/com/tochka/api/{model,api}` не сохраняются: эти пакеты пересоздаются
+целиком, менять нужно `codegen/generate.py`. CI проверяет это отдельным шагом.
 
 ## Сборка и тесты
 
 ```bash
-mvn test        # 42 теста: модели, транспорт на локальном сервере, вебхуки, повторы, TLS
-mvn package
+./mvnw verify   # 42 теста + jar, sources-jar и javadoc-jar
+./mvnw test -Dtest=WebhookVerifierTest
 ```
+
+Нужен только JDK 17+ — Maven приезжает через wrapper.
 
 Тесты не ходят в сеть: HTTP-обмен проверяется на локальном `HttpServer`, а подпись вебхуков — на
 сгенерированной паре RSA-ключей и на зафиксированной паре «ключ банка + пример вебхука из
