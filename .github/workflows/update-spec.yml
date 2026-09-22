@@ -1,0 +1,105 @@
+name: Обновление спецификации API
+
+# Скачиваем свежий swagger.json и, если он изменился, открываем PR с перегенерированным кодом.
+# Скачивание живёт именно здесь, а не в сборке: так обновление API проходит ревью, а сборка
+# любого коммита остаётся воспроизводимой.
+on:
+  schedule:
+    - cron: '0 6 * * 1'   # каждый понедельник, 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  SPEC_URL: https://enter.tochka.com/doc/openapi/swagger.json
+  # enter.tochka.com отдаёт только цепочку Минцифры, а её нет в хранилище Ubuntu.
+  # Корневого сертификата из ресурсов библиотеки достаточно: сервер присылает всю цепочку.
+  ROOT_CA: src/main/resources/com/tochka/api/tls/russian_trusted_root_ca.pem
+
+jobs:
+  update:
+    name: Проверить обновления API
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Установить JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Скачать спецификацию
+        run: curl -fsSL --cacert "$ROOT_CA" -o swagger.json "$SPEC_URL"
+
+      - name: Сравнить с текущей
+        id: spec
+        run: |
+          if git diff --quiet -- swagger.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Спецификация не изменилась."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "version=$(python3 -c 'import json;print(json.load(open("swagger.json"))["info"]["version"])')" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Перегенерировать код
+        if: steps.spec.outputs.changed == 'true'
+        run: python3 codegen/generate.py
+
+      # Версия артефакта повторяет версию спецификации: v1.98.1-stable -> 1.98.1-SNAPSHOT.
+      - name: Обновить версию проекта
+        if: steps.spec.outputs.changed == 'true'
+        run: |
+          VERSION="$(echo '${{ steps.spec.outputs.version }}' | sed -E 's/^v//; s/-stable$//')-SNAPSHOT"
+          echo "Новая версия: $VERSION"
+          ./mvnw -B --no-transfer-progress versions:set -DnewVersion="$VERSION" -DgenerateBackupPoms=false
+
+      - name: Собрать и прогнать тесты
+        if: steps.spec.outputs.changed == 'true'
+        run: ./mvnw -B --no-transfer-progress verify
+
+      - name: Открыть PR
+        if: steps.spec.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SPEC_VERSION: ${{ steps.spec.outputs.version }}
+        run: |
+          BRANCH="api-update/${SPEC_VERSION}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1; then
+            echo "Ветка $BRANCH уже существует — PR открыт ранее."
+            exit 0
+          fi
+
+          {
+            echo "## Изменения в API"
+            echo
+            echo "Спецификация обновлена до \`${SPEC_VERSION}\`."
+            echo
+            echo "### Публичные методы"
+            echo '```'
+            git --no-pager diff --stat -- src/main/java/com/tochka/api/api
+            echo '```'
+            echo
+            echo "### Модели"
+            echo '```'
+            git --no-pager diff --stat -- src/main/java/com/tochka/api/model | tail -1
+            echo '```'
+            echo
+            echo "Сборка и тесты прошли. Перед вливанием проверьте диффы классов в"
+            echo "\`src/main/java/com/tochka/api/api\`: исчезнувший метод — ломающее изменение"
+            echo "для тех, кто уже использует библиотеку."
+          } > /tmp/pr-body.md
+
+          git checkout -b "$BRANCH"
+          git add -A
+          git commit -m "Обновление API до ${SPEC_VERSION}"
+          git push origin "$BRANCH"
+          gh pr create --title "Обновление API до ${SPEC_VERSION}" --body-file /tmp/pr-body.md --base "${GITHUB_REF_NAME}"

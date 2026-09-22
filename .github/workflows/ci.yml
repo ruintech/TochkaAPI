@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Сборка и тесты (JDK ${{ matrix.java }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        java: ['17', '21']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Установить JDK ${{ matrix.java }}
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+          cache: maven
+
+      # verify прогоняет тесты, собирает jar, sources-jar и javadoc-jar.
+      # Javadoc настроен на failOnWarnings, поэтому сломанная документация валит сборку.
+      - name: mvn verify
+        run: ./mvnw -B --no-transfer-progress verify
+
+      - name: Сохранить артефакты
+        if: matrix.java == '17'
+        uses: actions/upload-artifact@v4
+        with:
+          name: jars
+          path: target/*.jar
+          retention-days: 14
+
+      - name: Сохранить отчёты упавших тестов
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports-jdk${{ matrix.java }}
+          path: target/surefire-reports/
+          retention-days: 7
+
+  codegen:
+    name: Генерация соответствует спецификации
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Сгенерированный код коммитится, поэтому сборка воспроизводима и изменения API видны
+      # в ревью. Эта проверка ловит случай, когда swagger.json обновили, а генератор не запустили
+      # (или, наоборот, правили сгенерированные файлы руками).
+      - name: Перегенерировать модели и сервисы
+        run: python3 codegen/generate.py
+
+      - name: Проверить, что дифф пустой
+        run: |
+          if ! git diff --quiet -- src/main/java/com/tochka/api/model src/main/java/com/tochka/api/api; then
+            echo "::error::Сгенерированный код не соответствует swagger.json."
+            echo "Запустите 'python3 codegen/generate.py' и закоммитьте результат."
+            echo "Правки в пакетах model/ и api/ вручную не сохраняются — меняйте codegen/generate.py."
+            git --no-pager diff --stat -- src/main/java/com/tochka/api/model src/main/java/com/tochka/api/api
+            exit 1
+          fi
+          echo "Сгенерированный код актуален."
