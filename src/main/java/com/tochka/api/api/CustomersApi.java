@@ -36,7 +36,7 @@ public final class CustomersApi {
 
     /**
      * Get Customers List. Метод возвращает список компаний, к которым у вас есть доступ, и их {@code
-     * customerCode}./nС этого метода обычно начинают работу: {@code customerCode} нужен в большинстве
+     * customerCode}. С этого метода обычно начинают работу: {@code customerCode} нужен в большинстве
      * других запросов. Берите значение из объекта с {@code customerType}: "Business". Что такое {@code
      * customerCode} и где он нужен — в разделе «Клиенты (/docs/tochka-api/opisanie-metodov/klienty)».
      *

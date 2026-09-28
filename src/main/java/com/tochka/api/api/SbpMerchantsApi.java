@@ -38,8 +38,8 @@ public final class SbpMerchantsApi {
     }
 
     /**
-     * Get Merchants List. Метод возвращает список торговых точек юрлица с их merchantId и данными. Про
-     * регистрацию и работу с ТСП — в разделе «Регистрация ЮЛ или ТСП
+     * Get Merchants List. Метод возвращает список торговых точек юрлица с их {@code merchantId} и
+     * данными. Про регистрацию и работу с ТСП — в разделе «Регистрация ЮЛ или ТСП
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/registraciya-yul-i-tsp)».
      *
      * <p>Required permissions: {@code ReadSBPData}.
