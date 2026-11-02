@@ -48,7 +48,7 @@ public record AcquiringSubscriptionListItemModel(
         @JsonProperty("createdAt") String createdAt,
         @JsonProperty("redirectUrl") String redirectUrl,
         @JsonProperty("failRedirectUrl") String failRedirectUrl,
-        @JsonProperty("Client") ReceiptClientModel client,
+        @JsonProperty("Client") ReceiptClientResponseModel client,
         @JsonProperty("Items") List<ReceiptItemResponseModel> items,
         @JsonProperty("purpose") String purpose,
         @JsonProperty("amount") BigDecimal amount,
@@ -104,7 +104,7 @@ public record AcquiringSubscriptionListItemModel(
         private String createdAt;
         private String redirectUrl;
         private String failRedirectUrl;
-        private ReceiptClientModel client;
+        private ReceiptClientResponseModel client;
         private List<ReceiptItemResponseModel> items;
         private String purpose;
         private BigDecimal amount;
@@ -165,7 +165,7 @@ public record AcquiringSubscriptionListItemModel(
         }
 
         /** Данные покупателя */
-        public Builder client(ReceiptClientModel client) {
+        public Builder client(ReceiptClientResponseModel client) {
             this.client = client;
             return this;
         }
