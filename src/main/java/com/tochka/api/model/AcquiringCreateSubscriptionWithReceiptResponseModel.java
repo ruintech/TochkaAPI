@@ -47,7 +47,7 @@ public record AcquiringCreateSubscriptionWithReceiptResponseModel(
         @JsonProperty("failRedirectUrl") String failRedirectUrl,
         @JsonProperty("merchantId") String merchantId,
         @JsonProperty("taxSystemCode") TaxSystemCodeInput taxSystemCode,
-        @JsonProperty("Client") ReceiptClientModel client,
+        @JsonProperty("Client") ReceiptClientResponseModel client,
         @JsonProperty("Items") List<ReceiptItemOutputModel> items,
         @JsonProperty("Supplier") SupplierModel supplier) {
 
@@ -95,7 +95,7 @@ public record AcquiringCreateSubscriptionWithReceiptResponseModel(
         private String failRedirectUrl;
         private String merchantId;
         private TaxSystemCodeInput taxSystemCode;
-        private ReceiptClientModel client;
+        private ReceiptClientResponseModel client;
         private List<ReceiptItemOutputModel> items;
         private SupplierModel supplier;
 
@@ -186,7 +186,7 @@ public record AcquiringCreateSubscriptionWithReceiptResponseModel(
         }
 
         /** Данные покупателя */
-        public Builder client(ReceiptClientModel client) {
+        public Builder client(ReceiptClientResponseModel client) {
             this.client = client;
             return this;
         }

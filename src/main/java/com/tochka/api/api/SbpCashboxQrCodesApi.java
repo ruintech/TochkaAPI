@@ -82,8 +82,8 @@ public final class SbpCashboxQrCodesApi {
     }
 
     /**
-     * Get Cashbox Qrcode. Метод возвращает данные одного кассового QR-кода по его qrcId. Про кассовые
-     * QR-коды — в разделе «Работа с QR-кодами
+     * Get Cashbox Qrcode. Метод возвращает данные одного кассового QR-кода по его {@code qrcId}. Про
+     * кассовые QR-коды — в разделе «Работа с QR-кодами
      * (/docs/tochka-api/opisanie-metodov/sbp-sistema-bystryh-platezhej/rabota-s-qr-kodami)».
      *
      * <p>Required permissions: {@code ReadSBPData}.
