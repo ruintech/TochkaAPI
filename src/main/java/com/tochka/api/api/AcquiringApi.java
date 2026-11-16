@@ -30,7 +30,10 @@ public final class AcquiringApi {
     }
 
     /**
-     * Capture Payment. Метод для списания средств при двухэтапной оплате
+     * Capture Payment. Метод списывает деньги, замороженные на карте покупателя при двухэтапной
+     * оплате. До вызова этого метода деньги только заблокированы, а списываются именно им. Как
+     * работает двухэтапная оплата — в разделе «Платёжные ссылки
+     * (/docs/tochka-api/opisanie-metodov/platyozhnye-ssylki)».
      *
      * <p>Required permissions: {@code MakeAcquiringOperation}.
      *
@@ -44,7 +47,10 @@ public final class AcquiringApi {
     }
 
     /**
-     * Create Payment Operation. Метод для создания ссылки на оплату
+     * Create Payment Operation. Метод создаёт платёжную ссылку, по которой покупатель оплачивает заказ
+     * картой, через СБП, T-Pay или «Долями». В ответ приходит ссылка и {@code operationId} для
+     * отслеживания оплаты. Как создать ссылку и какие параметры передать — в разделе «Платёжные ссылки
+     * (/docs/tochka-api/opisanie-metodov/platyozhnye-ssylki)».
      *
      * <p>Required permissions: {@code MakeAcquiringOperation}.
      *
@@ -58,7 +64,10 @@ public final class AcquiringApi {
     }
 
     /**
-     * Create Payment Operation With Receipt. Метод для создания ссылки на оплату и отправки чека
+     * Create Payment Operation With Receipt. Метод создаёт платёжную ссылку и отправляет покупателю
+     * кассовый чек по 54-ФЗ. Подходит, если вы обязаны выдавать чеки: в запросе передаются позиции
+     * заказа, ставки НДС и данные для чека. Про фискализацию и состав чека — в разделе «Платёжные
+     * ссылки (/docs/tochka-api/opisanie-metodov/platyozhnye-ssylki)».
      *
      * <p>Required permissions: {@code MakeAcquiringOperation}.
      *
@@ -72,10 +81,9 @@ public final class AcquiringApi {
     }
 
     /**
-     * Get Payment Operation Info. Метод для получения информации о конкретной операции - *CREATED* -
-     * Операция создана - *APPROVED* - Операция одобрена (оплата прошла успешно) - *ON-REFUND* -
-     * Операция заблокирована на время выполнения возврата - *REFUNDED* - Осуществлен возврат -
-     * *EXPIRED* - Истек срок действия
+     * Get Payment Operation Info. Метод возвращает подробную информацию об одной операции по её {@code
+     * operationId}: статус, сумму, способ оплаты, данные покупателя. Подробнее о платёжных ссылках — в
+     * разделе «Платёжные ссылки (/docs/tochka-api/opisanie-metodov/platyozhnye-ssylki)».
      *
      * <p>Required permissions: {@code ReadAcquiringData}.
      *
@@ -89,9 +97,10 @@ public final class AcquiringApi {
     }
 
     /**
-     * Get Payment Operation List. Метод для получения списка операций - *CREATED* - Операция создана -
-     * *APPROVED* - Операция одобрена (оплата прошла успешно) - *ON-REFUND* - Операция заблокирована на
-     * время выполнения возврата - *REFUNDED* - Осуществлен возврат - *EXPIRED* - Истек срок действия
+     * Get Payment Operation List. Метод возвращает список операций по платёжным ссылкам за период, c
+     * их статусами и данными оплаты.Помогает отслеживать, что оплачено, а что нет. Что означают
+     * статусы операций — в разделе «Платёжные ссылки
+     * (/docs/tochka-api/opisanie-metodov/platyozhnye-ssylki)».
      *
      * <p>Required permissions: {@code ReadAcquiringData}.
      *
@@ -162,9 +171,10 @@ public final class AcquiringApi {
     }
 
     /**
-     * Get Payment Operation List. Метод для получения списка операций - *CREATED* - Операция создана -
-     * *APPROVED* - Операция одобрена (оплата прошла успешно) - *ON-REFUND* - Операция заблокирована на
-     * время выполнения возврата - *REFUNDED* - Осуществлен возврат - *EXPIRED* - Истек срок действия
+     * Get Payment Operation List. Метод возвращает список операций по платёжным ссылкам за период, c
+     * их статусами и данными оплаты.Помогает отслеживать, что оплачено, а что нет. Что означают
+     * статусы операций — в разделе «Платёжные ссылки
+     * (/docs/tochka-api/opisanie-metodov/platyozhnye-ssylki)».
      *
      * <p>Required permissions: {@code ReadAcquiringData}.
      *
@@ -184,9 +194,10 @@ public final class AcquiringApi {
     }
 
     /**
-     * Get Payment Operation List. Метод для получения списка операций - *CREATED* - Операция создана -
-     * *APPROVED* - Операция одобрена (оплата прошла успешно) - *ON-REFUND* - Операция заблокирована на
-     * время выполнения возврата - *REFUNDED* - Осуществлен возврат - *EXPIRED* - Истек срок действия
+     * Get Payment Operation List. Метод возвращает список операций по платёжным ссылкам за период, c
+     * их статусами и данными оплаты.Помогает отслеживать, что оплачено, а что нет. Что означают
+     * статусы операций — в разделе «Платёжные ссылки
+     * (/docs/tochka-api/opisanie-metodov/platyozhnye-ssylki)».
      *
      * <p>Required permissions: {@code ReadAcquiringData}.
      *
@@ -206,9 +217,10 @@ public final class AcquiringApi {
     }
 
     /**
-     * Get Payment Operation List. Метод для получения списка операций - *CREATED* - Операция создана -
-     * *APPROVED* - Операция одобрена (оплата прошла успешно) - *ON-REFUND* - Операция заблокирована на
-     * время выполнения возврата - *REFUNDED* - Осуществлен возврат - *EXPIRED* - Истек срок действия
+     * Get Payment Operation List. Метод возвращает список операций по платёжным ссылкам за период, c
+     * их статусами и данными оплаты.Помогает отслеживать, что оплачено, а что нет. Что означают
+     * статусы операций — в разделе «Платёжные ссылки
+     * (/docs/tochka-api/opisanie-metodov/platyozhnye-ssylki)».
      *
      * <p>The customer code is taken from the client configuration ({@code TochkaClient.builder().customerCode(...)}).
      *
@@ -222,9 +234,10 @@ public final class AcquiringApi {
     }
 
     /**
-     * Get Payment Operation List. Метод для получения списка операций - *CREATED* - Операция создана -
-     * *APPROVED* - Операция одобрена (оплата прошла успешно) - *ON-REFUND* - Операция заблокирована на
-     * время выполнения возврата - *REFUNDED* - Осуществлен возврат - *EXPIRED* - Истек срок действия
+     * Get Payment Operation List. Метод возвращает список операций по платёжным ссылкам за период, c
+     * их статусами и данными оплаты.Помогает отслеживать, что оплачено, а что нет. Что означают
+     * статусы операций — в разделе «Платёжные ссылки
+     * (/docs/tochka-api/opisanie-metodov/platyozhnye-ssylki)».
      *
      * <p>The customer code is taken from the client configuration ({@code TochkaClient.builder().customerCode(...)}).
      *
@@ -245,9 +258,10 @@ public final class AcquiringApi {
     }
 
     /**
-     * Get Payment Operation List. Метод для получения списка операций - *CREATED* - Операция создана -
-     * *APPROVED* - Операция одобрена (оплата прошла успешно) - *ON-REFUND* - Операция заблокирована на
-     * время выполнения возврата - *REFUNDED* - Осуществлен возврат - *EXPIRED* - Истек срок действия
+     * Get Payment Operation List. Метод возвращает список операций по платёжным ссылкам за период, c
+     * их статусами и данными оплаты.Помогает отслеживать, что оплачено, а что нет. Что означают
+     * статусы операций — в разделе «Платёжные ссылки
+     * (/docs/tochka-api/opisanie-metodov/platyozhnye-ssylki)».
      *
      * <p>The customer code is taken from the client configuration ({@code TochkaClient.builder().customerCode(...)}).
      *
@@ -268,7 +282,10 @@ public final class AcquiringApi {
     }
 
     /**
-     * Get Payment Registry. Метод для получения реестра платежей по интернет-эквайрингу
+     * Get Payment Registry. Метод возвращает реестр платежей за день: сумму каждого платежа, комиссию
+     * за эквайринг и сумму к зачислению. Удобен для сверки прихода и расчёта комиссий. Подробнее о
+     * платёжных ссылках — в разделе «Платёжные ссылки
+     * (/docs/tochka-api/opisanie-metodov/platyozhnye-ssylki)».
      *
      * <p>Required permissions: {@code ReadAcquiringData}.
      *
@@ -311,7 +328,10 @@ public final class AcquiringApi {
     }
 
     /**
-     * Get Payment Registry. Метод для получения реестра платежей по интернет-эквайрингу
+     * Get Payment Registry. Метод возвращает реестр платежей за день: сумму каждого платежа, комиссию
+     * за эквайринг и сумму к зачислению. Удобен для сверки прихода и расчёта комиссий. Подробнее о
+     * платёжных ссылках — в разделе «Платёжные ссылки
+     * (/docs/tochka-api/opisanie-metodov/platyozhnye-ssylki)».
      *
      * <p>Required permissions: {@code ReadAcquiringData}.
      *
@@ -331,7 +351,10 @@ public final class AcquiringApi {
     }
 
     /**
-     * Get Payment Registry. Метод для получения реестра платежей по интернет-эквайрингу
+     * Get Payment Registry. Метод возвращает реестр платежей за день: сумму каждого платежа, комиссию
+     * за эквайринг и сумму к зачислению. Удобен для сверки прихода и расчёта комиссий. Подробнее о
+     * платёжных ссылках — в разделе «Платёжные ссылки
+     * (/docs/tochka-api/opisanie-metodov/platyozhnye-ssylki)».
      *
      * <p>The customer code is taken from the client configuration ({@code TochkaClient.builder().customerCode(...)}).
      *
@@ -350,7 +373,10 @@ public final class AcquiringApi {
     }
 
     /**
-     * Get Payment Registry. Метод для получения реестра платежей по интернет-эквайрингу
+     * Get Payment Registry. Метод возвращает реестр платежей за день: сумму каждого платежа, комиссию
+     * за эквайринг и сумму к зачислению. Удобен для сверки прихода и расчёта комиссий. Подробнее о
+     * платёжных ссылках — в разделе «Платёжные ссылки
+     * (/docs/tochka-api/opisanie-metodov/platyozhnye-ssylki)».
      *
      * <p>The customer code is taken from the client configuration ({@code TochkaClient.builder().customerCode(...)}).
      *
@@ -405,8 +431,10 @@ public final class AcquiringApi {
     }
 
     /**
-     * Refund Payment Operation. Метод для возврата платежей, созданных через платёжную ссылку Возврат
-     * возможен только для платежа со статусом APPROVED
+     * Refund Payment Operation. Метод возвращает покупателю платёж, поступивший по платёжной ссылке.
+     * Возврат бывает полным или частичным и возможен только для платежей в статусе *APPROVED*. Как
+     * оформить возврат — в разделе «Платёжные ссылки
+     * (/docs/tochka-api/opisanie-metodov/platyozhnye-ssylki)».
      *
      * <p>Required permissions: {@code MakeAcquiringOperation}.
      *
