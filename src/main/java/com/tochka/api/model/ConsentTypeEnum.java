@@ -41,7 +41,8 @@ public enum ConsentTypeEnum {
     READ_STATEMENTS_MCP("ReadStatementsMcp"),
     CREATE_PAYMENT_FOR_SIGN_MCP("CreatePaymentForSignMcp"),
     READ_FEEDBACK_DATA("ReadFeedbackData"),
-    EDIT_FEEDBACK_DATA("EditFeedbackData");
+    EDIT_FEEDBACK_DATA("EditFeedbackData"),
+    MANAGE_CLICQUOT_DATA("ManageClicquotData");
 
     private final String value;
 

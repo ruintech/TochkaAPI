@@ -38,9 +38,9 @@ public final class InvoicesApi {
     }
 
     /**
-     * Delete Invoice. Метод удаляет счёт на оплату по его documentId. Пригодится, если в счёте ошибка:
-     * отредактировать счёт нельзя, поэтому его удаляют и создают заново. Подробнее о счетах на оплату
-     * — в разделе «Счёт на оплату
+     * Delete Invoice. Метод удаляет счёт на оплату по его {@code documentId}. Пригодится, если в счёте
+     * ошибка: отредактировать счёт нельзя, поэтому его удаляют и создают заново. Подробнее о счетах на
+     * оплату — в разделе «Счёт на оплату
      * (/docs/tochka-api/opisanie-metodov/vystavlenie-schetov-i-sozdanie-zakryvayushih-dokumentov/schet-na-oplatu)».
      *
      * <p>Required permissions: {@code ManageInvoiceData}.

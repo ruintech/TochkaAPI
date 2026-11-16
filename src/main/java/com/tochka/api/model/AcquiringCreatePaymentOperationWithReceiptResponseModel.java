@@ -49,7 +49,7 @@ public record AcquiringCreatePaymentOperationWithReceiptResponseModel(
         @JsonProperty("redirectUrl") String redirectUrl,
         @JsonProperty("failRedirectUrl") String failRedirectUrl,
         @JsonProperty("taxSystemCode") TaxSystemCodeInput taxSystemCode,
-        @JsonProperty("Client") ReceiptClientModel client,
+        @JsonProperty("Client") ReceiptClientResponseModel client,
         @JsonProperty("Items") List<ReceiptItemOutputModel> items,
         @JsonProperty("Supplier") SupplierModel supplier) {
 
@@ -99,7 +99,7 @@ public record AcquiringCreatePaymentOperationWithReceiptResponseModel(
         private String redirectUrl;
         private String failRedirectUrl;
         private TaxSystemCodeInput taxSystemCode;
-        private ReceiptClientModel client;
+        private ReceiptClientResponseModel client;
         private List<ReceiptItemOutputModel> items;
         private SupplierModel supplier;
 
@@ -196,7 +196,7 @@ public record AcquiringCreatePaymentOperationWithReceiptResponseModel(
         }
 
         /** Данные покупателя */
-        public Builder client(ReceiptClientModel client) {
+        public Builder client(ReceiptClientResponseModel client) {
             this.client = client;
             return this;
         }
